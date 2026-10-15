@@ -11,8 +11,8 @@ export function ConsoleGreeting() {
     w.__greeted = true;
     console.log(
       "%c이효현%c  여기까지 오셨네요",
-      "font: 700 20px/1.4 Pretendard, sans-serif; color: #006D75",
-      "font: 400 13px/1.4 Pretendard, sans-serif; color: #465B6B",
+      "font: 700 20px/1.4 Pretendard, sans-serif; color: #2D5BFF",
+      "font: 400 13px/1.4 Pretendard, sans-serif; color: #585F78",
     );
     console.log(`소스: ${site.repo}\n연락: ${site.email}`);
   }, []);

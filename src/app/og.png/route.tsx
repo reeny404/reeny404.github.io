@@ -27,25 +27,25 @@ export async function GET() {
           justifyContent: "space-between",
           padding: 72,
           background: "#FFFFFF",
-          backgroundImage: "radial-gradient(circle at 1px 1px, #C8D4DD 1.5px, transparent 0)",
+          backgroundImage: "radial-gradient(circle at 1px 1px, #E1E5F0 1.5px, transparent 0)",
           backgroundSize: "28px 28px",
-          color: "#16324B",
+          color: "#161A33",
           fontFamily: "Pretendard",
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 16, fontSize: 32, fontWeight: 600 }}>
-          <div style={{ width: 28, height: 28, border: "4px solid #006D75", borderRadius: 4, background: "#E4F2F1" }} />
+          <div style={{ width: 28, height: 28, border: "4px solid #2D5BFF", borderRadius: 4, background: "#EBF0FF" }} />
           {site.name}
-          <span style={{ color: "#006D75", fontSize: 26 }}>Frontend Engineer</span>
+          <span style={{ color: "#2D5BFF", fontSize: 26 }}>Frontend Engineer</span>
         </div>
         <div style={{ display: "flex", flexDirection: "column", fontSize: 76, fontWeight: 700, lineHeight: 1.15, letterSpacing: -2 }}>
           <span>눈앞의 버그보다,</span>
           <span>반복되는 이유를 봅니다</span>
         </div>
-        <div style={{ display: "flex", gap: 40, fontSize: 28, fontWeight: 600, color: "#465B6B" }}>
+        <div style={{ display: "flex", gap: 40, fontSize: 28, fontWeight: 600, color: "#585F78" }}>
           <span>render 2,340 → 1</span>
           <span>CLS 0.168 → 0.003</span>
-          <span style={{ marginLeft: "auto", color: "#006D75" }}>reeny404.github.io</span>
+          <span style={{ marginLeft: "auto", color: "#2D5BFF" }}>reeny404.github.io</span>
         </div>
       </div>
     ),
