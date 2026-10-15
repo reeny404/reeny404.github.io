@@ -53,7 +53,7 @@ export default function Home() {
           <header className={s.sectionHead}>
             <Eyebrow>Selected Work</Eyebrow>
             <h2 id="work-title">직접 맡은 변경과 결과</h2>
-            <p>각 사례에서 문제의 원인, 구조 판단과 직접 담당 범위, 측정 조건을 함께 기록. 팀원과 다른 직군의 작업은 사례마다 구분.</p>
+            <p>각 사례에서 문제의 원인, 구조 판단과 직접 담당 범위, 측정 조건을 함께 기록했습니다.</p>
           </header>
 
           <ol className={s.workList}>
@@ -80,7 +80,11 @@ export default function Home() {
                     </Link>
                     <span className={s.workContext}>{w.context}</span>
                     <h3>{w.headline}</h3>
-                    <p className={s.workSummary}>{w.summary}</p>
+                    <ul className={s.workPoints}>
+                      {w.summary.map((point) => (
+                        <li key={point}>{point}</li>
+                      ))}
+                    </ul>
                   </div>
                   <div className={s.workSide}>
                     {w.metrics && <MetricList items={w.metrics} />}

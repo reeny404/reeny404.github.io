@@ -111,13 +111,13 @@ After   CanvasNode → isSelected: boolean
             numeric={[1, 2]}
             rows={[
               ["장비 1개 클릭당 CanvasNode render 호출 합계", "2,340회", { value: "1회", result: true }],
-              ["장비 768개 드래그 시작 최악 프레임", "191.7ms", { value: "83.4ms", result: true }],
-              ["드래그 FPS 중앙값", "59.9", "59.9"],
+              ["장비 768개 장면, 끌기 시작할 때 가장 긴 프레임", "191.7ms", { value: "83.4ms", result: true }],
+              ["끄는 동안의 FPS 중앙값", "59.9", "59.9"],
             ]}
           />
           <Note label="측정 조건">장비 768개, CanvasNode 1,675개의 합성 mock. Chromium headless 1600×900, 2회 이상 측정 중앙값. render 수는 컴포넌트 카운터 합계.</Note>
           <Note label="해석 범위" tone="caution">
-            개선 대상은 드래그를 시작하는 순간의 긴 프레임이며 평균 FPS는 동일. 별도 V1 측정의 같은 규모 최악 프레임 41.7ms보다는 여전히 긴 값. 768개는 부하 확인용 규모.
+            개선 대상은 장비를 눌러 끌기 시작하는 순간의 긴 프레임이며, 끄는 동안의 FPS는 동일. 별도 V1 측정의 같은 규모 최악 프레임 41.7ms보다는 여전히 긴 값. 768개는 부하 확인용 규모.
           </Note>
         </Chapter>
 
@@ -182,7 +182,7 @@ After   CanvasNode → isSelected: boolean
         <Chapter id="remaining" index="10 남은 과제" title="측정 시점의 한계">
           <p className="prose">2026.09 mock 측정 시점에 함께 기록한 후속 과제.</p>
           <ul className="prose">
-            <li>768개 장면의 드래그 시작 최악 프레임 83.4ms, V1의 41.7ms보다 긴 값</li>
+            <li>768개 장면에서 끌기 시작할 때 가장 긴 프레임 83.4ms, V1의 41.7ms보다 긴 값</li>
             <li>768개 장면의 메모리 사용량과 listener 증가</li>
             <li>다중 선택 정확도</li>
           </ul>

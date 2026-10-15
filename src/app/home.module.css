@@ -156,13 +156,6 @@
   text-decoration: none;
 }
 
-/* 행 전체를 누를 수 있게 링크 영역 확장 */
-.workLink::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-}
-
 .workTitle {
   display: inline-block;
 }
@@ -171,17 +164,9 @@
   transition: transform var(--duration-base) var(--ease-spring);
 }
 
-.workRow:hover .workArrow,
+.workLink:hover .workArrow,
 .workLink:focus-visible .workArrow {
   transform: translateX(4px);
-}
-
-.workRow:hover h3 {
-  color: var(--color-accent);
-}
-
-.workRow h3 {
-  transition: color var(--duration-fast) var(--ease-out);
 }
 
 .workContext {
@@ -192,6 +177,20 @@
 .workSummary {
   margin-top: var(--space-1);
   color: var(--color-text-muted);
+}
+
+.workPoints {
+  margin-top: var(--space-1);
+  padding-left: 1.1em;
+  color: var(--color-text-muted);
+}
+
+.workPoints li + li {
+  margin-top: var(--space-1);
+}
+
+.workPoints li::marker {
+  color: var(--color-line);
 }
 
 .workSide {
