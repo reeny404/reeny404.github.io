@@ -54,12 +54,12 @@ export const selectedWork: CaseSummary[] = [
     anchor: "drawing-recognition",
     index: "02",
     title: "도면 인식 선개발",
-    context: "애자일소다 PlotPlan · 2026.09 ~ 현재",
+    context: "애자일소다 PlotPlan · 2026.09 ~ 2026.10",
     headline: "BE 계약 확정 전에 요청, 응답과 진행률을 제안하고 도면 인식 흐름 선개발",
     summary:
       "같은 형태의 MSW mock으로 파일 업로드부터 진행 상태, 인식 결과의 캔버스 반영까지 선개발. 인식 좌표와 사용자 배치 좌표를 어느 계층에서 갱신할지 BE, AI 담당자와 정리.",
     description: "",
-    note: { label: "진행 상태", text: "2026.10 기준 확정 BE 계약 연결 진행. AI 모델과 BE API 구현은 각 담당자의 작업." },
+    tags: ["MSW", "WebSocket"],
     linkLabel: "도면 인식 선개발",
   },
   {

@@ -1,26 +1,20 @@
 .editor {
-  display: grid;
-  gap: var(--space-3);
-  padding: var(--space-3);
+  padding: var(--space-2);
   border: 1px solid var(--color-line);
   border-radius: var(--radius-lg);
   background: var(--color-bg-raised);
   box-shadow: 0 1px 0 var(--color-line), 0 24px 48px -32px rgb(11 26 40 / 0.35);
 }
 
-.toolbar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-}
-
 .board {
+  position: relative;
   border-radius: var(--radius-md);
   background: var(--color-bg-sunken);
   overflow: hidden;
 }
 
 .svg {
+  display: block;
   width: 100%;
   height: auto;
   aspect-ratio: 520 / 340;
@@ -50,14 +44,17 @@
   cursor: grabbing;
 }
 
-/* 놓을 때 격자 위치로 들어가는 느낌. 드래그 중에는 지연 없이 즉시 따라옴 */
+/*
+ * 놓을 때와 실행 취소할 때만 짧게 이동. 끝에서 튕기는 spring은 회전에서 흔들려 보여 ease-out 사용.
+ * 드래그와 핸들 회전 중에는 transition 없이 포인터를 바로 따라감.
+ */
 @media (prefers-reduced-motion: no-preference) {
   .item:not([data-dragging="true"]) {
-    transition: transform var(--duration-base) var(--ease-spring);
+    transition: transform var(--duration-base) var(--ease-out);
   }
 
-  .item > g {
-    transition: transform var(--duration-base) var(--ease-spring);
+  .item:not([data-rotating="true"]) .shape {
+    transition: transform var(--duration-base) var(--ease-out);
   }
 }
 
@@ -81,13 +78,14 @@
 .selection {
   fill: none;
   stroke: var(--color-accent);
-  stroke-width: 2;
-  stroke-dasharray: 4 3;
+  stroke-width: 1.5;
   opacity: 0;
   transition: opacity var(--duration-fast) var(--ease-out);
+  pointer-events: none;
 }
 
-.item[data-selected="true"] .selection {
+.item[data-selected="true"] .selection,
+.item:focus-visible .selection {
   opacity: 1;
 }
 
@@ -96,15 +94,41 @@
   stroke: var(--color-accent);
 }
 
-.item:focus-visible .selection {
-  opacity: 1;
-  stroke-dasharray: none;
+/* ---------- 회전 핸들 ---------- */
+.handle {
+  cursor: grab;
+  touch-action: none;
+}
+
+.item[data-rotating="true"] .handle {
+  cursor: grabbing;
+}
+
+.handleLine {
+  stroke: var(--color-accent);
+  stroke-width: 1.5;
+}
+
+.handleHit {
+  fill: transparent;
+}
+
+.handleDot {
+  fill: var(--color-bg-raised);
+  stroke: var(--color-accent);
+  stroke-width: 2;
+}
+
+.handle:hover .handleDot,
+.item[data-rotating="true"] .handleDot {
+  fill: var(--color-accent);
 }
 
 .label {
   font-family: var(--font-mono);
   font-size: 11px;
   fill: var(--color-text-muted);
+  pointer-events: none;
 }
 
 .item[data-selected="true"] .label {
@@ -112,64 +136,100 @@
   font-weight: var(--weight-semibold);
 }
 
-.panels {
-  display: grid;
-  gap: var(--space-3);
-  font-size: var(--text-xs);
-}
-
-@media (min-width: 480px) {
-  .panels {
-    grid-template-columns: 1fr 1.3fr;
-  }
-}
-
-.panels > div {
-  min-width: 0;
-  padding: var(--space-2) var(--space-3);
+/* ---------- 보드 위 컨트롤 ---------- */
+.resetControl,
+.historyControls {
+  position: absolute;
+  display: flex;
+  gap: 2px;
+  padding: 2px;
+  border: 1px solid var(--color-line);
   border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--color-bg-raised) 92%, transparent);
+  backdrop-filter: blur(6px);
+}
+
+.resetControl {
+  top: var(--space-2);
+  right: var(--space-2);
+}
+
+.historyControls {
+  right: var(--space-2);
+  bottom: var(--space-2);
+}
+
+.iconButton {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 0;
+  border-radius: calc(var(--radius-md) - 2px);
+  background: transparent;
+  color: var(--color-text);
+  cursor: pointer;
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    transform var(--duration-instant) var(--ease-out);
+}
+
+.iconButton:hover:not(:disabled) {
   background: var(--color-bg-sunken);
 }
 
-.panelTitle {
-  display: block;
-  margin-bottom: var(--space-1);
-  font-weight: var(--weight-semibold);
-  letter-spacing: var(--tracking-label);
-  color: var(--color-text-muted);
+.iconButton:active:not(:disabled) {
+  transform: scale(0.92);
 }
 
-.json {
-  display: block;
-  padding: 0;
-  background: none;
+.iconButton:disabled {
+  color: var(--color-text-muted);
+  opacity: 0.4;
+  cursor: default;
+}
+
+.status {
+  position: absolute;
+  left: var(--space-2);
+  bottom: var(--space-2);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  max-width: calc(100% - 6.5rem);
+  margin: 0;
   font-size: var(--text-xs);
-  line-height: var(--leading-snug);
-  word-break: break-all;
+  pointer-events: none;
 }
 
-.log {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+.status:empty {
+  display: none;
+}
+
+.badge {
+  flex-shrink: 0;
+  min-width: 1.5rem;
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--color-accent);
+  color: var(--color-bg);
+  font-weight: var(--weight-semibold);
+  text-align: center;
+}
+
+.lastCommand {
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--color-bg-raised) 85%, transparent);
   font-family: var(--font-mono);
-  line-height: var(--leading-snug);
-}
-
-.log li {
-  margin: 0;
-  color: var(--color-text-muted);
+  color: var(--color-text);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.log li[data-latest="true"] {
-  color: var(--color-text);
-}
-
 @media (prefers-reduced-motion: no-preference) {
-  .log li[data-latest="true"] {
+  .lastCommand {
     animation: log-in var(--duration-base) var(--ease-out);
   }
 }
@@ -177,17 +237,6 @@
 @keyframes log-in {
   from {
     opacity: 0;
-    transform: translateY(-4px);
+    transform: translateY(4px);
   }
-}
-
-.empty {
-  color: var(--color-text-muted);
-  font-family: var(--font-sans);
-}
-
-.caption {
-  font-size: var(--text-xs);
-  color: var(--color-text-muted);
-  line-height: var(--leading-snug);
 }

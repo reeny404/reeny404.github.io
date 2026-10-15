@@ -38,7 +38,7 @@ function useActions(): Action[] {
       { id: "github", group: "외부 링크", label: "GitHub", keywords: "github code 코드", run: () => window.open(site.github, "_blank", "noopener") },
       { id: "repo", group: "외부 링크", label: "이 사이트의 소스 코드", keywords: "source repo 저장소", run: () => window.open(site.repo, "_blank", "noopener") },
       { id: "blog", group: "외부 링크", label: "블로그", keywords: "blog tistory 티스토리", run: () => window.open(site.blog, "_blank", "noopener") },
-      { id: "mail", group: "외부 링크", label: "메일 보내기", keywords: "email contact 연락", run: () => (window.location.href = `mailto:${site.email}`) },
+      { id: "mail", group: "외부 링크", label: "메일 보내기", keywords: "email contact 연락 연락처 커피챗 채용", run: () => (window.location.href = `mailto:${site.email}`) },
     ],
     [router, canUndo, canRedo],
   );
@@ -175,7 +175,6 @@ export function CommandPalette() {
           <span>
             <kbd>↵</kbd> 실행
           </span>
-          <span>이 사이트의 조작은 모두 실행 취소 가능</span>
         </p>
       </div>
     </dialog>

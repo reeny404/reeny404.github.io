@@ -163,8 +163,8 @@ After   CanvasNode → isSelected: boolean
             UI 개발과 상태 검증
                      ↓
           확정된 BE 계약으로 연결부 교체`}</CodeFlow>
-          <Note label="진행 상태와 기여 구분" tone="caution">
-            직접 담당 범위는 계약 제안, mock과 FE 흐름 구현, 좌표 갱신 책임 정리. AI 모델과 BE API 구현은 각 담당자의 작업. 2026.10 기준 확정 BE 계약 연결 진행.
+          <Note label="기여 구분" tone="scope">
+            직접 담당 범위는 계약 제안, mock과 FE 흐름 구현, 좌표 갱신 책임 정리. AI 모델과 BE API 구현은 각 담당자의 작업.
           </Note>
         </Chapter>
 

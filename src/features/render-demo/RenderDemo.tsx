@@ -186,7 +186,6 @@ export function RenderDemo() {
             </button>
           ))}
         </div>
-        <p className={s.hint}>노드를 눌러 보면 다시 렌더링된 노드가 깜빡임</p>
       </div>
       <Grid key={mode} mode={mode} />
       <figcaption className={s.caption}>

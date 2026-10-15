@@ -126,15 +126,6 @@
   color: var(--color-text-muted);
 }
 
-.footer span:last-child {
-  margin-left: auto;
-}
-
-@media (max-width: 480px) {
-  .footer span:last-child {
-    display: none;
-  }
-}
 
 /* ---------- Toast ---------- */
 .toastRegion {

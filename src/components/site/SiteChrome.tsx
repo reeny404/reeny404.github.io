@@ -8,8 +8,8 @@ export function SiteHeader() {
     <header className={`${s.header} no-print`}>
       <div className={`container ${s.headerInner}`}>
         <Link className={s.logo} href="/">
-          <span className={s.logoMark} aria-hidden="true" />
           {site.name}
+          <span className={s.logoRole}>Frontend Engineer</span>
         </Link>
         <SiteNav />
         <div className={s.controls}>
@@ -25,10 +25,6 @@ export function SiteFooter() {
   return (
     <footer className={s.footer}>
       <div className={`container ${s.footerInner}`}>
-        <p>
-          © 2026 {site.name}. Next.js 정적 export로 만들고 GitHub Pages에 배포.{" "}
-          <a href={site.repo}>소스 코드</a>
-        </p>
         <ul>
           <li>
             <a href={`mailto:${site.email}`}>Email</a>
@@ -38,6 +34,9 @@ export function SiteFooter() {
           </li>
           <li>
             <a href={site.blog}>Blog</a>
+          </li>
+          <li>
+            <a href={site.repo}>Source</a>
           </li>
         </ul>
       </div>

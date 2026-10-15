@@ -5,7 +5,7 @@ export const site = {
   title: "이효현 | Frontend Engineer",
   description:
     "2D 공정설계 에디터의 편집 데이터와 Canvas 표현 분리, 좌표 계산과 저장 경로 설계. 웹 디자인 도구의 저장 실패와 초기 로딩, 결제 데이터 유실 개선.",
-  headline: "편집 데이터의 변경과 저장 책임을 나누는 설계",
+  headline: "빨리 만들고, 오래 버티게 만듭니다",
   email: "happy2hyeon@kakao.com",
   github: "https://github.com/reeny404",
   blog: "https://reeny404.tistory.com",
@@ -56,10 +56,11 @@ export const experience = [
 ] as const;
 
 export const skills = [
-  { group: "UI와 편집", items: ["React", "TypeScript", "JavaScript", "Konva", "D3/SVG", "Canvas API"] },
-  { group: "상태와 데이터", items: ["Zustand", "TanStack Query"] },
-  { group: "실시간과 차트", items: ["WebSocket", "STOMP/SockJS", "ECharts"] },
-  { group: "개발과 검증", items: ["Vite", "Webpack", "MSW", "Playwright"] },
+  { group: "프레임워크와 언어", items: ["React", "TypeScript", "JavaScript"] },
+  { group: "그래픽스", items: ["Konva", "D3/SVG", "Canvas API"] },
+  { group: "상태 관리", items: ["Zustand", "TanStack Query"] },
+  { group: "실시간 통신", items: ["WebSocket", "STOMP/SockJS"] },
+  { group: "빌드와 테스트", items: ["Vite", "Webpack", "MSW", "Playwright"] },
 ] as const;
 
 export const education = [
@@ -69,11 +70,11 @@ export const education = [
 
 export const sideProjects = [
   {
-    name: "네이버톡 알림 채널 구독 해제 확장",
-    meta: "2025.05 · React, TypeScript, Chrome Extension Manifest V3",
+    name: "mod-hud",
+    meta: "2026.10 · TypeScript, Claude Code 플러그인",
     summary:
-      "채널마다 반복하던 알림 해제 작업을 순차 실행하는 Chrome 확장. React popup에서 대상 페이지로 이동하고, content script에서 대상 채널 수를 보여 준 뒤 사용자 확인을 거쳐 해제 실행.",
-    href: "https://github.com/reeny404/chrome-extension-unsubscribe-naver-talk",
+      "여러 Claude Code 세션 중 응답을 기다리는 세션과 작업 중인 세션, 확인이 필요한 MR을 프롬프트 위 한 줄과 패널로 보여 주는 mod. 세션마다 포켓몬 알이 하나씩 생기고 MR이 머지되면 부화.",
+    href: "https://github.com/reeny404/mod-hud",
   },
   {
     name: "quick-react-env",

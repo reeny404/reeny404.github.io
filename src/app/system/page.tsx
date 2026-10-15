@@ -77,7 +77,7 @@ export default function SystemPage() {
         <section id="color" className={s.block} aria-labelledby="color-title">
           <h2 id="color-title">색</h2>
           <p className={s.blockLede}>
-            컴포넌트는 semantic 토큰만 참조. 다크 모드는 시스템 설정을 따르고 헤더의 버튼이나 <kbd>⌘K</kbd>로 바꿀 수 있으며, 바꾼 것도 <kbd>⌘Z</kbd>로 되돌릴 수 있음.
+            컴포넌트는 semantic 토큰만 참조. 다크 모드는 시스템 설정을 따름.
           </p>
           <ul className={s.swatches}>
             {colors.map((c) => {

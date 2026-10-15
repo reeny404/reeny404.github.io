@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ViewTransition } from "react";
-import { Eyebrow, MetricList, Note, TagList, buttonClass } from "@/components/ui";
+import { Eyebrow, MetricList, Note, TagList } from "@/components/ui";
 import { selectedWork } from "@/content/cases";
 import { education, experience, sideProjects, site, skills } from "@/content/profile";
 import { MiniEditor } from "@/features/editor/MiniEditor";
@@ -34,29 +34,14 @@ export default function Home() {
         <div className={`container ${s.heroGrid}`}>
           <div className={s.heroText}>
             <h1 id="hero-title">
-              <span className={s.name}>
-                {site.name} <span className={s.role}>Frontend Engineer</span>
-              </span>
               <span className={s.headline}>
-                편집 데이터의 변경과
+                빨리 만들고,
                 <br />
-                저장 책임을 나누는 설계
+                오래 버티게 만듭니다
               </span>
             </h1>
             <p className={s.lede}>
-              2D 공정설계 에디터에서 편집 데이터와 Canvas 표현을 분리하고 좌표 계산, 저장, 실행 취소의 경로를 설계와 구현.
-              현재 애자일소다 Frontend Lead.
-            </p>
-            <div className={s.cta}>
-              <Link className={buttonClass("primary")} href="/#work">
-                사례 보기
-              </Link>
-              <Link className={buttonClass()} href="/system/">
-                디자인 시스템
-              </Link>
-            </div>
-            <p className={s.tip}>
-              에디터의 장비를 끌어 보거나 <kbd>⌘</kbd> <kbd>K</kbd>로 어디든 이동. 이 사이트의 조작은 모두 <kbd>⌘</kbd> <kbd>Z</kbd>로 되돌릴 수 있음.
+              저장되지 않던 캔버스, 19초 걸리던 첫 화면, 세션과 함께 사라지던 결제 데이터. 그리고 다시 만들고 나서 더 느려진 에디터까지.
             </p>
           </div>
           <MiniEditor />
@@ -113,36 +98,6 @@ export default function Home() {
         </div>
       </section>
 
-      <section className={s.section} id="about-site" aria-labelledby="about-site-title">
-        <div className="container">
-          <header className={s.sectionHead}>
-            <Eyebrow>This Site</Eyebrow>
-            <h2 id="about-site-title">이 사이트도 하나의 사이드 프로젝트</h2>
-            <p>보여 주는 페이지가 아니라 직접 설계한 구조를 만져 볼 수 있는 공간으로 구성.</p>
-          </header>
-          <ul className={s.siteFacts}>
-            <li>
-              <h3>모든 조작은 command</h3>
-              <p>테마 변경과 첫 화면 에디터의 이동, 회전이 같은 history를 통과. <kbd>⌘Z</kbd>, <kbd>⇧⌘Z</kbd>로 사이트 전체 실행 취소.</p>
-            </li>
-            <li>
-              <h3>토큰 하나에서 시작</h3>
-              <p>
-                <code>tokens.ts</code> 하나에서 CSS 변수와 <Link href="/system/">디자인 시스템 문서</Link>를 함께 생성. 색 대비는 빌드 시점에 계산.
-              </p>
-            </li>
-            <li>
-              <h3>정적 HTML과 필요한 곳만 JS</h3>
-              <p>Next.js 16 정적 export로 모든 페이지를 HTML로 생성하고 GitHub Pages에 배포. 인터랙션이 있는 부분만 클라이언트 컴포넌트.</p>
-            </li>
-            <li>
-              <h3>측정할 수 있는 기준</h3>
-              <p>Lighthouse CI로 성능, 접근성, SEO 점수를 배포 전에 검사. 사례와 같은 방식으로 수치와 조건을 함께 기록.</p>
-            </li>
-          </ul>
-        </div>
-      </section>
-
       <section className={s.section} id="experience" aria-labelledby="experience-title">
         <div className="container">
           <header className={s.sectionHead}>
@@ -183,7 +138,7 @@ export default function Home() {
               <Eyebrow>Skills</Eyebrow>
               <h2 id="skills-title">주요 기술</h2>
             </header>
-            <dl className={s.defList}>
+            <dl className={s.skillRows}>
               {skills.map((g) => (
                 <div key={g.group}>
                   <dt>{g.group}</dt>
@@ -197,7 +152,7 @@ export default function Home() {
           <div>
             <header className={s.sectionHead}>
               <Eyebrow>Side Projects</Eyebrow>
-              <h2>공개 저장소</h2>
+              <h2>사이드 프로젝트</h2>
             </header>
             <ul className={s.projects}>
               {sideProjects.map((p) => (
@@ -219,7 +174,7 @@ export default function Home() {
           <div>
             <header className={s.sectionHead}>
               <Eyebrow>Contact</Eyebrow>
-              <h2 id="contact-title">연락</h2>
+              <h2 id="contact-title">연락처</h2>
             </header>
             <ul className={s.contact}>
               <li>

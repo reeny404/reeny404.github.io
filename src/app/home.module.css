@@ -41,21 +41,7 @@
   gap: var(--space-4);
 }
 
-.name {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: var(--space-2) var(--space-3);
-  font-size: var(--text-lg);
-  letter-spacing: normal;
-}
 
-.role {
-  font-size: var(--text-sm);
-  font-weight: var(--weight-semibold);
-  letter-spacing: var(--tracking-label);
-  color: var(--color-accent);
-}
 
 .headline {
   font-size: var(--text-2xl);
@@ -75,11 +61,6 @@
   gap: var(--space-3);
 }
 
-.tip {
-  max-width: 34rem;
-  font-size: var(--text-sm);
-  color: var(--color-text-muted);
-}
 
 /* 첫 화면 진입. LCP를 늦추지 않도록 opacity를 0까지 내리지 않고 짧게 */
 @media (prefers-reduced-motion: no-preference) {
@@ -90,7 +71,6 @@
 
   .heroText > :nth-child(2) { animation-delay: 40ms; }
   .heroText > :nth-child(3) { animation-delay: 80ms; }
-  .heroText > :nth-child(4) { animation-delay: 120ms; }
   .heroGrid > figure { animation-delay: 100ms; }
 }
 
@@ -220,45 +200,6 @@
   gap: var(--space-4);
 }
 
-/* ---------- This site ---------- */
-.siteFacts {
-  display: grid;
-  gap: var(--space-5);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-@media (min-width: 768px) {
-  .siteFacts {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (min-width: 1280px) {
-  .siteFacts {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-}
-
-.siteFacts li {
-  display: grid;
-  align-content: start;
-  gap: var(--space-2);
-  margin: 0;
-  padding-top: var(--space-4);
-  border-top: 2px solid var(--color-text);
-}
-
-.siteFacts h3 {
-  font-size: var(--text-md);
-}
-
-.siteFacts p {
-  font-size: var(--text-sm);
-  color: var(--color-text-muted);
-}
-
 /* ---------- Timeline ---------- */
 .timeline {
   margin: 0;
@@ -367,5 +308,18 @@
   display: inline-block;
   min-width: 4.5rem;
   font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.skillRows {
+  display: grid;
+  gap: var(--space-4);
+}
+
+/* 분류 이름은 작게, 기술 태그가 먼저 읽히도록 */
+.skillRows dt {
+  margin-bottom: var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
   color: var(--color-text-muted);
 }

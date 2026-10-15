@@ -39,8 +39,8 @@ export async function GET() {
           <span style={{ color: "#006D75", fontSize: 26 }}>Frontend Engineer</span>
         </div>
         <div style={{ display: "flex", flexDirection: "column", fontSize: 76, fontWeight: 700, lineHeight: 1.15, letterSpacing: -2 }}>
-          <span>편집 데이터의 변경과</span>
-          <span>저장 책임을 나누는 설계</span>
+          <span>빨리 만들고,</span>
+          <span>오래 버티게 만듭니다</span>
         </div>
         <div style={{ display: "flex", gap: 40, fontSize: 28, fontWeight: 600, color: "#465B6B" }}>
           <span>render 2,340 → 1</span>

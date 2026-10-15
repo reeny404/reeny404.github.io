@@ -12,7 +12,7 @@ const NAV = [
   { href: "/#work", label: "사례", match: "/work/" },
   { href: "/system/", label: "디자인 시스템", match: "/system/" },
   { href: "/#experience", label: "경력", match: null },
-  { href: "/#contact", label: "연락", match: null },
+  { href: "/#contact", label: "연락처", match: null },
 ] as const;
 
 export function SiteNav() {
