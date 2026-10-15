@@ -323,7 +323,7 @@ function clampAxis(start: number, visible: number, total: number) {
 
 /**
  * 휠로 커서 위치를 기준으로 확대, 축소. 화면 전용 상태라 command로 기록하지 않음.
- * 최소, 최대에 닿은 뒤에는 기본 동작을 막지 않아 페이지 스크롤이 이어짐.
+ * 에디터 위에서는 줌 한계에 닿아도 페이지가 스크롤되지 않도록 항상 기본 동작을 막음.
  */
 function useWheelZoom() {
   const svgRef = useRef<SVGSVGElement>(null);
@@ -334,10 +334,10 @@ function useWheelZoom() {
     const svg = svgRef.current;
     if (!svg) return;
     const onWheel = (ev: WheelEvent) => {
+      ev.preventDefault();
       const current = zoomRef.current;
       const next = Math.min(ZOOM.max, Math.max(ZOOM.min, current * Math.exp(-ev.deltaY * 0.0015)));
       if (next === current) return;
-      ev.preventDefault();
       const p = toBoardPoint(svg, ev.clientX, ev.clientY);
       zoomRef.current = next;
       setViewport((v) => {
