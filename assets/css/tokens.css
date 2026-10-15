@@ -1,0 +1,119 @@
+/*
+ * Design tokens — 이효현 포트폴리오
+ * 원본 규칙: DESIGN.md. 컴포넌트는 이 파일의 변수만 참조하고 색과 크기를 직접 쓰지 않는다.
+ */
+
+:root {
+  /* Color — primitive */
+  --white: #ffffff;
+  --mist-100: #edf2f5;
+  --mist-300: #c8d4dd;
+  --slate-600: #465b6b;
+  --navy-900: #16324b;
+  --navy-950: #0d2236;
+  --teal-700: #006d75;
+  --teal-100: #e4f2f1;
+  --amber-700: #8a5a00;
+  --amber-100: #fbf1dc;
+
+  /* Color — semantic */
+  --color-bg: var(--white);
+  --color-bg-sunken: var(--mist-100);
+  --color-text: var(--navy-900);
+  --color-text-muted: var(--slate-600);
+  --color-line: var(--mist-300);
+  --color-accent: var(--teal-700);
+  --color-accent-soft: var(--teal-100);
+  --color-caution: var(--amber-700);
+  --color-caution-soft: var(--amber-100);
+  --color-focus: var(--teal-700);
+  --color-selection: var(--teal-100);
+
+  /* Typography */
+  --font-sans: "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --font-mono: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+
+  --text-xs: 0.8125rem;   /* 13 — 측정 조건, 출처 */
+  --text-sm: 0.9375rem;   /* 15 — 보조 설명, 표 */
+  --text-md: 1.0625rem;   /* 17 — 본문 */
+  --text-lg: 1.25rem;     /* 20 — 사례 요약 */
+  --text-xl: clamp(1.5rem, 1.2rem + 1.2vw, 2rem);      /* 섹션 제목 */
+  --text-2xl: clamp(2rem, 1.4rem + 2.6vw, 3.25rem);    /* 페이지 제목 */
+  --text-metric: clamp(1.75rem, 1.3rem + 1.8vw, 2.5rem);
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  --leading-tight: 1.25;
+  --leading-snug: 1.45;
+  --leading-body: 1.7;
+  --tracking-tight: -0.02em;
+  --tracking-label: 0.06em;
+
+  /* Spacing — 4px base */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+
+  /* Layout */
+  --width-content: 72rem;
+  --width-prose: 42rem;
+  --gutter: clamp(1rem, 0.5rem + 2.5vw, 2.5rem);
+  --header-height: 3.5rem;
+
+  /* Border */
+  --border-thin: 1px;
+  --border-strong: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+
+  /* Motion */
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-bg: #0f1c28;
+    --color-bg-sunken: #16273a;
+    --color-text: #e6edf2;
+    --color-text-muted: #a3b4c2;
+    --color-line: #2c4256;
+    --color-accent: #5fc4c9;
+    --color-accent-soft: #143a40;
+    --color-caution: #e6b65c;
+    --color-caution-soft: #3a2e14;
+    --color-focus: #5fc4c9;
+    --color-selection: #1d4a52;
+  }
+}
+
+:root[data-theme="dark"] {
+  --color-bg: #0f1c28;
+  --color-bg-sunken: #16273a;
+  --color-text: #e6edf2;
+  --color-text-muted: #a3b4c2;
+  --color-line: #2c4256;
+  --color-accent: #5fc4c9;
+  --color-accent-soft: #143a40;
+  --color-caution: #e6b65c;
+  --color-caution-soft: #3a2e14;
+  --color-focus: #5fc4c9;
+  --color-selection: #1d4a52;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration-base: 0ms;
+  }
+}
