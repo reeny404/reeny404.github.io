@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import { SiteFooter, SiteHeader } from "@/components/site/SiteChrome";
 import { site } from "@/content/profile";
 import { tokensCss } from "@/design/tokens-css";
+import { Analytics } from "@/features/analytics/Analytics";
 import { CommandPalette } from "@/features/command/CommandPalette";
 import { HistoryToast } from "@/features/command/HistoryToast";
 import { ConsoleGreeting } from "@/features/easter-eggs/ConsoleGreeting";
@@ -66,6 +67,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <CommandPalette />
         <HistoryToast />
         <ConsoleGreeting />
+        <Analytics />
       </body>
     </html>
   );
