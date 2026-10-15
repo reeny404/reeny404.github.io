@@ -35,13 +35,13 @@ export default function Home() {
           <div className={s.heroText}>
             <h1 id="hero-title">
               <span className={s.headline}>
-                빨리 만들고,
+                눈앞의 버그보다,
                 <br />
-                오래 버티게 만듭니다
+                반복되는 이유를 봅니다
               </span>
             </h1>
             <p className={s.lede}>
-              저장되지 않던 캔버스, 19초 걸리던 첫 화면, 세션과 함께 사라지던 결제 데이터. 그리고 다시 만들고 나서 더 느려진 에디터까지.
+              저장이 자꾸 실패하던 이유는 이벤트 로그에서, 다시 만든 에디터가 느려진 이유는 구독 범위에서 찾았습니다.
             </p>
           </div>
           <MiniEditor />

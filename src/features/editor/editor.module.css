@@ -26,6 +26,12 @@
   fill: var(--color-line);
 }
 
+.boardEdge {
+  fill: none;
+  stroke: var(--color-line);
+  stroke-dasharray: 4 4;
+}
+
 .pipe {
   fill: none;
   stroke: var(--color-text-muted);

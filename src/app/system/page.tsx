@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
-import { Button, Compare, DataTable, Eyebrow, MetricList, Note, TagList } from "@/components/ui";
+import type { ReactNode } from "react";
+import { Button, CodeFlow, Compare, DataTable, Eyebrow, MetricList, Note, TagList } from "@/components/ui";
 import { contrastRatio, wcagLevel } from "@/design/contrast";
 import { breakpoints, colors, motion, radius, space, typography } from "@/design/tokens";
+import { OpenPaletteButton, ShortcutTable, ThemeSwitcher } from "./SystemControls";
 import s from "./system.module.css";
 
 export const metadata: Metadata = {
   title: "디자인 시스템",
-  description: "이 사이트의 디자인 토큰과 컴포넌트. tokens.ts 하나에서 CSS 변수와 이 문서를 함께 생성하고 색 대비를 빌드 시점에 계산.",
+  description: "이 사이트의 UI를 이루는 토큰, 컴포넌트, 패턴. tokens.ts 하나에서 CSS 변수와 이 문서를 함께 생성.",
   alternates: { canonical: "/system/" },
 };
 
@@ -14,20 +16,42 @@ const colorByName = Object.fromEntries(colors.map((c) => [c.name, c]));
 
 function ratio(fg: string, on: string | undefined, mode: "light" | "dark") {
   if (!on) return null;
-  const bg = colorByName[on];
-  const value = contrastRatio(fg, bg[mode]);
+  const value = contrastRatio(fg, colorByName[on][mode]);
   return { value: value.toFixed(2), level: wcagLevel(value) };
 }
 
-const SECTIONS = [
+const TOC = [
   ["principles", "원칙"],
   ["color", "색"],
   ["type", "글자"],
   ["space", "간격과 모서리"],
   ["motion", "움직임"],
   ["components", "컴포넌트"],
-  ["writing", "문구"],
+  ["patterns", "패턴"],
 ] as const;
+
+function Block({ id, eyebrow, title, lede, children }: { id: string; eyebrow?: string; title: string; lede?: ReactNode; children: ReactNode }) {
+  return (
+    <section id={id} className={s.block} aria-labelledby={`${id}-title`}>
+      <header className={s.blockHead}>
+        {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
+        <h2 id={`${id}-title`}>{title}</h2>
+        {lede && <p className={s.blockLede}>{lede}</p>}
+      </header>
+      {children}
+    </section>
+  );
+}
+
+function Specimen({ name, note, children }: { name: string; note?: string; children: ReactNode }) {
+  return (
+    <div className={s.specimen}>
+      <h3>{name}</h3>
+      <div className={s.specimenBody}>{children}</div>
+      {note && <p className={s.specNote}>{note}</p>}
+    </div>
+  );
+}
 
 export default function SystemPage() {
   return (
@@ -35,13 +59,13 @@ export default function SystemPage() {
       <section className={s.hero} aria-labelledby="system-title">
         <div className="container">
           <Eyebrow>Design System</Eyebrow>
-          <h1 id="system-title">이 사이트를 만든 규칙</h1>
+          <h1 id="system-title">이 사이트의 UI 시스템</h1>
           <p className={s.lede}>
-            <code>src/design/tokens.ts</code> 하나가 원본. 빌드할 때 CSS 변수와 이 페이지가 같은 객체에서 만들어지고, 텍스트 색의 대비 비율도 그때 계산. 문서와 실제 화면의 값이 어긋날 수 없는 구조.
+            원본은 <code>src/design/tokens.ts</code> 하나. 빌드할 때 같은 객체에서 CSS 변수와 이 페이지가 만들어지고, 텍스트 색의 대비 비율도 그때 계산.
           </p>
           <nav aria-label="디자인 시스템 목차" className={s.toc}>
             <ul>
-              {SECTIONS.map(([id, label]) => (
+              {TOC.map(([id, label]) => (
                 <li key={id}>
                   <a href={`#${id}`}>{label}</a>
                 </li>
@@ -52,33 +76,31 @@ export default function SystemPage() {
       </section>
 
       <div className={`container ${s.body}`}>
-        <section id="principles" className={s.block} aria-labelledby="principles-title">
-          <h2 id="principles-title">원칙</h2>
+        <Block id="principles" title="원칙">
           <ol className={s.principles}>
             <li>
-              <h3>카드 반복 대신 여백과 구분선</h3>
-              <p>사례와 경력은 행으로 구분. 테두리 상자는 비교, 도식, 데모에만 사용.</p>
+              <h3>구분선으로 위계</h3>
+              <p>카드를 반복하지 않고 여백과 얇은 선으로 묶음. 테두리 상자는 비교, 도식, 조작할 수 있는 영역에만.</p>
             </li>
             <li>
-              <h3>수치 옆에 조건</h3>
-              <p>전후 수치가 있는 곳에는 같은 화면에 측정 조건과 해석 범위를 함께 배치.</p>
+              <h3>색은 의미에만</h3>
+              <p>강조색은 변경 결과, 선택, 링크에만 사용. 컴포넌트는 hex가 아닌 semantic 토큰만 참조.</p>
             </li>
             <li>
-              <h3>기여 범위 표시</h3>
-              <p>팀원과 다른 직군의 작업은 scope 노트, 한계와 진행 상태는 caution 노트로 분리.</p>
+              <h3>짧은 움직임</h3>
+              <p>transform과 opacity만, 80~380ms. 움직임 줄이기 설정에서는 토큰 단계에서 0ms.</p>
             </li>
             <li>
-              <h3>지연 없는 움직임</h3>
-              <p>transform과 opacity만 움직이고 200ms 안팎으로 마무리. 줄인 움직임 설정에서는 0ms.</p>
+              <h3>두 테마, 같은 기준</h3>
+              <p>라이트와 다크 모두 본문 대비 AA 이상. 키보드만으로 모든 조작 가능, 터치 영역 24px 이상.</p>
             </li>
           </ol>
-        </section>
+        </Block>
 
-        <section id="color" className={s.block} aria-labelledby="color-title">
-          <h2 id="color-title">색</h2>
-          <p className={s.blockLede}>
-            컴포넌트는 semantic 토큰만 참조. 다크 모드는 시스템 설정을 따름.
-          </p>
+        <Block id="color" eyebrow="Foundations" title="색" lede="왼쪽은 라이트, 오른쪽은 다크 값. 텍스트 색은 배경 대비 비율과 WCAG 등급을 함께 표시.">
+          <div className={s.inlineControl}>
+            <ThemeSwitcher />
+          </div>
           <ul className={s.swatches}>
             {colors.map((c) => {
               const on = "on" in c ? c.on : undefined;
@@ -105,13 +127,9 @@ export default function SystemPage() {
               );
             })}
           </ul>
-        </section>
+        </Block>
 
-        <section id="type" className={s.block} aria-labelledby="type-title">
-          <h2 id="type-title">글자</h2>
-          <p className={s.blockLede}>
-            Pretendard Variable을 직접 호스팅하고 unicode-range로 나눠 필요한 글자 묶음만 다운로드. 숫자는 tabular-nums로 자리 맞춤, 한글은 단어 단위 줄바꿈.
-          </p>
+        <Block id="type" eyebrow="Foundations" title="글자" lede="Pretendard Variable. 빌드할 때 사이트에 쓰인 글자만 남겨 한 파일로 제공. 숫자는 tabular-nums, 한글은 단어 단위 줄바꿈.">
           <ul className={s.typeScale}>
             {typography.scale.map((t) => (
               <li key={t.name}>
@@ -120,16 +138,21 @@ export default function SystemPage() {
                   <span>{t.usage}</span>
                 </span>
                 <span className={s.typeSample} style={{ fontSize: `var(--text-${t.name})` }}>
-                  {t.name === "metric" ? "2,340 → 1" : "편집 데이터의 기준"}
+                  {t.name === "metric" ? "1,280" : "다람쥐 헌 쳇바퀴에 타고파"}
                 </span>
               </li>
             ))}
           </ul>
-        </section>
+        </Block>
 
-        <section id="space" className={s.block} aria-labelledby="space-title">
-          <h2 id="space-title">간격과 모서리</h2>
-          <p className={s.blockLede}>4px 기반 간격. 레이아웃 기준점은 {Object.entries(breakpoints).map(([k, v]) => `${k} ${v}px`).join(", ")}.</p>
+        <Block
+          id="space"
+          eyebrow="Foundations"
+          title="간격과 모서리"
+          lede={`4px 기반. 레이아웃 기준점 ${Object.entries(breakpoints)
+            .map(([k, v]) => `${k} ${v}px`)
+            .join(", ")}.`}
+        >
           <ul className={s.spaceScale}>
             {space.map(([k, v]) => (
               <li key={k}>
@@ -147,11 +170,14 @@ export default function SystemPage() {
               </li>
             ))}
           </ul>
-        </section>
+        </Block>
 
-        <section id="motion" className={s.block} aria-labelledby="motion-title">
-          <h2 id="motion-title">움직임</h2>
-          <p className={s.blockLede}>각 줄에 마우스를 올리거나 포커스하면 해당 easing으로 이동. 길이는 {motion.duration.map((d) => `${d.name} ${d.value}`).join(", ")}.</p>
+        <Block
+          id="motion"
+          eyebrow="Foundations"
+          title="움직임"
+          lede={`줄에 마우스를 올리거나 포커스하면 해당 easing으로 이동. 길이는 ${motion.duration.map((d) => `${d.name} ${d.value}`).join(", ")}.`}
+        >
           <ul className={s.motionList}>
             {motion.easing.map((e) => (
               <li key={e.name} tabIndex={0} className={s.motionRow} style={{ "--ease": `var(--ease-${e.name})` } as React.CSSProperties}>
@@ -165,76 +191,111 @@ export default function SystemPage() {
               </li>
             ))}
           </ul>
-        </section>
+        </Block>
 
-        <section id="components" className={s.block} aria-labelledby="components-title">
-          <h2 id="components-title">컴포넌트</h2>
-          <p className={s.blockLede}>사이트 전체가 쓰는 같은 컴포넌트를 그대로 렌더링.</p>
+        <Block id="components" eyebrow="Components" title="컴포넌트" lede="사이트 전체가 쓰는 컴포넌트를 그대로 렌더링.">
+          <div className={s.specimens}>
+            <Specimen name="Button" note="hover에서 테두리 강조, 누르면 0.97로 축소(80ms), 포커스는 2px accent outline.">
+              <div className={s.row}>
+                <Button variant="primary">저장</Button>
+                <Button>취소</Button>
+                <Button variant="ghost">더 보기</Button>
+                <Button size="sm">작게</Button>
+                <Button disabled>비활성</Button>
+              </div>
+            </Specimen>
 
-          <div className={s.specimen}>
-            <h3>Button</h3>
-            <div className={s.row}>
-              <Button variant="primary">Primary</Button>
-              <Button>Default</Button>
-              <Button variant="ghost">Ghost</Button>
-              <Button size="sm">Small</Button>
-              <Button disabled>Disabled</Button>
-            </div>
-            <p className={s.specNote}>hover에서 테두리 강조, 누르면 0.97 축소(80ms), 포커스는 2px accent outline.</p>
+            <Specimen name="Tag">
+              <TagList items={["React", "TypeScript", "Konva"]} label="예시 태그" />
+            </Specimen>
+
+            <Specimen name="Metric" note="화살표는 스크린리더에서 숨기고 “에서”로 읽힘. 두 시점의 값만 표시.">
+              <MetricList
+                inline
+                items={[
+                  { label: "폰트 파일", before: "2,009KB", after: "125KB" },
+                  { label: "Lighthouse mobile", before: "74", after: "97" },
+                ]}
+              />
+            </Specimen>
+
+            <Specimen name="Note" note="default는 조건과 출처, scope는 범위 구분, caution은 한계와 주의.">
+              <div className={s.stack}>
+                <Note label="측정 조건">Lighthouse 12, mobile 기본 설정, 로컬 정적 서버.</Note>
+                <Note label="범위" tone="scope">
+                  첫 방문 기준. 다시 방문할 때는 캐시로 더 빠름.
+                </Note>
+                <Note label="주의" tone="caution">
+                  느린 연결에서는 폰트가 늦게 바뀔 수 있음.
+                </Note>
+              </div>
+            </Specimen>
+
+            <Specimen name="DataTable" note="숫자 열은 오른쪽 정렬, 결과 값만 강조.">
+              <DataTable
+                caption="페이지별 Lighthouse mobile"
+                columns={["페이지", "이전", "이후"]}
+                numeric={[1, 2]}
+                rows={[
+                  ["/", "74", { value: "97", result: true }],
+                  ["/system", "75", { value: "96", result: true }],
+                ]}
+              />
+            </Specimen>
+
+            <Specimen name="Compare">
+              <Compare before={["왼쪽 위 좌표 저장", "회전할 때 위치도 보정"]} after={["중심 좌표 저장", "회전은 각도 하나만 변경"]} />
+            </Specimen>
+
+            <Specimen name="Toast" note="조작 결과를 알리고 바로 되돌릴 수 있게. hover, 포커스 중에는 사라지지 않음.">
+              <div className={s.toastSample}>
+                <span>되돌림: 테마 다크 → 라이트</span>
+                <span className={s.toastSampleAction}>다시 실행</span>
+              </div>
+            </Specimen>
+
+            <Specimen name="Command Palette" note="네이티브 dialog, combobox와 listbox 역할, 방향키와 Enter로 조작.">
+              <div className={s.row}>
+                <OpenPaletteButton />
+              </div>
+            </Specimen>
+
+            <Specimen name="Canvas Selection" note="선택 테두리, 회전 핸들(넓은 터치 영역), 보드 위 아이콘 버튼.">
+              <svg viewBox="0 0 320 150" className={s.canvasSample} aria-hidden="true">
+                <rect width="320" height="150" className={s.canvasBg} />
+                <g transform="translate(130 85)">
+                  <rect x="-40" y="-20" width="80" height="40" rx="8" className={s.canvasShape} />
+                  <rect x="-44" y="-24" width="88" height="48" rx="10" className={s.canvasSelection} />
+                  <line x1="0" y1="-24" x2="0" y2="-42" className={s.canvasSelection} />
+                  <circle cx="0" cy="-48" r="5" className={s.canvasHandle} />
+                </g>
+                <g transform="translate(252 108)">
+                  <rect width="56" height="32" rx="8" className={s.canvasControl} />
+                  <path d="M17 20 13 16l4-4M13 16h8a4 4 0 0 1 0 8h-2" className={s.canvasIcon} />
+                  <path d="M39 20l4-4-4-4M43 16h-8a4 4 0 0 0 0 8h2" className={s.canvasIcon} />
+                </g>
+              </svg>
+            </Specimen>
           </div>
+        </Block>
 
-          <div className={s.specimen}>
-            <h3>Metric</h3>
-            <MetricList
-              inline
-              items={[
-                { label: "클릭당 render 호출", before: "2,340회", after: "1회" },
-                { label: "초기 로드 CLS", before: "0.168", after: "0.003" },
-              ]}
-            />
-            <p className={s.specNote}>화살표는 스크린리더에서 숨기고 “에서”로 읽힘. 확인된 두 시점만 표시하고 배율 표현은 사용하지 않음.</p>
+        <Block id="patterns" eyebrow="Patterns" title="패턴">
+          <div className={s.specimens}>
+            <Specimen name="테마" note="첫 paint 전 인라인 스크립트로 저장된 테마 적용. 전환은 클릭 지점에서 퍼지는 View Transition.">
+              <ThemeSwitcher />
+            </Specimen>
+
+            <Specimen name="Command와 실행 취소" note="상태를 바꾸는 조작은 command로 기록. 선택, 줌, 드래그 중 미리보기는 화면 상태라 기록하지 않음.">
+              <CodeFlow label="command 흐름">{`조작 ─ command(do / undo) ─ history ─ document
+                               │
+                         ⌘Z: undo · ⇧⌘Z: redo`}</CodeFlow>
+            </Specimen>
+
+            <Specimen name="키보드" note="모든 조작은 키보드로도 가능. 입력창에 포커스가 있으면 실행 취소 단축키를 가로채지 않음.">
+              <ShortcutTable />
+            </Specimen>
           </div>
-
-          <div className={s.specimen}>
-            <h3>Note</h3>
-            <div className={s.stack}>
-              <Note label="측정 조건">기본. 측정 환경과 출처.</Note>
-              <Note label="기여 구분" tone="scope">
-                scope. 직접 담당 범위와 다른 사람의 작업 구분.
-              </Note>
-              <Note label="해석 범위" tone="caution">
-                caution. 수치의 한계와 진행 중인 상태.
-              </Note>
-            </div>
-          </div>
-
-          <div className={s.specimen}>
-            <h3>Tag, Compare</h3>
-            <TagList items={["React", "TypeScript", "Konva"]} label="예시 기술" />
-            <Compare before={["UI별로 나뉜 좌표 계산"]} after={["command 계층에서 한 번 계산"]} />
-          </div>
-
-          <div className={s.specimen}>
-            <h3>DataTable</h3>
-            <DataTable
-              caption="숫자 열 오른쪽 정렬, 결과 강조"
-              columns={["지표", "전", "후"]}
-              numeric={[1, 2]}
-              rows={[["CLS", "0.168", { value: "0.003", result: true }]]}
-            />
-          </div>
-        </section>
-
-        <section id="writing" className={s.block} aria-labelledby="writing-title">
-          <h2 id="writing-title">문구</h2>
-          <ul className={s.writing}>
-            <li>문장 끝은 명사형. 예: 구조 설계, API 연결.</li>
-            <li>이름 옆에 직무가 있으므로 소개에서 직무를 다시 선언하지 않음.</li>
-            <li>실제 코드와 화면의 이름 사용. 지어낸 용어와 비유, 의인화 금지.</li>
-            <li>원인, 증상, 변경 내용과 측정 조건을 생략하지 않음. 근거가 충돌하는 수치는 싣지 않음.</li>
-            <li>공개하지 않는 것: 전화번호, 고객사명, 내부 도메인, 이슈와 커밋 번호, 회사 제품 화면.</li>
-          </ul>
-        </section>
+        </Block>
       </div>
     </>
   );

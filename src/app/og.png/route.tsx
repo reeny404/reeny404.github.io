@@ -39,8 +39,8 @@ export async function GET() {
           <span style={{ color: "#006D75", fontSize: 26 }}>Frontend Engineer</span>
         </div>
         <div style={{ display: "flex", flexDirection: "column", fontSize: 76, fontWeight: 700, lineHeight: 1.15, letterSpacing: -2 }}>
-          <span>빨리 만들고,</span>
-          <span>오래 버티게 만듭니다</span>
+          <span>눈앞의 버그보다,</span>
+          <span>반복되는 이유를 봅니다</span>
         </div>
         <div style={{ display: "flex", gap: 40, fontSize: 28, fontWeight: 600, color: "#465B6B" }}>
           <span>render 2,340 → 1</span>

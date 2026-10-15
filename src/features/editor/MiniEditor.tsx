@@ -1,7 +1,8 @@
 "use client";
 
-import { memo, useRef, useState, type ReactNode } from "react";
+import { memo, useEffect, useRef, useState, type ReactNode } from "react";
 import { history, useHistory } from "@/features/command/history";
+import { useShortcutLabels } from "@/features/command/shortcuts";
 import {
   BOARD,
   GRID,
@@ -251,12 +252,15 @@ function StatusBar() {
 function IconButton({
   label,
   shortcut,
+  hint,
   disabled,
   onClick,
   children,
 }: {
   label: string;
   shortcut?: string;
+  /** 툴팁에 함께 보일 단축키 표기 */
+  hint?: string;
   disabled?: boolean;
   onClick(): void;
   children: ReactNode;
@@ -267,7 +271,7 @@ function IconButton({
       className={s.iconButton}
       aria-label={label}
       aria-keyshortcuts={shortcut}
-      title={label}
+      title={hint ? `${label} (${hint})` : label}
       disabled={disabled}
       onClick={onClick}
     >
@@ -281,13 +285,14 @@ function IconButton({
 function HistoryControls() {
   const canUndo = useHistory((h) => h.past.length > 0);
   const canRedo = useHistory((h) => h.future.length > 0);
+  const keys = useShortcutLabels();
   return (
     <div className={s.historyControls}>
-      <IconButton label="실행 취소" shortcut="Meta+Z Control+Z" disabled={!canUndo} onClick={() => history.undo()}>
+      <IconButton label="실행 취소" shortcut="Meta+Z Control+Z" hint={keys.undo} disabled={!canUndo} onClick={() => history.undo()}>
         <path d="M9 14 4 9l5-5" />
         <path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11" />
       </IconButton>
-      <IconButton label="다시 실행" shortcut="Meta+Shift+Z Control+Y" disabled={!canRedo} onClick={() => history.redo()}>
+      <IconButton label="다시 실행" shortcut="Meta+Shift+Z Control+Y" hint={keys.redo} disabled={!canRedo} onClick={() => history.redo()}>
         <path d="m15 14 5-5-5-5" />
         <path d="M20 9H9.5a5.5 5.5 0 0 0 0 11H13" />
       </IconButton>
@@ -307,12 +312,62 @@ function ResetButton() {
   );
 }
 
+const ZOOM = { min: 0.8, max: 1.6 } as const;
+type Viewport = { x: number; y: number; zoom: number };
+
+/** 축 하나의 보이는 범위. 보드보다 작으면 보드 안에 머물고, 보드보다 크면 가운데 정렬 */
+function clampAxis(start: number, visible: number, total: number) {
+  if (visible >= total) return (total - visible) / 2;
+  return Math.min(Math.max(0, start), total - visible);
+}
+
+/**
+ * 휠로 커서 위치를 기준으로 확대, 축소. 화면 전용 상태라 command로 기록하지 않음.
+ * 최소, 최대에 닿은 뒤에는 기본 동작을 막지 않아 페이지 스크롤이 이어짐.
+ */
+function useWheelZoom() {
+  const svgRef = useRef<SVGSVGElement>(null);
+  const [viewport, setViewport] = useState<Viewport>({ x: 0, y: 0, zoom: 1 });
+  const zoomRef = useRef(viewport.zoom);
+
+  useEffect(() => {
+    const svg = svgRef.current;
+    if (!svg) return;
+    const onWheel = (ev: WheelEvent) => {
+      const current = zoomRef.current;
+      const next = Math.min(ZOOM.max, Math.max(ZOOM.min, current * Math.exp(-ev.deltaY * 0.0015)));
+      if (next === current) return;
+      ev.preventDefault();
+      const p = toBoardPoint(svg, ev.clientX, ev.clientY);
+      zoomRef.current = next;
+      setViewport((v) => {
+        const prevW = BOARD.w / v.zoom;
+        const prevH = BOARD.h / v.zoom;
+        const w = BOARD.w / next;
+        const h = BOARD.h / next;
+        return {
+          zoom: next,
+          x: clampAxis(p.x - ((p.x - v.x) / prevW) * w, w, BOARD.w),
+          y: clampAxis(p.y - ((p.y - v.y) / prevH) * h, h, BOARD.h),
+        };
+      });
+    };
+    svg.addEventListener("wheel", onWheel, { passive: false });
+    return () => svg.removeEventListener("wheel", onWheel);
+  }, []);
+
+  const viewBox = `${viewport.x} ${viewport.y} ${BOARD.w / viewport.zoom} ${BOARD.h / viewport.zoom}`;
+  return { svgRef, viewBox };
+}
+
 export function MiniEditor() {
+  const { svgRef, viewBox } = useWheelZoom();
   return (
     <figure className={s.editor}>
       <div className={s.board}>
         <svg
-          viewBox={`0 0 ${BOARD.w} ${BOARD.h}`}
+          ref={svgRef}
+          viewBox={viewBox}
           className={s.svg}
           role="group"
           aria-label="장비 배치 에디터. 장비를 드래그하거나 선택 후 방향키로 이동, R로 회전"
@@ -323,7 +378,9 @@ export function MiniEditor() {
               <circle cx={1} cy={1} r={1} className={s.dot} />
             </pattern>
           </defs>
-          <rect width={BOARD.w} height={BOARD.h} fill="url(#grid-dot)" pointerEvents="none" />
+          {/* 축소하면 보드 바깥도 보이므로 격자는 넓게, 보드 경계는 옅은 선으로 */}
+          <rect x={-BOARD.w} y={-BOARD.h} width={BOARD.w * 3} height={BOARD.h * 3} fill="url(#grid-dot)" pointerEvents="none" />
+          <rect width={BOARD.w} height={BOARD.h} className={s.boardEdge} pointerEvents="none" />
           {PIPES.map(([a, b]) => (
             <Pipe key={`${a}-${b}`} from={a} to={b} />
           ))}

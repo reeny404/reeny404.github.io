@@ -6,6 +6,7 @@ import { site } from "@/content/profile";
 import { setTheme } from "@/features/theme/theme";
 import { history, useHistory } from "./history";
 import { isTypingTarget, palette, usePaletteOpen } from "./palette-store";
+import { useShortcutLabels } from "./shortcuts";
 import s from "./command.module.css";
 
 type Action = {
@@ -22,6 +23,7 @@ function useActions(): Action[] {
   const router = useRouter();
   const canUndo = useHistory((h) => h.past.length > 0);
   const canRedo = useHistory((h) => h.future.length > 0);
+  const keys = useShortcutLabels();
 
   return useMemo<Action[]>(
     () => [
@@ -33,14 +35,14 @@ function useActions(): Action[] {
       { id: "light", group: "테마", label: "라이트 모드", keywords: "theme light 밝게", run: () => setTheme("light") },
       { id: "dark", group: "테마", label: "다크 모드", keywords: "theme dark 어둡게", run: () => setTheme("dark") },
       { id: "system-theme", group: "테마", label: "시스템 설정 따르기", keywords: "theme system auto 자동", run: () => setTheme("system") },
-      { id: "undo", group: "편집", label: "실행 취소", keywords: "undo 되돌리기", hint: "⌘Z", disabled: !canUndo, run: () => history.undo() },
-      { id: "redo", group: "편집", label: "다시 실행", keywords: "redo", hint: "⇧⌘Z", disabled: !canRedo, run: () => history.redo() },
+      { id: "undo", group: "편집", label: "실행 취소", keywords: "undo 되돌리기", hint: keys.undo, disabled: !canUndo, run: () => history.undo() },
+      { id: "redo", group: "편집", label: "다시 실행", keywords: "redo", hint: keys.redo, disabled: !canRedo, run: () => history.redo() },
       { id: "github", group: "외부 링크", label: "GitHub", keywords: "github code 코드", run: () => window.open(site.github, "_blank", "noopener") },
       { id: "repo", group: "외부 링크", label: "이 사이트의 소스 코드", keywords: "source repo 저장소", run: () => window.open(site.repo, "_blank", "noopener") },
       { id: "blog", group: "외부 링크", label: "블로그", keywords: "blog tistory 티스토리", run: () => window.open(site.blog, "_blank", "noopener") },
       { id: "mail", group: "외부 링크", label: "메일 보내기", keywords: "email contact 연락 연락처 커피챗 채용", run: () => (window.location.href = `mailto:${site.email}`) },
     ],
-    [router, canUndo, canRedo],
+    [router, canUndo, canRedo, keys],
   );
 }
 

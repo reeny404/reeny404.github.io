@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useSyncExternalStore } from "react";
 import { Button } from "@/components/ui";
 import { palette } from "@/features/command/palette-store";
+import { useShortcutLabels } from "@/features/command/shortcuts";
 import { resolvedTheme, setTheme, useThemeChoice } from "@/features/theme/theme";
 import s from "./site.module.css";
 
@@ -37,21 +38,13 @@ export function SiteNav() {
 
 const subscribeNoop = () => () => {};
 
-function useIsMac() {
-  return useSyncExternalStore(
-    subscribeNoop,
-    () => /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent),
-    () => true,
-  );
-}
-
 export function PaletteButton() {
-  const mac = useIsMac();
+  const keys = useShortcutLabels();
   return (
     <Button variant="ghost" size="sm" onClick={() => palette.open()} aria-keyshortcuts="Meta+K Control+K">
       <span className={s.paletteLabel}>명령</span>
       <span className="visually-hidden">팔레트 열기</span>
-      <kbd>{mac ? "⌘K" : "Ctrl K"}</kbd>
+      <kbd>{keys.palette}</kbd>
     </Button>
   );
 }

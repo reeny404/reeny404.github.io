@@ -292,10 +292,59 @@
   left: calc(100% - 1.25rem);
 }
 
-/* ---------- Components ---------- */
-.specimen {
+/* ---------- Block ---------- */
+.blockHead {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.inlineControl {
+  display: flex;
+}
+
+.segmented {
+  display: inline-flex;
+  padding: 3px;
+  border-radius: var(--radius-md);
+  background: var(--color-bg-sunken);
+}
+
+.segmented button {
+  min-height: 2rem;
+  padding: 0 var(--space-4);
+  border: 0;
+  border-radius: calc(var(--radius-md) - 2px);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out);
+}
+
+.segmented button[aria-checked="true"] {
+  background: var(--color-bg-raised);
+  color: var(--color-text);
+  font-weight: var(--weight-semibold);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.12);
+}
+
+/* ---------- Specimens ---------- */
+.specimens {
   display: grid;
   gap: var(--space-4);
+}
+
+@media (min-width: 1024px) {
+  .specimens {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.specimen {
+  display: grid;
+  align-content: start;
+  gap: var(--space-4);
+  min-width: 0;
   padding: var(--space-5);
   border: 1px solid var(--color-line);
   border-radius: var(--radius-lg);
@@ -307,9 +356,16 @@
   color: var(--color-text-muted);
 }
 
+.specimenBody {
+  display: grid;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
 .row {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: var(--space-3);
 }
 
@@ -320,9 +376,88 @@
 
 .specNote {
   font-size: var(--text-xs);
+  line-height: var(--leading-snug);
   color: var(--color-text-muted);
 }
 
-.writing {
-  max-width: var(--width-prose);
+.toastSample {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: fit-content;
+  max-width: 100%;
+  padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4);
+  border-radius: var(--radius-pill);
+  background: var(--color-text);
+  color: var(--color-bg);
+  font-size: var(--text-sm);
+}
+
+.toastSampleAction {
+  padding: 0.25rem var(--space-3);
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--color-bg) 16%, transparent);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+}
+
+.canvasSample {
+  width: 100%;
+  max-width: 22rem;
+  height: auto;
+  border-radius: var(--radius-md);
+}
+
+.canvasBg {
+  fill: var(--color-bg-sunken);
+}
+
+.canvasShape {
+  fill: var(--color-accent-soft);
+  stroke: var(--color-accent);
+  stroke-width: 1.5;
+}
+
+.canvasSelection {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 1.5;
+}
+
+.canvasHandle {
+  fill: var(--color-bg-raised);
+  stroke: var(--color-accent);
+  stroke-width: 2;
+}
+
+.canvasControl {
+  fill: var(--color-bg-raised);
+  stroke: var(--color-line);
+}
+
+.canvasIcon {
+  fill: none;
+  stroke: var(--color-text);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.keys {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+
+.keys th,
+.keys td {
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--color-line);
+  text-align: left;
+  font-weight: var(--weight-regular);
+}
+
+.keys th {
+  width: 7rem;
+  white-space: nowrap;
 }

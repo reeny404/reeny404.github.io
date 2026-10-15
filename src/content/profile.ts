@@ -5,7 +5,7 @@ export const site = {
   title: "이효현 | Frontend Engineer",
   description:
     "2D 공정설계 에디터의 편집 데이터와 Canvas 표현 분리, 좌표 계산과 저장 경로 설계. 웹 디자인 도구의 저장 실패와 초기 로딩, 결제 데이터 유실 개선.",
-  headline: "빨리 만들고, 오래 버티게 만듭니다",
+  headline: "눈앞의 버그보다, 반복되는 이유를 봅니다",
   email: "happy2hyeon@kakao.com",
   github: "https://github.com/reeny404",
   blog: "https://reeny404.tistory.com",
@@ -56,11 +56,11 @@ export const experience = [
 ] as const;
 
 export const skills = [
-  { group: "프레임워크와 언어", items: ["React", "TypeScript", "JavaScript"] },
-  { group: "그래픽스", items: ["Konva", "D3/SVG", "Canvas API"] },
-  { group: "상태 관리", items: ["Zustand", "TanStack Query"] },
-  { group: "실시간 통신", items: ["WebSocket", "STOMP/SockJS"] },
-  { group: "빌드와 테스트", items: ["Vite", "Webpack", "MSW", "Playwright"] },
+  { group: "Languages & Frameworks", items: ["React", "TypeScript", "JavaScript"] },
+  { group: "Graphics", items: ["Konva", "D3/SVG", "Canvas API"] },
+  { group: "State Management", items: ["Zustand", "TanStack Query"] },
+  { group: "Realtime", items: ["WebSocket", "STOMP/SockJS"] },
+  { group: "Build & Test", items: ["Vite", "Webpack", "MSW", "Playwright"] },
 ] as const;
 
 export const education = [
