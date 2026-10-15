@@ -1,0 +1,115 @@
+.demo {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-raised);
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.segmented {
+  display: inline-flex;
+  flex-wrap: wrap;
+  padding: 3px;
+  border-radius: var(--radius-md);
+  background: var(--color-bg-sunken);
+}
+
+.segmented button {
+  min-height: 2.25rem;
+  padding: 0 var(--space-3);
+  border: 0;
+  border-radius: calc(var(--radius-md) - 2px);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out);
+}
+
+.segmented button[aria-checked="true"] {
+  background: var(--color-bg-raised);
+  color: var(--color-text);
+  font-weight: var(--weight-semibold);
+  box-shadow: 0 1px 2px rgb(11 26 40 / 0.12);
+}
+
+.hint {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), 1fr);
+  gap: 4px;
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-sunken);
+}
+
+/* 좁은 화면에서도 노드가 24px 이상의 터치 영역을 갖도록 열 수를 줄임 */
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(12, 1fr);
+    padding: var(--space-2);
+  }
+}
+
+.node {
+  aspect-ratio: 1;
+  min-width: 0;
+  padding: 0;
+  border: 1px solid var(--color-line);
+  border-radius: 3px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.node:hover {
+  border-color: var(--color-text-muted);
+}
+
+.node[aria-pressed="true"] {
+  border-color: var(--color-accent);
+  box-shadow: inset 0 0 0 2px var(--color-accent);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.stats dt {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.stats dd {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+}
+
+.stats dd[data-mode="array"] {
+  color: var(--color-flash);
+}
+
+.stats dd[data-mode="boolean"] {
+  color: var(--color-accent);
+}
+
+.caption {
+  font-size: var(--text-xs);
+  line-height: var(--leading-snug);
+  color: var(--color-text-muted);
+}

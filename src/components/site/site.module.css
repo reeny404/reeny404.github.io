@@ -1,0 +1,162 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-line) 70%, transparent);
+  background: color-mix(in srgb, var(--color-bg) 85%, transparent);
+  backdrop-filter: saturate(1.4) blur(10px);
+  -webkit-backdrop-filter: saturate(1.4) blur(10px);
+}
+
+.headerInner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  min-height: var(--header-height);
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: var(--weight-bold);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.logo:hover {
+  color: inherit;
+}
+
+/* 선택된 장비처럼 보이는 작은 표시. hover하면 90도 회전 */
+.logoMark {
+  width: 0.875rem;
+  height: 0.875rem;
+  border: 2px solid var(--color-accent);
+  border-radius: 2px;
+  background: var(--color-accent-soft);
+  transition: transform var(--duration-base) var(--ease-spring);
+}
+
+.logo:hover .logoMark {
+  transform: rotate(90deg);
+}
+
+.nav {
+  margin-left: auto;
+}
+
+.nav ul {
+  display: flex;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-sm);
+}
+
+.nav li {
+  margin: 0;
+}
+
+.nav a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.25rem;
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-md);
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-out), background-color var(--duration-fast) var(--ease-out);
+}
+
+.nav a:hover {
+  color: var(--color-text);
+  background: var(--color-bg-sunken);
+}
+
+.nav a[aria-current="page"] {
+  color: var(--color-text);
+}
+
+.nav a[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  left: var(--space-3);
+  right: var(--space-3);
+  bottom: 2px;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--color-accent);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.paletteLabel {
+  color: var(--color-text-muted);
+}
+
+/* 좁은 화면: 메뉴는 아래 줄에서 가로 스크롤 */
+@media (max-width: 767px) {
+  .headerInner {
+    flex-wrap: wrap;
+    row-gap: 0;
+  }
+
+  .controls {
+    margin-left: auto;
+  }
+
+  .paletteLabel {
+    display: none;
+  }
+
+  .nav {
+    order: 3;
+    width: calc(100% + var(--gutter) * 2);
+    margin: 0 calc(var(--gutter) * -1);
+    padding: 0 var(--gutter) var(--space-1);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .nav a {
+    padding: 0 var(--space-2);
+  }
+
+  .nav a[aria-current="page"]::after {
+    left: var(--space-2);
+    right: var(--space-2);
+  }
+}
+
+.footer {
+  padding-block: var(--space-7);
+  border-top: 1px solid var(--color-line);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.footerInner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.footerInner ul {
+  display: flex;
+  gap: var(--space-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footerInner li {
+  margin: 0;
+}

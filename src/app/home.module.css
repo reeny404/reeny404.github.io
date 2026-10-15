@@ -1,0 +1,371 @@
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  padding-block: var(--space-8);
+  border-bottom: 1px solid var(--color-line);
+  overflow: hidden;
+}
+
+/* 설계 도면처럼 옅은 격자. 가장자리로 갈수록 사라짐 */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 1px 1px, var(--color-line) 1px, transparent 0) 0 0 / 24px 24px;
+  mask-image: radial-gradient(ellipse 70% 80% at 70% 40%, #000 20%, transparent 75%);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.heroGrid {
+  position: relative;
+  display: grid;
+  gap: var(--space-7);
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .heroGrid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: var(--space-8);
+  }
+}
+
+.heroText {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.heroText h1 {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-3);
+  font-size: var(--text-lg);
+  letter-spacing: normal;
+}
+
+.role {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-label);
+  color: var(--color-accent);
+}
+
+.headline {
+  font-size: var(--text-2xl);
+  line-height: 1.12;
+}
+
+.lede {
+  max-width: 34rem;
+  font-size: var(--text-lg);
+  line-height: var(--leading-snug);
+  color: var(--color-text-muted);
+}
+
+.cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.tip {
+  max-width: 34rem;
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+/* 첫 화면 진입. LCP를 늦추지 않도록 opacity를 0까지 내리지 않고 짧게 */
+@media (prefers-reduced-motion: no-preference) {
+  .heroText > *,
+  .heroGrid > figure {
+    animation: rise var(--duration-slow) var(--ease-out) both;
+  }
+
+  .heroText > :nth-child(2) { animation-delay: 40ms; }
+  .heroText > :nth-child(3) { animation-delay: 80ms; }
+  .heroText > :nth-child(4) { animation-delay: 120ms; }
+  .heroGrid > figure { animation-delay: 100ms; }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0.2;
+    transform: translateY(10px);
+  }
+}
+
+/* ---------- Section ---------- */
+.section {
+  padding-block: var(--space-9);
+}
+
+.section + .section {
+  border-top: 1px solid var(--color-line);
+}
+
+@media (max-width: 767px) {
+  .section {
+    padding-block: var(--space-8);
+  }
+}
+
+.sectionHead {
+  display: grid;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+}
+
+.sectionHead p {
+  max-width: var(--width-prose);
+  color: var(--color-text-muted);
+}
+
+/* ---------- Work ---------- */
+.workList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--color-line);
+}
+
+.workList > li {
+  margin: 0;
+}
+
+.workRow {
+  position: relative;
+  display: grid;
+  gap: var(--space-4);
+  padding-block: var(--space-6);
+  border-bottom: 1px solid var(--color-line);
+}
+
+@media (min-width: 1024px) {
+  .workRow {
+    grid-template-columns: 3rem minmax(0, 1.3fr) minmax(0, 1fr);
+    gap: var(--space-6);
+  }
+}
+
+.workIndex {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--color-accent);
+}
+
+.workBody {
+  display: grid;
+  gap: var(--space-2);
+  align-content: start;
+}
+
+.workLink {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  width: fit-content;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  text-decoration: none;
+}
+
+/* 행 전체를 누를 수 있게 링크 영역 확장 */
+.workLink::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.workTitle {
+  display: inline-block;
+}
+
+.workArrow {
+  transition: transform var(--duration-base) var(--ease-spring);
+}
+
+.workRow:hover .workArrow,
+.workLink:focus-visible .workArrow {
+  transform: translateX(4px);
+}
+
+.workRow:hover h3 {
+  color: var(--color-accent);
+}
+
+.workRow h3 {
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.workContext {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.workSummary {
+  margin-top: var(--space-1);
+  color: var(--color-text-muted);
+}
+
+.workSide {
+  display: grid;
+  align-content: start;
+  gap: var(--space-4);
+}
+
+/* ---------- This site ---------- */
+.siteFacts {
+  display: grid;
+  gap: var(--space-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 768px) {
+  .siteFacts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1280px) {
+  .siteFacts {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.siteFacts li {
+  display: grid;
+  align-content: start;
+  gap: var(--space-2);
+  margin: 0;
+  padding-top: var(--space-4);
+  border-top: 2px solid var(--color-text);
+}
+
+.siteFacts h3 {
+  font-size: var(--text-md);
+}
+
+.siteFacts p {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+/* ---------- Timeline ---------- */
+.timeline {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--color-line);
+}
+
+.timeline > li {
+  margin: 0;
+}
+
+.timelineItem {
+  display: grid;
+  gap: var(--space-3);
+  padding-block: var(--space-6);
+  border-bottom: 1px solid var(--color-line);
+}
+
+@media (min-width: 1024px) {
+  .timelineItem {
+    grid-template-columns: 15rem minmax(0, 1fr);
+    gap: var(--space-6);
+  }
+}
+
+.period {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.period span {
+  display: block;
+}
+
+.timelineBody {
+  display: grid;
+  gap: var(--space-3);
+  max-width: 52rem;
+}
+
+.timelineBody ul {
+  font-size: var(--text-sm);
+}
+
+.roleLine {
+  margin-top: var(--space-1);
+  color: var(--color-text-muted);
+}
+
+/* ---------- Split sections ---------- */
+.split {
+  display: grid;
+  gap: var(--space-8);
+}
+
+@media (min-width: 1024px) {
+  .split {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.defList {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.defList dt {
+  margin-bottom: var(--space-2);
+  font-weight: var(--weight-semibold);
+}
+
+.projects {
+  display: grid;
+  gap: var(--space-6);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.projects li {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0;
+}
+
+.projectLink {
+  width: fit-content;
+  font-weight: var(--weight-semibold);
+}
+
+.contact {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-lg);
+}
+
+.contact li {
+  margin: 0;
+}
+
+.contact span {
+  display: inline-block;
+  min-width: 4.5rem;
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}

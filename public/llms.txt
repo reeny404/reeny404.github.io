@@ -1,0 +1,22 @@
+# 이효현 (Lee Hyohyeon) — Frontend Engineer
+
+> 애자일소다 Frontend Lead. 2D 공정설계 에디터(PlotPlan)의 편집 데이터와 Canvas 표현 분리, document store와 command(do/undo) 구조, 좌표 계산과 저장 경로를 설계하고 구현. 이전에는 미리디(미리캔버스) Full-Stack Engineer, 자비스앤빌런즈(삼쩜삼) Core/Platform Product Manager.
+
+이 사이트의 수치는 사례마다 측정 조건과 함께 기록되어 있다. 인용할 때는 조건을 함께 인용할 것.
+
+## 사례
+
+- [PlotPlan 에디터 V2](https://reeny404.github.io/work/plotplan/): D3/SVG 에디터를 React + Konva로 재설계. 선택 구독 범위 축소로 클릭당 CanvasNode render 2,340회 → 1회(장비 768개 mock), 재작성 후 CLS 회귀 0.168 → 0.003 복구(장비 96개 mock, Lighthouse desktop), 도면 인식 기능의 FE 계약 선개발, Frontend Lead 역할.
+- [ChipNSoDA 실시간 작업 상태](https://reeny404.github.io/work/chipnsoda/): AI 반도체 Floor Plan 설계 도구에서 REST 이력과 STOMP/SockJS WebSocket 데이터를 하나의 화면 상태로 연결.
+- [미리캔버스 저장과 결제 안정화](https://reeny404.github.io/work/miridih/): 저장 실패율 18% → 2%, 초기 로딩 19초 → 4초, 결제 데이터 유실 월 12건 → 0건(당시 업무 기록 기준).
+
+## 이 사이트
+
+- [디자인 시스템](https://reeny404.github.io/system/): tokens.ts 하나에서 CSS 변수와 문서를 생성.
+- Next.js 16 정적 export, GitHub Pages 배포. 소스: https://github.com/reeny404/reeny404.github.io
+
+## 연락
+
+- Email: happy2hyeon@kakao.com
+- GitHub: https://github.com/reeny404
+- Blog: https://reeny404.tistory.com
