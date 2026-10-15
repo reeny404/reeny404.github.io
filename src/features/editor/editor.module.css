@@ -32,13 +32,6 @@
   stroke-dasharray: 4 4;
 }
 
-.pipe {
-  fill: none;
-  stroke: var(--color-text-muted);
-  stroke-width: 2;
-  stroke-dasharray: 6 4;
-  opacity: 0.55;
-}
 
 .item {
   cursor: grab;
@@ -65,20 +58,30 @@
 }
 
 .body {
-  fill: var(--color-bg-raised);
-  stroke: var(--color-text);
-  stroke-width: 1.5;
-  transition: fill var(--duration-fast) var(--ease-out);
+  stroke: none;
 }
 
-.detail {
-  fill: none;
-  stroke: var(--color-text-muted);
-  stroke-width: 1.5;
+.fillAccent { fill: var(--color-accent); }
+.fillCoral { fill: var(--color-point-coral); }
+.fillYellow { fill: var(--color-point-yellow); }
+.fillMint { fill: var(--color-point-mint); }
+.fillInk { fill: var(--color-text); }
+
+/* path 꼭짓점을 둥글게: 같은 색 stroke를 두껍게 얹음 */
+.rounded {
+  stroke-width: 8;
+  stroke-linejoin: round;
 }
 
-.item:hover .body {
-  fill: var(--color-accent-soft);
+.fillYellow.rounded { stroke: var(--color-point-yellow); }
+.fillInk.rounded { stroke: var(--color-text); }
+
+.shapeText {
+  fill: #fff;
+  font-size: 22px;
+  font-weight: var(--weight-bold);
+  letter-spacing: -0.01em;
+  pointer-events: none;
 }
 
 .selection {
@@ -90,14 +93,13 @@
   pointer-events: none;
 }
 
+.item:hover .selection {
+  opacity: 0.6;
+}
+
 .item[data-selected="true"] .selection,
 .item:focus-visible .selection {
   opacity: 1;
-}
-
-.item[data-selected="true"] .body {
-  fill: var(--color-accent-soft);
-  stroke: var(--color-accent);
 }
 
 /* ---------- 회전 핸들 ---------- */
@@ -128,18 +130,6 @@
 .handle:hover .handleDot,
 .item[data-rotating="true"] .handleDot {
   fill: var(--color-accent);
-}
-
-.label {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  fill: var(--color-text-muted);
-  pointer-events: none;
-}
-
-.item[data-selected="true"] .label {
-  fill: var(--color-accent);
-  font-weight: var(--weight-semibold);
 }
 
 /* ---------- 보드 위 컨트롤 ---------- */

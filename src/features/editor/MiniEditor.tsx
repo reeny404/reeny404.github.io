@@ -6,24 +6,22 @@ import { useShortcutLabels } from "@/features/command/shortcuts";
 import {
   BOARD,
   GRID,
-  PIPES,
-  bounds,
   clampCenter,
   editor,
   ids,
   normalizeAngle,
   snap,
-  useEquipment,
   useIsPristine,
   useIsSelected,
   usePreview,
-  type Equipment,
+  useShape,
+  type Shape,
 } from "./store";
 import s from "./editor.module.css";
 
 /** document 값에 드래그, 회전 미리보기를 더한 화면상의 배치 */
 function usePlacement(id: string) {
-  const e = useEquipment(id);
+  const e = useShape(id);
   const preview = usePreview(id);
   return {
     e,
@@ -56,24 +54,33 @@ function toBoardPoint(svg: SVGSVGElement, clientX: number, clientY: number) {
   return { x: p.x, y: p.y };
 }
 
-function Glyph({ e }: { e: Equipment }) {
+function starPath(w: number, h: number) {
+  const points = Array.from({ length: 10 }, (_, i) => {
+    const r = i % 2 === 0 ? 1 : 0.45;
+    const a = (Math.PI / 5) * i - Math.PI / 2;
+    return `${(w / 2 + (w / 2) * r * Math.cos(a)).toFixed(1)} ${(h / 2 + (h / 2) * r * Math.sin(a) + h * 0.04).toFixed(1)}`;
+  });
+  return `M${points.join(" L")} Z`;
+}
+
+/** 원점이 왼쪽 위인 w × h 영역에 도형을 그림 */
+function Glyph({ e }: { e: Shape }) {
   switch (e.kind) {
-    case "tank":
-      return <rect width={e.w} height={e.h} rx={e.w / 2} className={s.body} />;
-    case "vessel":
-      return <rect width={e.w} height={e.h} rx={e.w / 2.4} className={s.body} />;
-    case "pump":
+    case "rect":
+      return <rect width={e.w} height={e.h} rx={14} className={`${s.body} ${s.fillAccent}`} />;
+    case "ellipse":
+      return <ellipse cx={e.w / 2} cy={e.h / 2} rx={e.w / 2} ry={e.h / 2} className={`${s.body} ${s.fillCoral}`} />;
+    case "star":
+      return <path d={starPath(e.w, e.h)} className={`${s.body} ${s.fillYellow} ${s.rounded}`} />;
+    case "triangle":
+      return <path d={`M${e.w / 2} 4 L${e.w - 4} ${e.h - 4} L4 ${e.h - 4} Z`} className={`${s.body} ${s.fillInk} ${s.rounded}`} />;
+    case "text":
       return (
         <>
-          <rect width={e.w} height={e.h} rx={6} className={s.body} />
-          <circle cx={e.h / 2} cy={e.h / 2} r={e.h / 2 - 8} className={s.detail} />
-        </>
-      );
-    case "exchanger":
-      return (
-        <>
-          <rect width={e.w} height={e.h} rx={e.h / 2} className={s.body} />
-          <path d={`M14 ${e.h / 2} l8 -8 l8 16 l8 -16 l8 16 l8 -16 l8 16 l8 -8`} className={s.detail} />
+          <rect width={e.w} height={e.h} rx={e.h / 2} className={`${s.body} ${s.fillMint}`} />
+          <text x={e.w / 2} y={e.h / 2} className={s.shapeText} textAnchor="middle" dominantBaseline="central">
+            Hello
+          </text>
         </>
       );
   }
@@ -169,8 +176,6 @@ const Item = memo(function Item({ id }: { id: string }) {
     }
   };
 
-  const labelY = bounds({ ...e, rotation }).h / 2 + 16;
-
   return (
     <g
       className={s.item}
@@ -181,7 +186,7 @@ const Item = memo(function Item({ id }: { id: string }) {
       role="button"
       tabIndex={0}
       aria-pressed={selected}
-      aria-label={`${e.id} ${e.name}, 위치 ${Math.round(e.cx)} ${Math.round(e.cy)}, ${e.rotation}도`}
+      aria-label={`${e.name}, 위치 ${Math.round(e.cx)} ${Math.round(e.cy)}, ${e.rotation}도`}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
@@ -192,7 +197,7 @@ const Item = memo(function Item({ id }: { id: string }) {
       onFocus={() => editor.select(id)}
       onKeyDown={onKeyDown}
     >
-      {/* 원점이 장비 중심이므로 rotate 하나로 중심 기준 회전 */}
+      {/* 원점이 도형 중심이므로 rotate 하나로 중심 기준 회전 */}
       <g className={s.shape} style={{ transform: `rotate(${angle}deg)` }}>
         <g transform={`translate(${-e.w / 2} ${-e.h / 2})`}>
           <Glyph e={e} />
@@ -216,18 +221,8 @@ const Item = memo(function Item({ id }: { id: string }) {
           </g>
         )}
       </g>
-      <text className={s.label} x={0} y={labelY} textAnchor="middle">
-        {e.id}
-      </text>
     </g>
   );
-});
-
-const Pipe = memo(function Pipe({ from, to }: { from: string; to: string }) {
-  const a = usePlacement(from);
-  const b = usePlacement(to);
-  const mid = (a.cx + b.cx) / 2;
-  return <path className={s.pipe} d={`M${a.cx} ${a.cy} H${mid} V${b.cy} H${b.cx}`} />;
 });
 
 /** 조작한 뒤에만 마지막 command 표시 */
@@ -370,7 +365,7 @@ export function MiniEditor() {
           viewBox={viewBox}
           className={s.svg}
           role="group"
-          aria-label="장비 배치 에디터. 장비를 드래그하거나 선택 후 방향키로 이동, R로 회전"
+          aria-label="도형 편집 캔버스. 도형을 드래그하거나 선택 후 방향키로 이동, R로 회전"
           onPointerDown={(ev) => ev.target === ev.currentTarget && editor.select(null)}
         >
           <defs>
@@ -381,9 +376,6 @@ export function MiniEditor() {
           {/* 축소하면 보드 바깥도 보이므로 격자는 넓게, 보드 경계는 옅은 선으로 */}
           <rect x={-BOARD.w} y={-BOARD.h} width={BOARD.w * 3} height={BOARD.h * 3} fill="url(#grid-dot)" pointerEvents="none" />
           <rect width={BOARD.w} height={BOARD.h} className={s.boardEdge} pointerEvents="none" />
-          {PIPES.map(([a, b]) => (
-            <Pipe key={`${a}-${b}`} from={a} to={b} />
-          ))}
           {ids.map((id) => (
             <Item key={id} id={id} />
           ))}

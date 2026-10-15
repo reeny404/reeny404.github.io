@@ -4,15 +4,16 @@ import { useSyncExternalStore } from "react";
 import { history } from "@/features/command/history";
 
 /**
- * 첫 화면 미니 에디터의 상태.
+ * 첫 화면 미니 에디터(도형 편집)의 상태.
  * - document: 저장 대상인 편집 데이터. command를 통해서만 바뀐다.
  * - view: 선택, 드래그와 회전 중 미리보기처럼 저장하지 않는 화면 상태.
  * 위치는 중심 좌표로 저장해 회전이 각도 하나만 바꾸도록 한다.
  */
 
-export type Equipment = {
+export type Shape = {
   id: string;
-  kind: "tank" | "pump" | "exchanger" | "vessel";
+  kind: "rect" | "ellipse" | "star" | "triangle" | "text";
+  /** 레이어 이름. command 기록과 접근성 이름에 사용 */
   name: string;
   cx: number;
   cy: number;
@@ -25,22 +26,15 @@ export type Equipment = {
 export const GRID = 20;
 export const BOARD = { w: 520, h: 340 } as const;
 
-const initial: Equipment[] = [
-  { id: "T-101", kind: "tank", name: "원료 탱크", cx: 80, cy: 100, w: 80, h: 80, rotation: 0 },
-  { id: "P-101", kind: "pump", name: "이송 펌프", cx: 210, cy: 100, w: 60, h: 40, rotation: 0 },
-  { id: "E-201", kind: "exchanger", name: "열교환기", cx: 350, cy: 80, w: 100, h: 40, rotation: 0 },
-  { id: "V-301", kind: "vessel", name: "분리기", cx: 430, cy: 230, w: 60, h: 100, rotation: 0 },
-  { id: "P-102", kind: "pump", name: "순환 펌프", cx: 250, cy: 260, w: 60, h: 40, rotation: 0 },
+const initial: Shape[] = [
+  { id: "rect", kind: "rect", name: "사각형", cx: 120, cy: 120, w: 120, h: 84, rotation: 0 },
+  { id: "ellipse", kind: "ellipse", name: "원", cx: 270, cy: 100, w: 92, h: 92, rotation: 0 },
+  { id: "star", kind: "star", name: "별", cx: 410, cy: 120, w: 104, h: 100, rotation: 0 },
+  { id: "text", kind: "text", name: "텍스트", cx: 200, cy: 250, w: 150, h: 56, rotation: 0 },
+  { id: "triangle", kind: "triangle", name: "삼각형", cx: 360, cy: 240, w: 84, h: 72, rotation: 0 },
 ];
 
-export const PIPES: [string, string][] = [
-  ["T-101", "P-101"],
-  ["P-101", "E-201"],
-  ["E-201", "V-301"],
-  ["V-301", "P-102"],
-];
-
-type Doc = Record<string, Equipment>;
+type Doc = Record<string, Shape>;
 type Preview = { id: string; dx: number; dy: number; rotation?: number };
 type View = { selected: string | null; preview: Preview | null };
 
@@ -52,7 +46,7 @@ const viewListeners = new Set<() => void>();
 const subscribeDoc = (l: () => void) => (docListeners.add(l), () => docListeners.delete(l));
 const subscribeView = (l: () => void) => (viewListeners.add(l), () => viewListeners.delete(l));
 
-function patch(id: string, next: Partial<Equipment>) {
+function patch(id: string, next: Partial<Shape>) {
   doc = { ...doc, [id]: { ...doc[id], ...next } };
   docListeners.forEach((l) => l());
 }
@@ -68,15 +62,15 @@ const initialDoc = doc;
 export const normalizeAngle = (deg: number) => ((Math.round(deg) % 360) + 360) % 360;
 
 /** 회전을 반영한 축 정렬 경계 상자의 크기 */
-export function bounds(e: Pick<Equipment, "w" | "h" | "rotation">) {
+export function bounds(e: Pick<Shape, "w" | "h" | "rotation">) {
   const r = (e.rotation * Math.PI) / 180;
   const cos = Math.abs(Math.cos(r));
   const sin = Math.abs(Math.sin(r));
   return { w: e.w * cos + e.h * sin, h: e.w * sin + e.h * cos };
 }
 
-/** 회전한 장비가 보드 밖으로 나가지 않도록 중심 좌표 제한 */
-export function clampCenter(e: Equipment, cx: number, cy: number, rotation = e.rotation) {
+/** 회전한 도형이 보드 밖으로 나가지 않도록 중심 좌표 제한 */
+export function clampCenter(e: Shape, cx: number, cy: number, rotation = e.rotation) {
   const b = bounds({ ...e, rotation });
   return {
     cx: Math.min(Math.max(b.w / 2, cx), BOARD.w - b.w / 2),
@@ -106,7 +100,7 @@ export const editor = {
     if (from.cx === to.cx && from.cy === to.cy) return;
     const fmt = (p: { cx: number; cy: number }) => `(${Math.round(p.cx)}, ${Math.round(p.cy)})`;
     history.execute({
-      label: `${id} 이동 ${fmt(from)} → ${fmt(to)}`,
+      label: `${e.name} 이동 ${fmt(from)} → ${fmt(to)}`,
       scope: "editor",
       do: () => patch(id, to),
       undo: () => patch(id, from),
@@ -120,7 +114,7 @@ export const editor = {
     const from = { rotation: e.rotation, cx: e.cx, cy: e.cy };
     const center = clampCenter(e, e.cx, e.cy, to);
     history.execute({
-      label: `${id} 회전 ${from.rotation}° → ${to}°`,
+      label: `${e.name} 회전 ${from.rotation}° → ${to}°`,
       scope: "editor",
       do: () => patch(id, { rotation: to, ...center }),
       undo: () => patch(id, from),
@@ -147,7 +141,7 @@ export function useIsPristine() {
   return useSyncExternalStore(subscribeDoc, () => doc === initialDoc, () => true);
 }
 
-export function useEquipment(id: string) {
+export function useShape(id: string) {
   return useSyncExternalStore(subscribeDoc, () => doc[id], () => initialDoc[id]);
 }
 
@@ -159,7 +153,7 @@ export function useSelectedId() {
   return useSyncExternalStore(subscribeView, () => view.selected, () => null);
 }
 
-/** 이 장비의 미리보기. 다른 장비가 드래그될 때는 같은 null을 돌려 다시 렌더링하지 않는다 */
+/** 이 도형의 미리보기. 다른 도형이 드래그될 때는 같은 null을 돌려 다시 렌더링하지 않는다 */
 export function usePreview(id: string) {
   return useSyncExternalStore(
     subscribeView,
