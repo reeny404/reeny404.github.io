@@ -8,7 +8,7 @@ import s from "./system.module.css";
 
 export const metadata: Metadata = {
   title: "디자인 시스템",
-  description: "이 포트폴리오의 색, 글자, 간격, 움직임과 컴포넌트를 정리한 디자인 시스템. tokens.ts 한 곳에서 CSS 변수와 이 문서를 함께 생성.",
+  description: "색, 글자, 간격, 움직임과 컴포넌트 정의",
   alternates: { canonical: "/system/" },
 };
 
