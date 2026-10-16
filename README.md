@@ -1,64 +1,30 @@
-# reeny404.github.io
+<div align="center">
 
-Next.js로 만든 포트폴리오 사이트입니다. GitHub Pages로 배포합니다.
+### 눈앞의 버그보다, 반복되는 이유를 봅니다
 
-**https://reeny404.github.io**
+Frontend Engineer 웹 포트폴리오
 
-## 주요 기능
+**[reeny404.github.io →](https://reeny404.github.io)**
 
-- **도형 에디터**: 첫 화면의 캔버스에서 도형을 드래그, 회전하고 실행 취소할 수 있습니다.
-- **명령 팔레트**: `⌘K`로 페이지 이동, 테마 변경, 실행 취소를 실행합니다.
-- **라이트 / 다크 테마**: 시스템 설정을 따르고, 직접 선택한 테마는 저장됩니다.
-- **디자인 시스템 문서**: [`/system`](https://reeny404.github.io/system/) 페이지에서 토큰과 컴포넌트를 확인할 수 있습니다.
+</div>
 
-## 기술 스택
+<br />
 
-- [Next.js 16](https://nextjs.org) (App Router, 정적 export)
-- React 19, TypeScript
-- CSS Modules, 디자인 토큰 기반 CSS 변수
-- GitHub Actions, GitHub Pages, Lighthouse CI
+## 사례
 
-## 시작하기
-
-Node.js 22 이상이 필요합니다.
-
-```sh
-npm install
-npm run dev
-```
-
-http://localhost:3000 에서 확인할 수 있습니다.
-
-## 스크립트
-
-| 명령 | 설명 |
+| 사례 | 내용 |
 | --- | --- |
-| `npm run dev` | 개발 서버 실행 |
-| `npm run build` | `out/`에 정적 파일 생성 |
-| `npm run start` | 빌드 결과를 로컬에서 미리보기 |
-| `npm run lint` | ESLint 검사 |
-| `npx @lhci/cli@0.15.1 autorun` | Lighthouse 성능 예산 검사 (`lighthouserc.json`) |
+| [PlotPlan 에디터 V2](https://reeny404.github.io/work/plotplan/) | 데이터, 화면, 저장의 책임을 나눠 다시 만든 에디터 |
+| [ChipNSoDA 실시간 작업 상태](https://reeny404.github.io/work/chipnsoda/) | REST 이력과 WebSocket 실시간 데이터를 하나의 화면 상태로 연결 |
+| [미리캔버스 저장과 결제 안정화](https://reeny404.github.io/work/miridih/) | 무한 로딩으로 나타나던 저장 실패 분석과 결제 상태의 DB 중심 전환 |
 
-`dev`와 `build` 전에는 사이트에 쓰인 글자만 남긴 폰트 파일이 자동으로 생성됩니다.
+## 사이트에서 해볼 수 있는 것
 
-## 프로젝트 구조
+- 첫 화면 제목을 클릭해 직접 고쳐 쓰기
+- 옆 캔버스의 도형을 드래그하고 회전한 뒤 `⌘Z`로 되돌리기
+- `⌘K`로 명령 팔레트를 열어 페이지 이동, 테마 변경
+- [디자인 시스템](https://reeny404.github.io/system/) 페이지에서 이 사이트의 색, 글자, 컴포넌트 보기
 
-```
-src/
-├── app/          페이지와 라우트
-├── components/   공통 UI 컴포넌트
-├── content/      사이트에 표시되는 데이터
-├── design/       디자인 토큰
-└── features/     에디터, 명령 팔레트, 테마 등 기능 단위 모듈
-scripts/          빌드 보조 스크립트
-docs/             개발 기록
-```
+## 만든 방식
 
-## 배포
-
-`main` 브랜치에 푸시하면 GitHub Actions가 lint, build, Lighthouse CI를 실행하고, 모두 통과하면 GitHub Pages에 배포합니다. 설정은 [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)에 있습니다.
-
-## 문서
-
-- [DESIGN.md](DESIGN.md): 디자인 원칙과 규칙
-- [docs/blog](docs/blog): 개발 기록
+Next.js 정적 export와 GitHub Pages로 배포합니다. 색과 간격은 디자인 토큰 한 곳에서 관리하고, Lighthouse 성능, 접근성 검사를 통과해야 배포됩니다. 만드는 과정은 [개발 기록](docs/blog)에 남기고 있습니다.
