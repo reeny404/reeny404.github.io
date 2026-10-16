@@ -36,7 +36,7 @@
 }
 
 /*
- * 버그는 "수정 전" 수치처럼 text-muted 글자에 danger 취소선, 반복되는 이유는 accent-soft 형광펜.
+ * 버그는 "수정 전" 수치처럼 text-muted 글자에 danger 취소선, 반복되는 이유는 옅은 accent 형광펜.
  * 선과 형광펜은 pseudo 요소로 그려 인트로에서 transform(scaleX)만으로 왼쪽부터 그어짐
  */
 .bug,
@@ -70,7 +70,9 @@
   height: 0.42em;
   z-index: -1;
   border-radius: 2px;
-  background: var(--color-accent-soft);
+  /* accent-soft는 라이트 모드 흰 바탕에서 거의 보이지 않아 accent를 옅게 깔아 씀 */
+  background: var(--color-accent);
+  opacity: 0.18;
   transform-origin: left;
 }
 
