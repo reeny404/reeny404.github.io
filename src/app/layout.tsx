@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     siteName: `${site.name} 포트폴리오`,
     title: site.title,
     description: site.headline,
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: `${site.name} | ${site.headline}` }],
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: `Frontend Engineer | ${site.headline}` }],
   },
   twitter: { card: "summary_large_image", title: site.title, description: site.headline, images: ["/og.png"] },
   robots: { index: true, follow: true },
