@@ -1,0 +1,116 @@
+/* 첫 paint부터 인트로 시작 전까지 완성 문구를 숨김 (heroIntroInitScript가 data-hero-intro 설정) */
+:global(html[data-hero-intro="pending"]) .headline {
+  visibility: hidden;
+}
+
+/* 디자인 툴의 텍스트 상자처럼: hover에 점선 경계, 편집 중에는 accent 경계 */
+.headline {
+  display: block;
+  border-radius: var(--radius-sm);
+  outline: 1px dashed transparent;
+  outline-offset: 8px;
+  caret-color: var(--color-accent);
+  transition: outline-color var(--duration-fast) var(--ease-out);
+}
+
+.headline[data-done="true"] {
+  cursor: text;
+}
+
+.headline[data-done="true"]:hover {
+  outline-color: var(--color-border);
+}
+
+.headline[data-done="true"]:focus {
+  outline: 1px solid var(--color-accent);
+}
+
+/* 아직 입력되지 않은 글자. 자리는 그대로 두어 줄바꿈과 높이가 변하지 않음 */
+.pending {
+  visibility: hidden;
+}
+
+.selected {
+  background: var(--color-accent-soft);
+  border-radius: 2px;
+}
+
+/*
+ * 버그는 "수정 전" 수치처럼 text-muted 글자에 danger 취소선, 반복되는 이유는 accent-soft 형광펜.
+ * 선과 형광펜은 pseudo 요소로 그려 인트로에서 transform(scaleX)만으로 왼쪽부터 그어짐
+ */
+.bug,
+.focus {
+  position: relative;
+}
+
+.bug {
+  color: var(--color-text-muted);
+}
+
+.bug::after {
+  content: "";
+  position: absolute;
+  inset: 52% 0 auto;
+  height: 0.09em;
+  border-radius: 1px;
+  background: var(--color-danger);
+  transform-origin: left;
+}
+
+/* 형광펜을 글자 뒤에 두되 다른 요소 뒤로 빠지지 않도록 자체 stacking context */
+.focus {
+  isolation: isolate;
+}
+
+.focus::before {
+  content: "";
+  position: absolute;
+  inset: auto -0.04em 0.06em;
+  height: 0.42em;
+  z-index: -1;
+  border-radius: 2px;
+  background: var(--color-accent-soft);
+  transform-origin: left;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .headline[data-done="false"] .bug::after,
+  .headline[data-done="false"] .focus::before {
+    animation: draw var(--duration-slow) var(--ease-out);
+  }
+}
+
+@keyframes draw {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+/* 폭 0인 자리 표시. 막대는 pseudo 요소라 글자 사이 간격이 바뀌지 않음 */
+.caret {
+  position: relative;
+  display: inline-block;
+  width: 0;
+  height: 1em;
+  vertical-align: -0.1em;
+}
+
+.caret::after {
+  content: "";
+  position: absolute;
+  inset: -0.05em auto -0.05em -1px;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--color-accent);
+}
+
+.caret[data-blink="true"]::after {
+  animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}

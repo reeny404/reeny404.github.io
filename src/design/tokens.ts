@@ -58,7 +58,7 @@ export const colors = [
   { name: "accent-soft", light: palette.blue50, dark: palette.blue900, usage: "선택 영역, 범위 노트 바탕" },
   { name: "caution", light: palette.amber700, dark: palette.amber300, usage: "해석 한계, 주의", on: "bg" },
   { name: "caution-soft", light: palette.amber50, dark: palette.amber900, usage: "주의 노트 바탕" },
-  { name: "danger", light: palette.coral700, dark: palette.coral300, usage: "render 발생 표시(데모 전용)", on: "bg-sunken" },
+  { name: "danger", light: palette.coral700, dark: palette.coral300, usage: "지운 내용의 취소선, render 발생 표시(데모)", on: "bg-sunken" },
   { name: "decorative-coral", light: palette.coral500, dark: palette.coral500, usage: "장식, 도형" },
   { name: "decorative-yellow", light: palette.yellow400, dark: palette.yellow400, usage: "장식, 도형" },
   { name: "decorative-mint", light: palette.mint500, dark: palette.mint500, usage: "장식, 도형" },

@@ -3,6 +3,7 @@ import { ViewTransition } from "react";
 import { Eyebrow, MetricList, Note, TagList } from "@/components/ui";
 import { selectedWork } from "@/content/cases";
 import { education, experience, sideProjects, site, skills } from "@/content/profile";
+import { HeroHeadline } from "@/features/editor/HeroHeadline";
 import { MiniEditor } from "@/features/editor/MiniEditor";
 import s from "./home.module.css";
 
@@ -34,11 +35,7 @@ export default function Home() {
         <div className={`container ${s.heroGrid}`}>
           <div className={s.heroText}>
             <h1 id="hero-title">
-              <span className={s.headline}>
-                눈앞의 버그보다,
-                <br />
-                반복되는 이유를 봅니다
-              </span>
+              <HeroHeadline className={s.headline} />
             </h1>
             <p className={s.lede}>
               저장이 자꾸 실패하던 이유는 이벤트 로그에서, 다시 만든 에디터가 느려진 이유는 구독 범위에서 찾았습니다.
