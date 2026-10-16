@@ -51,8 +51,8 @@ export default function Home() {
       <section className={s.section} id="work" aria-labelledby="work-title">
         <div className="container">
           <header className={s.sectionHead}>
-            <Eyebrow>Selected Work</Eyebrow>
-            <h2 id="work-title">직접 맡은 변경과 결과</h2>
+            <Eyebrow>Case Studies</Eyebrow>
+            <h2 id="work-title">이유를 찾아 고친 일들</h2>
             <p>각 사례에서 문제의 원인, 구조 판단과 직접 담당 범위, 측정 조건을 함께 기록했습니다.</p>
           </header>
 

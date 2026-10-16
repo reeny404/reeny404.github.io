@@ -14,7 +14,8 @@ import "./globals.css";
 const pretendard = localFont({
   src: "./fonts/pretendard-subset.woff2",
   weight: "100 900",
-  display: "swap",
+  // swap이면 폰트가 늦게 도착할 때 한글 줄바꿈이 바뀌며 본문이 밀림(CLS). preload와 optional로 교체 자체를 없앰
+  display: "optional",
   variable: "--font-pretendard",
   fallback: ["Apple SD Gothic Neo", "Malgun Gothic", "system-ui", "sans-serif"],
 });

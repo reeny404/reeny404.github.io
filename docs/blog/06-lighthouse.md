@@ -57,8 +57,19 @@ Lighthouse가 잡아 준 것:
 
 ## 남은 것
 
-- mobile LCP 2.6s의 대부분은 폰트 교체 후 다시 그려지는 render delay. `font-display: optional`이면 더 줄지만, 느린 연결의 첫 방문에서 Pretendard가 아예 보이지 않음. 디자인 일관성을 택해 `swap` 유지
-- [다듬기] 실제 배포 후 GitHub Pages(HTTP/2, gzip)에서 다시 측정한 값
+- 처음에는 디자인 일관성을 위해 `font-display: swap`을 유지했다. 그런데 배포 후 desktop 측정에서 PlotPlan 페이지 CLS가 0.012로 기준(0.01)을 넘었다. Lighthouse가 지목한 원인은 "Web font loaded". 대체 서체로 그려진 한글이 Pretendard로 바뀌면서 줄바꿈 위치가 달라지고 본문 전체가 밀린 것. `next/font`의 대체 서체 보정은 영문 Arial 기준이라 한글에는 효과가 없었다
+- `font-display: optional`로 변경. preload 중이라 보통 속도의 연결에서는 처음부터 Pretendard가 보이고, 아주 느린 첫 방문에서만 시스템 한글 서체가 유지되며 화면은 밀리지 않음
+
+## 배포 후 실제 측정 (GitHub Pages, HTTP/2, gzip)
+
+`optional` 적용 전, 페이지별 1회.
+
+| 페이지 | mobile | desktop | Accessibility, Best Practices, SEO |
+| --- | ---: | ---: | --- |
+| `/` | 97 | 100 | 모두 100 |
+| `/work/plotplan/` | 98 | 100 (CLS 0.012) | 모두 100 |
+
+[다듬기] `optional` 적용 후 다시 측정한 값
 
 ## CI에서 지키기
 

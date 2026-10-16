@@ -23,7 +23,7 @@ export default function ChipNSoDAPage() {
         meta={[
           ["역할", "Frontend Engineer, 프리랜서"],
           ["기간", "주요 개발과 안정화 2024.11 ~ 2025.04"],
-          ["기술", "React, TypeScript, TanStack Query, STOMP/SockJS, ECharts"],
+          ["기술", "React, TypeScript, TanStack Query, STOMP/SockJS"],
         ]}
       />
       <CaseBody>

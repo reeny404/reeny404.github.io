@@ -95,7 +95,7 @@ export const selectedWork: CaseSummary[] = [
       "소켓 연결 전 구독 요청은 대기, 버전을 바꾸면 이전 버전 데이터 초기화",
     ],
     description: caseStudies.chipnsoda.description,
-    tags: ["STOMP/SockJS", "TanStack Query", "ECharts"],
+    tags: ["STOMP/SockJS", "TanStack Query", "WebSocket"],
     linkLabel: "ChipNSoDA 사례",
   },
   {
