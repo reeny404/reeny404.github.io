@@ -1,25 +1,30 @@
-# reeny404.github.io
+<div align="center">
 
-Personal portfolio site built as a side project. https://reeny404.github.io
+### 눈앞의 버그보다, 반복되는 이유를 봅니다
 
-Next.js 16 App Router 정적 export → GitHub Pages. 사이트의 상태 변경은 command로 기록되어 실행 취소와 다시 실행이 가능.
+Frontend Engineer 웹 포트폴리오
 
-```
-src/design/          tokens.ts(단일 원본), tokens-css.ts, contrast.ts
-src/components/      ui(Metric, Note, DataTable…), case(Chapter…), site(Header…)
-src/features/        command(history, 명령 팔레트, 토스트), editor(첫 화면 도형 에디터),
-                     render-demo, theme, easter-eggs
-src/content/         사례와 경력 데이터
-src/app/             페이지, sitemap, robots, og.png
-scripts/             subset-font.mjs: 사이트에 쓰인 글자만 남긴 폰트 생성
-docs/blog/           진행 기록 블로그 초안
-```
+**[reeny404.github.io →](https://reeny404.github.io)**
 
-```sh
-npm install
-npm run dev      # 폰트 subset 생성 후 개발 서버
-npm run build    # out/ 정적 파일
-npx @lhci/cli@0.15.1 autorun   # 성능 예산 검사 (lighthouserc.json)
-```
+</div>
 
-`main` 푸시 시 GitHub Actions가 lint, build, Lighthouse CI를 통과한 경우에만 Pages에 배포. 디자인 규칙은 [DESIGN.md](DESIGN.md)와 사이트의 `/system` 페이지 참고.
+<br />
+
+## 사례
+
+| 사례 | 내용 |
+| --- | --- |
+| [PlotPlan 에디터 V2](https://reeny404.github.io/work/plotplan/) | 데이터, 화면, 저장의 책임을 나눠 다시 만든 에디터 |
+| [ChipNSoDA 실시간 작업 상태](https://reeny404.github.io/work/chipnsoda/) | REST 이력과 WebSocket 실시간 데이터를 하나의 화면 상태로 연결 |
+| [미리캔버스 저장과 결제 안정화](https://reeny404.github.io/work/miridih/) | 무한 로딩으로 나타나던 저장 실패 분석과 결제 상태의 DB 중심 전환 |
+
+## 사이트에서 해볼 수 있는 것
+
+- 첫 화면 제목을 클릭해 직접 고쳐 쓰기
+- 옆 캔버스의 도형을 드래그하고 회전한 뒤 `⌘Z`로 되돌리기
+- `⌘K`로 명령 팔레트를 열어 페이지 이동, 테마 변경
+- [디자인 시스템](https://reeny404.github.io/system/) 페이지에서 이 사이트의 색, 글자, 컴포넌트 보기
+
+## 만든 방식
+
+Next.js 정적 export와 GitHub Pages로 배포합니다. 색과 간격은 디자인 토큰 한 곳에서 관리하고, Lighthouse 성능, 접근성 검사를 통과해야 배포됩니다. 만드는 과정은 [개발 기록](docs/blog)에 남기고 있습니다.

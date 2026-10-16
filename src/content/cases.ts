@@ -114,6 +114,7 @@ export const selectedWork: CaseSummary[] = [
       { label: "초기 로딩", before: "19초", after: "4초" },
       { label: "결제 데이터 유실", before: "월 12건", after: "0건" },
     ],
+    note: { label: "자료 기준", text: "재직 당시 직접 관리한 업무 기록 기준" },
     linkLabel: "미리디 사례",
   },
 ];
