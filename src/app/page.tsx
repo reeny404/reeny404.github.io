@@ -50,7 +50,7 @@ export default function Home() {
           <header className={s.sectionHead}>
             <Eyebrow>Case Studies</Eyebrow>
             <h2 id="work-title">이유를 찾아 고친 일들</h2>
-            <p>각 사례에서 문제의 원인, 구조 판단과 직접 담당 범위, 측정 조건을 함께 기록했습니다.</p>
+            <p>각 사례에서 문제의 원인, 구조 판단과 직접 담당 범위, 측정 조건이나 자료 기준을 함께 기록했습니다.</p>
           </header>
 
           <ol className={s.workList}>

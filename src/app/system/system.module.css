@@ -7,9 +7,9 @@
   margin-top: var(--space-3);
 }
 
+/* 폭을 제한하지 않고 화면이 좁아질 때만 줄바꿈 */
 .lede {
   margin-top: var(--space-5);
-  max-width: var(--width-prose);
   font-size: var(--text-lg);
   line-height: var(--leading-snug);
   color: var(--color-text-muted);

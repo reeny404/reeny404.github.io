@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { CaseBody, CaseHero, Chapter, Pager } from "@/components/case";
 import { Compare, MetricList, Note } from "@/components/ui";
 import { caseStudies } from "@/content/cases";
@@ -65,7 +66,8 @@ export default function MiridihPage() {
             옵션별 필터링과 포토 리뷰 등 상품 후기 기능 개발, 필요한 데이터 스키마 변경과 DB Migration 수행. TypeScript를 도입해 타입을 활용한 개발과 유지보수 기반 마련.
           </p>
           <Note label="자료 기준" tone="caution">
-            현재 원본 코드와 사내 문서를 보유하지 않은 과거 사례. 수치는 당시 업무 중 직접 확인하고 관리한 기록 기준이며, 최근 사례처럼 측정 환경이나 커밋 단위 근거를 제시하지 않음.
+            수치는 재직 당시 직접 관리한 업무 기록 기준. 사내 코드와 문서는 공개할 수 없어 결과 위주로 정리. 측정 방식과 판단 기준이 궁금한 경우{" "}
+            <Link href="/#contact">문의</Link>해 주세요.
           </Note>
         </Chapter>
 

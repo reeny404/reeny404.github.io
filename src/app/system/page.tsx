@@ -8,7 +8,7 @@ import s from "./system.module.css";
 
 export const metadata: Metadata = {
   title: "디자인 시스템",
-  description: "이 사이트의 UI를 이루는 토큰, 컴포넌트, 패턴. tokens.ts 하나에서 CSS 변수와 이 문서를 함께 생성.",
+  description: "이 포트폴리오의 색, 글자, 간격, 움직임과 컴포넌트를 정리한 디자인 시스템. tokens.ts 한 곳에서 CSS 변수와 이 문서를 함께 생성.",
   alternates: { canonical: "/system/" },
 };
 
@@ -59,9 +59,9 @@ export default function SystemPage() {
       <section className={s.hero} aria-labelledby="system-title">
         <div className="container">
           <Eyebrow>Design System</Eyebrow>
-          <h1 id="system-title">이 사이트의 UI 시스템</h1>
+          <h1 id="system-title">디자인 시스템</h1>
           <p className={s.lede}>
-            원본은 <code>src/design/tokens.ts</code> 하나. 빌드할 때 같은 객체에서 CSS 변수와 이 페이지가 만들어지고, 텍스트 색의 대비 비율도 그때 계산.
+            이 사이트의 모든 화면이 따르는 기준.
           </p>
           <nav aria-label="디자인 시스템 목차" className={s.toc}>
             <ul>
@@ -269,10 +269,10 @@ export default function SystemPage() {
                   <line x1="0" y1="-24" x2="0" y2="-42" className={s.canvasSelection} />
                   <circle cx="0" cy="-48" r="5" className={s.canvasHandle} />
                 </g>
-                <g transform="translate(252 108)">
-                  <rect width="56" height="32" rx="8" className={s.canvasControl} />
+                <g transform="translate(248 108)">
+                  <rect width="60" height="32" rx="8" className={s.canvasControl} />
                   <path d="M17 20 13 16l4-4M13 16h8a4 4 0 0 1 0 8h-2" className={s.canvasIcon} />
-                  <path d="M39 20l4-4-4-4M43 16h-8a4 4 0 0 0 0 8h2" className={s.canvasIcon} />
+                  <path d="M43 20l4-4-4-4M47 16h-8a4 4 0 0 0 0 8h2" className={s.canvasIcon} />
                 </g>
               </svg>
             </Specimen>
