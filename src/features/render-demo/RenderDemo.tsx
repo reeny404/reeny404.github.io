@@ -73,7 +73,7 @@ function useRenderFlash(counter: Counter) {
     counter.add();
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     // WAAPI keyframe에는 CSS 변수를 직접 쓸 수 없어 현재 테마의 값을 읽어 사용
-    const flash = getComputedStyle(document.documentElement).getPropertyValue("--color-flash").trim();
+    const flash = getComputedStyle(document.documentElement).getPropertyValue("--color-danger").trim();
     ref.current?.animate(
       [{ backgroundColor: flash, transform: "scale(0.86)" }, { backgroundColor: "transparent", transform: "none" }],
       { duration: reduce ? 0 : 520, easing: "cubic-bezier(0.2, 0.8, 0.2, 1)" },

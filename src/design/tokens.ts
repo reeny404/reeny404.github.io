@@ -29,7 +29,7 @@ export const palette = {
   amber300: "#E6B65C",
   amber900: "#3A2E14",
   coral300: "#FF8A75",
-  // 포인트: 에디터 도형과 일러스트용
+  // 장식: 에디터 도형과 일러스트용
   coral500: "#FF6B57",
   yellow400: "#FFC233",
   mint500: "#22C59B",
@@ -52,16 +52,16 @@ export const colors = [
   { name: "bg-sunken", light: palette.cloud100, dark: palette.charcoal800, usage: "캔버스, 코드 흐름 바탕" },
   { name: "text", light: palette.indigo950, dark: palette.gray100, usage: "제목과 본문", on: "bg" },
   { name: "text-muted", light: palette.slate600, dark: palette.gray300, usage: "보조 설명, 수정 전 수치", on: "bg" },
-  { name: "line", light: palette.cloud300, dark: palette.charcoal700, usage: "구분선, 테두리" },
-  { name: "line-subtle", light: palette.cloud200, dark: palette.charcoal750, usage: "캔버스 격자" },
+  { name: "border", light: palette.cloud300, dark: palette.charcoal700, usage: "구분선, 테두리" },
+  { name: "border-subtle", light: palette.cloud200, dark: palette.charcoal750, usage: "캔버스 격자" },
   { name: "accent", light: palette.blue600, dark: palette.blue300, usage: "변경 결과, 선택, 링크", on: "bg" },
   { name: "accent-soft", light: palette.blue50, dark: palette.blue900, usage: "선택 영역, 범위 노트 바탕" },
   { name: "caution", light: palette.amber700, dark: palette.amber300, usage: "해석 한계, 주의", on: "bg" },
   { name: "caution-soft", light: palette.amber50, dark: palette.amber900, usage: "주의 노트 바탕" },
-  { name: "flash", light: palette.coral700, dark: palette.coral300, usage: "render 발생 표시(데모 전용)", on: "bg-sunken" },
-  { name: "point-coral", light: palette.coral500, dark: palette.coral500, usage: "포인트, 도형" },
-  { name: "point-yellow", light: palette.yellow400, dark: palette.yellow400, usage: "포인트, 도형" },
-  { name: "point-mint", light: palette.mint500, dark: palette.mint500, usage: "포인트, 도형" },
+  { name: "danger", light: palette.coral700, dark: palette.coral300, usage: "render 발생 표시(데모 전용)", on: "bg-sunken" },
+  { name: "decorative-coral", light: palette.coral500, dark: palette.coral500, usage: "장식, 도형" },
+  { name: "decorative-yellow", light: palette.yellow400, dark: palette.yellow400, usage: "장식, 도형" },
+  { name: "decorative-mint", light: palette.mint500, dark: palette.mint500, usage: "장식, 도형" },
 ] as const satisfies readonly ColorToken[];
 
 export const typography = {
