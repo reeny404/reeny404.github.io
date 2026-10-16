@@ -118,7 +118,7 @@ kbd {
   display: inline-block;
   min-width: 1.6em;
   padding: 0 0.4em;
-  border: 1px solid var(--color-line);
+  border: 1px solid var(--color-border);
   border-bottom-width: 2px;
   border-radius: var(--radius-sm);
   background: var(--color-bg-raised);
@@ -140,7 +140,7 @@ svg {
 
 hr {
   border: 0;
-  border-top: 1px solid var(--color-line);
+  border-top: 1px solid var(--color-border);
   margin: 0;
 }
 

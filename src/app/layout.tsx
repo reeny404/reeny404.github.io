@@ -4,6 +4,7 @@ import { SiteFooter, SiteHeader } from "@/components/site/SiteChrome";
 import { site } from "@/content/profile";
 import { tokensCss } from "@/design/tokens-css";
 import { Analytics } from "@/features/analytics/Analytics";
+import { heroIntroInitScript } from "@/features/editor/hero-intro";
 import { CommandPalette } from "@/features/command/CommandPalette";
 import { HistoryToast } from "@/features/command/HistoryToast";
 import { ConsoleGreeting } from "@/features/easter-eggs/ConsoleGreeting";
@@ -55,6 +56,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <head>
         {/* 저장된 테마를 첫 paint 전에 적용해 깜빡임 방지 */}
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        <script dangerouslySetInnerHTML={{ __html: heroIntroInitScript }} />
         {/* tokens.ts에서 만든 CSS 변수. 외부 CSS 요청 없이 첫 HTML에 포함 */}
         <style dangerouslySetInnerHTML={{ __html: tokensCss }} />
       </head>

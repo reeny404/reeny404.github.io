@@ -3,6 +3,7 @@ import { ViewTransition } from "react";
 import { Eyebrow, MetricList, Note, TagList } from "@/components/ui";
 import { selectedWork } from "@/content/cases";
 import { education, experience, sideProjects, site, skills } from "@/content/profile";
+import { HeroHeadline } from "@/features/editor/HeroHeadline";
 import { MiniEditor } from "@/features/editor/MiniEditor";
 import s from "./home.module.css";
 
@@ -34,11 +35,7 @@ export default function Home() {
         <div className={`container ${s.heroGrid}`}>
           <div className={s.heroText}>
             <h1 id="hero-title">
-              <span className={s.headline}>
-                눈앞의 버그보다,
-                <br />
-                반복되는 이유를 봅니다
-              </span>
+              <HeroHeadline className={s.headline} />
             </h1>
             <p className={s.lede}>
               저장이 자꾸 실패하던 이유는 이벤트 로그에서, 다시 만든 에디터가 느려진 이유는 구독 범위에서 찾았습니다.
@@ -53,7 +50,7 @@ export default function Home() {
           <header className={s.sectionHead}>
             <Eyebrow>Case Studies</Eyebrow>
             <h2 id="work-title">이유를 찾아 고친 일들</h2>
-            <p>각 사례에서 문제의 원인, 구조 판단과 직접 담당 범위, 측정 조건을 함께 기록했습니다.</p>
+            <p>각 사례에서 문제의 원인, 구조 판단과 직접 담당 범위, 측정 조건이나 자료 기준을 함께 기록했습니다.</p>
           </header>
 
           <ol className={s.workList}>

@@ -1,9 +1,9 @@
 .editor {
   padding: var(--space-2);
-  border: 1px solid var(--color-line);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   background: var(--color-bg-raised);
-  box-shadow: 0 1px 0 var(--color-line), 0 24px 48px -32px rgb(22 26 51 / 0.35);
+  box-shadow: 0 1px 0 var(--color-border), 0 24px 48px -32px rgb(22 26 51 / 0.35);
 }
 
 .board {
@@ -23,12 +23,12 @@
 }
 
 .dot {
-  fill: var(--color-line);
+  fill: var(--color-border);
 }
 
 .boardEdge {
   fill: none;
-  stroke: var(--color-line);
+  stroke: var(--color-border);
   stroke-dasharray: 4 4;
 }
 
@@ -62,9 +62,9 @@
 }
 
 .fillAccent { fill: var(--color-accent); }
-.fillCoral { fill: var(--color-point-coral); }
-.fillYellow { fill: var(--color-point-yellow); }
-.fillMint { fill: var(--color-point-mint); }
+.fillCoral { fill: var(--color-decorative-coral); }
+.fillYellow { fill: var(--color-decorative-yellow); }
+.fillMint { fill: var(--color-decorative-mint); }
 .fillInk { fill: var(--color-text); }
 
 /* path 꼭짓점을 둥글게: 같은 색 stroke를 두껍게 얹음 */
@@ -73,7 +73,7 @@
   stroke-linejoin: round;
 }
 
-.fillYellow.rounded { stroke: var(--color-point-yellow); }
+.fillYellow.rounded { stroke: var(--color-decorative-yellow); }
 .fillInk.rounded { stroke: var(--color-text); }
 
 .shapeText {
@@ -139,7 +139,7 @@
   display: flex;
   gap: 2px;
   padding: 2px;
-  border: 1px solid var(--color-line);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   background: color-mix(in srgb, var(--color-bg-raised) 92%, transparent);
   backdrop-filter: blur(6px);
