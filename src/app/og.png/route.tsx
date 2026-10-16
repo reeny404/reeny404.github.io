@@ -1,7 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
-import { site } from "@/content/profile";
 
 /** og:image. 정적 export에서도 확장자가 붙은 파일로 나오도록 route handler로 생성 */
 export const dynamic = "force-static";
@@ -35,8 +34,7 @@ export async function GET() {
       >
         <div style={{ display: "flex", alignItems: "center", gap: 16, fontSize: 32, fontWeight: 600 }}>
           <div style={{ width: 28, height: 28, border: "4px solid #2D5BFF", borderRadius: 4, background: "#EBF0FF" }} />
-          {site.name}
-          <span style={{ color: "#2D5BFF", fontSize: 26 }}>Frontend Engineer</span>
+          <span style={{ color: "#2D5BFF" }}>Frontend Engineer</span>
         </div>
         <div style={{ display: "flex", flexDirection: "column", fontSize: 76, fontWeight: 700, lineHeight: 1.15, letterSpacing: -2 }}>
           <span>눈앞의 버그보다,</span>
