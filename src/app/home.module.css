@@ -33,7 +33,7 @@
 
 .heroText {
   display: grid;
-  gap: var(--space-5);
+  gap: var(--space-6);
 }
 
 .heroText h1 {
@@ -49,11 +49,22 @@
   line-height: 1.12;
 }
 
+/*
+ * 제목을 받치는 한 문장이라 보조 회색이 아닌 본문 색. 위계는 크기 차이로.
+ * 줄 길이를 고르게 나눠 끝줄에 한두 단어만 남지 않게
+ */
 .lede {
-  max-width: 34rem;
-  font-size: var(--text-lg);
-  line-height: var(--leading-snug);
-  color: var(--color-text-muted);
+  max-width: 32rem;
+  font-size: var(--text-md);
+  line-height: 1.55;
+  color: var(--color-text);
+  text-wrap: balance;
+}
+
+@media (min-width: 1024px) {
+  .lede {
+    font-size: var(--text-lg);
+  }
 }
 
 .cta {
