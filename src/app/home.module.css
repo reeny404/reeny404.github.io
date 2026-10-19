@@ -309,7 +309,6 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  font-size: var(--text-lg);
 }
 
 .contact li {
@@ -325,7 +324,14 @@
 
 .skillRows {
   display: grid;
-  gap: var(--space-4);
+  gap: var(--space-5) var(--space-6);
+}
+
+/* 분류를 두 열로 나눠 옆의 사이드 프로젝트와 높이를 맞춤. 좁은 화면에서는 한 열 */
+@media (min-width: 480px) {
+  .skillRows {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 /* 분류 이름은 작게, 기술 태그가 먼저 읽히도록 */

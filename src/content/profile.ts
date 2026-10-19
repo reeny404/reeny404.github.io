@@ -60,7 +60,7 @@ export const skills = [
   { group: "Graphics", items: ["Konva", "D3/SVG", "Canvas API"] },
   { group: "State Management", items: ["Zustand", "TanStack Query"] },
   { group: "Realtime", items: ["WebSocket", "STOMP/SockJS"] },
-  { group: "Build & Test", items: ["Vite", "Webpack", "MSW", "Playwright"] },
+  { group: "Build & Test", items: ["Vite", "MSW", "Playwright"] },
 ] as const;
 
 export const education = [
@@ -78,7 +78,7 @@ export const sideProjects = [
   },
   {
     name: "quick-react-env",
-    meta: "TypeScript, Node.js",
+    meta: "2025.05 · TypeScript, Node.js",
     summary:
       "Vite, Next.js 프로젝트 생성과 ESLint, Prettier, Husky 설정을 선택형으로 한 번에 구성하는 초기화 CLI.",
     href: "https://github.com/reeny404/quick-react-env",
