@@ -73,14 +73,14 @@ export const sideProjects = [
     name: "mod-hud",
     meta: "2026.10 · TypeScript, Claude Code 플러그인",
     summary:
-      "여러 Claude Code 세션 중 응답을 기다리는 세션과 작업 중인 세션, 확인이 필요한 MR을 프롬프트 위 한 줄과 패널로 보여 주는 mod. 세션마다 포켓몬 알이 하나씩 생기고 MR이 머지되면 부화.",
+      "여러 Claude Code 세션 중 입력을 기다리는 세션과 작업 중인 세션, 각 브랜치의 MR 상태를 입력창 위 한 줄과 패널로 보여 주는 플러그인.",
     href: "https://github.com/reeny404/mod-hud",
   },
   {
     name: "quick-react-env",
     meta: "TypeScript, Node.js",
     summary:
-      "Vite, Next.js 프로젝트 생성과 ESLint, Prettier, Husky, VSCode 설정을 선택형 템플릿으로 구성한 초기화 CLI. npm, pnpm, yarn 선택에 따른 의존성 설치 흐름 구현.",
+      "Vite, Next.js 프로젝트 생성과 ESLint, Prettier, Husky 설정을 선택형으로 한 번에 구성하는 초기화 CLI.",
     href: "https://github.com/reeny404/quick-react-env",
   },
 ] as const;
