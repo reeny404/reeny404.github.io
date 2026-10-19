@@ -64,8 +64,8 @@ function starPath(w: number, h: number) {
   return `M${points.join(" L")} Z`;
 }
 
-/** 원점이 왼쪽 위인 w × h 영역에 도형을 그림 */
-function Glyph({ e }: { e: Shape }) {
+/** 원점이 왼쪽 위인 w × h 영역에 도형을 그림. 404 보드에서도 같은 모양을 씀 */
+export function Glyph({ e }: { e: Shape }) {
   switch (e.kind) {
     case "rect":
       return <rect width={e.w} height={e.h} rx={14} className={`${s.body} ${s.fillAccent}`} />;

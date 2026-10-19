@@ -66,6 +66,23 @@
   }
 }
 
+/* 404 안내 문구는 왼쪽 칸을 끝까지 채워 한 줄에 들어가도록. 칸도 글 쪽을 넓게 */
+.ledeWide {
+  max-width: none;
+}
+
+/* 문장 속 유일한 행동이라 굵기와 강조색으로 드러냄 */
+.ledeLink {
+  font-weight: var(--weight-bold);
+  color: var(--color-accent);
+}
+
+@media (min-width: 1024px) {
+  .heroGridText {
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  }
+}
+
 /* 목적어와 동사 사이에서 줄이 나뉘지 않도록 묶는 구 */
 .phrase {
   white-space: nowrap;
