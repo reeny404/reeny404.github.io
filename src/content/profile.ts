@@ -16,8 +16,8 @@ export const experience = [
   {
     company: "애자일소다",
     companyEn: "AgileSoDA",
-    periods: ["2026.01 ~ 현재", "2024.11 ~ 2025.12"],
-    role: "수석연구원, Frontend Lead 역할 · 이전 Frontend Engineer, 프리랜서",
+    periods: ["2026.01 ~ 현재", "2024.11 ~ 2025.12 프리랜서"],
+    role: "Frontend Lead",
     summary: "AI 기반 플랜트 공정설계와 반도체 Floor Plan 설계 도구 개발.",
     points: [
       "PlotPlan 에디터 V2의 document store와 command 구조, 좌표 계산과 저장 경로 설계와 구현",
@@ -60,7 +60,7 @@ export const skills = [
   { group: "Graphics", items: ["Konva", "D3/SVG", "Canvas API"] },
   { group: "State Management", items: ["Zustand", "TanStack Query"] },
   { group: "Realtime", items: ["WebSocket", "STOMP/SockJS"] },
-  { group: "Build & Test", items: ["Vite", "Webpack", "MSW", "Playwright"] },
+  { group: "Build & Test", items: ["Vite", "MSW", "Playwright"] },
 ] as const;
 
 export const education = [
@@ -73,14 +73,14 @@ export const sideProjects = [
     name: "mod-hud",
     meta: "2026.10 · TypeScript, Claude Code 플러그인",
     summary:
-      "여러 Claude Code 세션 중 응답을 기다리는 세션과 작업 중인 세션, 확인이 필요한 MR을 프롬프트 위 한 줄과 패널로 보여 주는 mod. 세션마다 포켓몬 알이 하나씩 생기고 MR이 머지되면 부화.",
+      "여러 Claude Code 세션 중 입력을 기다리는 세션과 작업 중인 세션, 각 브랜치의 MR 상태를 입력창 위 한 줄과 패널로 보여 주는 플러그인.",
     href: "https://github.com/reeny404/mod-hud",
   },
   {
     name: "quick-react-env",
-    meta: "TypeScript, Node.js",
+    meta: "2025.05 · TypeScript, Node.js",
     summary:
-      "Vite, Next.js 프로젝트 생성과 ESLint, Prettier, Husky, VSCode 설정을 선택형 템플릿으로 구성한 초기화 CLI. npm, pnpm, yarn 선택에 따른 의존성 설치 흐름 구현.",
+      "Vite, Next.js 프로젝트 생성과 ESLint, Prettier, Husky 설정을 선택형으로 한 번에 구성하는 초기화 CLI.",
     href: "https://github.com/reeny404/quick-react-env",
   },
 ] as const;

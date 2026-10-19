@@ -40,4 +40,7 @@ const outDir = join(root, "src/app/fonts");
 await mkdir(outDir, { recursive: true });
 await writeFile(join(outDir, "pretendard-subset.woff2"), subset);
 const hangul = [...chars].filter((c) => /\p{Script=Hangul}/u.test(c)).length;
+// 콘솔 이스터 에그 btw()에서 쓰는 수치
+const stats = { glyphs: chars.size, hangul, sourceKB: Math.round(source.length / 1024), subsetKB: Math.round(subset.length / 1024) };
+await writeFile(join(outDir, "subset-stats.json"), JSON.stringify(stats));
 console.log(`subset-font: ${chars.size} glyphs (Hangul ${hangul}), ${(source.length / 1024).toFixed(0)}KB → ${(subset.length / 1024).toFixed(0)}KB`);

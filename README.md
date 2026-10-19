@@ -2,7 +2,7 @@
 
 ### 눈앞의 버그보다, 반복되는 이유를 봅니다
 
-Frontend Engineer 웹 포트폴리오
+Frontend Engineer Portfolio
 
 **[reeny404.github.io →](https://reeny404.github.io)**
 

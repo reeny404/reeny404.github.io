@@ -12,6 +12,7 @@
 
 ## 이 사이트
 
+- [실험실](https://reeny404.github.io/lab/): 렌더 범위 데모, 실행 취소 기록, 명령 팔레트, 테마 전환 등 사이트에 붙인 기능 모음.
 - [디자인 시스템](https://reeny404.github.io/system/): tokens.ts 하나에서 CSS 변수와 문서를 생성.
 - Next.js 16 정적 export, GitHub Pages 배포. 소스: https://github.com/reeny404/reeny404.github.io
 

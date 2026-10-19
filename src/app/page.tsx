@@ -38,7 +38,7 @@ export default function Home() {
               <HeroHeadline className={s.headline} />
             </h1>
             <p className={s.lede}>
-              저장이 자꾸 실패하던 이유는 이벤트 로그에서, 다시 만든 에디터가 느려진 이유는 구독 범위에서 찾았습니다.
+              드래그와 패널 입력이 서로 다른 로직으로 <span className={s.phrase}>좌표를 계산해</span> 되풀이되던 문제를 구조부터 고쳤습니다.
             </p>
           </div>
           <MiniEditor />
@@ -49,8 +49,8 @@ export default function Home() {
         <div className="container">
           <header className={s.sectionHead}>
             <Eyebrow>Case Studies</Eyebrow>
-            <h2 id="work-title">이유를 찾아 고친 일들</h2>
-            <p>각 사례에서 문제의 원인, 구조 판단과 직접 담당 범위, 측정 조건이나 자료 기준을 함께 기록했습니다.</p>
+            <h2 id="work-title">사례</h2>
+            <p>원인과 판단에 더해 직접 맡은 범위와 수치를 잰 조건도 함께 적었습니다.</p>
           </header>
 
           <ol className={s.workList}>

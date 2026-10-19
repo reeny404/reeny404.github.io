@@ -1,0 +1,49 @@
+/* 첫 화면 에디터처럼 바탕 위에 놓인 보드. 조작할 수 없으므로 커서는 기본 */
+.frame {
+  cursor: default;
+}
+
+/* 선택은 되어 있는데 안에 아무것도 없는 상자 */
+.marquee {
+  fill: var(--color-accent-soft);
+  stroke: var(--color-accent);
+  stroke-width: 1.5;
+  stroke-dasharray: 6 5;
+}
+
+.corner {
+  fill: var(--color-bg-raised);
+  stroke: var(--color-accent);
+  stroke-width: 1.5;
+}
+
+.coord {
+  fill: var(--color-accent);
+  font-size: 15px;
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+.path {
+  overflow: hidden;
+  color: var(--color-text-muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 비어 있다는 걸 알아채도록 상자만 천천히 깜빡임. 움직임 줄이기에서는 멈춤 */
+@media (prefers-reduced-motion: no-preference) {
+  .slot {
+    animation: blink 2.4s var(--ease-out) infinite;
+  }
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}

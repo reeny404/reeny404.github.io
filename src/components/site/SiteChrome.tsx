@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { site } from "@/content/profile";
-import { PaletteButton, SiteNav, ThemeToggle } from "./SiteControls";
+import { SiteNav, ThemeToggle } from "./SiteControls";
 import s from "./site.module.css";
 
 export function SiteHeader() {
@@ -13,7 +13,6 @@ export function SiteHeader() {
         </Link>
         <SiteNav />
         <div className={s.controls}>
-          <PaletteButton />
           <ThemeToggle />
         </div>
       </div>

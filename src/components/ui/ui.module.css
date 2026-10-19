@@ -34,7 +34,7 @@
 }
 
 .before {
-  font-size: var(--text-lg);
+  font-size: var(--text-md);
   color: var(--color-text-muted);
   text-decoration: line-through;
   text-decoration-color: color-mix(in srgb, var(--color-text-muted) 50%, transparent);
@@ -47,8 +47,8 @@
 
 .after {
   font-size: var(--text-metric);
-  font-weight: var(--weight-bold);
-  line-height: 1.05;
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-display);
   letter-spacing: var(--tracking-tight);
   color: var(--color-accent);
 }
@@ -217,12 +217,12 @@
     transform var(--duration-instant) var(--ease-out);
 }
 
-.button:hover {
+.button:hover:not(:disabled) {
   color: inherit;
   border-color: var(--color-text-muted);
 }
 
-.button:active {
+.button:active:not(:disabled) {
   transform: scale(0.97);
 }
 
@@ -238,7 +238,7 @@
   color: var(--color-bg);
 }
 
-.primary:hover {
+.primary:hover:not(:disabled) {
   color: var(--color-bg);
   border-color: var(--color-accent);
   background: var(--color-accent);
@@ -249,9 +249,17 @@
   background: transparent;
 }
 
-.ghost:hover {
+.ghost:hover:not(:disabled) {
   background: var(--color-bg-sunken);
   border-color: transparent;
+}
+
+/* 켜고 끄는 버튼(aria-pressed)의 켜진 상태. ghost hover보다 뒤에 두어 hover 중에도 유지 */
+.button[aria-pressed="true"],
+.button[aria-pressed="true"]:hover:not(:disabled) {
+  border-color: transparent;
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
 }
 
 .sm {

@@ -120,6 +120,27 @@ export const editor = {
       undo: () => patch(id, from),
     });
   },
+  /** 콘솔 이스터 에그 shuffle(). 모든 도형을 보드 안 임의 위치와 각도로 옮기는 command 하나 */
+  shuffle() {
+    const before = doc;
+    const next: Doc = Object.fromEntries(
+      Object.values(doc).map((e) => {
+        const rotation = normalizeAngle(Math.floor(Math.random() * 24) * 15);
+        const center = clampCenter(e, Math.random() * BOARD.w, Math.random() * BOARD.h, rotation);
+        return [e.id, { ...e, rotation, ...center }];
+      }),
+    );
+    const replace = (d: Doc) => {
+      doc = d;
+      docListeners.forEach((l) => l());
+    };
+    history.execute({
+      label: "도형 섞기",
+      scope: "editor",
+      do: () => replace(next),
+      undo: () => replace(before),
+    });
+  },
   /** 처음 배치로 되돌림. 이것도 command라서 다시 ⌘Z로 직전 배치 복구 가능 */
   reset() {
     const before = doc;

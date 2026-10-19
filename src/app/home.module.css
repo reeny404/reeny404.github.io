@@ -33,7 +33,7 @@
 
 .heroText {
   display: grid;
-  gap: var(--space-5);
+  gap: var(--space-6);
 }
 
 .heroText h1 {
@@ -44,15 +44,48 @@
 
 
 .headline {
-  font-size: var(--text-2xl);
-  line-height: 1.12;
+  /* 첫 줄과 서식 툴바의 글자 크기가 이 값을 기준으로 배율 계산 */
+  --headline-size: var(--text-2xl);
+  line-height: var(--leading-display);
 }
 
+/*
+ * 제목을 받치는 한 문장이라 보조 회색이 아닌 본문 색. 위계는 크기 차이로.
+ * 줄은 한 줄을 채운 뒤 넘기고, 끊기면 어색한 구는 .phrase로 묶음
+ */
 .lede {
-  max-width: 34rem;
-  font-size: var(--text-lg);
-  line-height: var(--leading-snug);
-  color: var(--color-text-muted);
+  max-width: 32rem;
+  font-size: var(--text-md);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text);
+}
+
+@media (min-width: 1024px) {
+  .lede {
+    font-size: var(--text-lg);
+  }
+}
+
+/* 404 안내 문구는 왼쪽 칸을 끝까지 채워 한 줄에 들어가도록. 칸도 글 쪽을 넓게 */
+.ledeWide {
+  max-width: none;
+}
+
+/* 문장 속 유일한 행동이라 굵기와 강조색으로 드러냄 */
+.ledeLink {
+  font-weight: var(--weight-bold);
+  color: var(--color-accent);
+}
+
+@media (min-width: 1024px) {
+  .heroGridText {
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  }
+}
+
+/* 목적어와 동사 사이에서 줄이 나뉘지 않도록 묶는 구 */
+.phrase {
+  white-space: nowrap;
 }
 
 .cta {
@@ -129,7 +162,8 @@
 
 @media (min-width: 1024px) {
   .workRow {
-    grid-template-columns: 3rem minmax(0, 1.3fr) minmax(0, 1fr);
+    /* 내용이 주인공. 지표와 기술 열은 라벨이 한두 줄에 들어갈 만큼만 */
+    grid-template-columns: 3rem minmax(0, 2fr) minmax(15rem, 1fr);
     gap: var(--space-6);
   }
 }
@@ -296,7 +330,6 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  font-size: var(--text-lg);
 }
 
 .contact li {
@@ -312,7 +345,14 @@
 
 .skillRows {
   display: grid;
-  gap: var(--space-4);
+  gap: var(--space-5) var(--space-6);
+}
+
+/* 분류를 두 열로 나눠 옆의 사이드 프로젝트와 높이를 맞춤. 좁은 화면에서는 한 열 */
+@media (min-width: 480px) {
+  .skillRows {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 /* 분류 이름은 작게, 기술 태그가 먼저 읽히도록 */

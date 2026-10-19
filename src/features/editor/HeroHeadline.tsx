@@ -1,6 +1,7 @@
 "use client";
 
-import { useLayoutEffect, useState, type ReactNode } from "react";
+import { useLayoutEffect, useRef, useState, type ReactNode } from "react";
+import { FormatToolbar } from "./FormatToolbar";
 import s from "./headline.module.css";
 
 const TEXT = "눈앞의 버그보다,\n반복되는 이유를 봅니다";
@@ -10,7 +11,9 @@ function range(word: string) {
   return { start, end: start + word.length };
 }
 
-/** 지우는 단어와 강조하는 단어 */
+/** 둘째 줄보다 살짝 작게 쓰는 첫 줄 */
+const LEAD = { start: 0, end: TEXT.indexOf("\n") };
+/** 붉게 표시하는 단어와 강조하는 단어 */
 const BUG = range("버그");
 const FOCUS = range("반복되는 이유");
 
@@ -28,7 +31,7 @@ type State = {
 
 const FINAL: State = { typed: TEXT.length, caret: null, blink: false, selection: null, bugMarked: true, focusMarked: true, done: true };
 
-/** 입력 → 버그 드래그 → 빨간 취소선 → 반복되는 이유 드래그 → 파란 형광펜 → 커서 사라짐 */
+/** 입력 → 버그 드래그 → 붉은 글자 → 반복되는 이유 드래그 → 파란 글자 → 커서 사라짐 */
 function timeline(): Array<[number, Partial<State>]> {
   const steps: Array<[number, Partial<State>]> = [];
   let t = 350;
@@ -51,18 +54,21 @@ function timeline(): Array<[number, Partial<State>]> {
 
 /** 경계(입력 위치, 커서, 선택, 표시한 단어)마다 잘라 같은 표시끼리 묶은 조각으로 그림 */
 function renderText(state: State): ReactNode[] {
-  const cuts = new Set([0, TEXT.length, state.typed, BUG.start, BUG.end, FOCUS.start, FOCUS.end]);
+  const cuts = new Set([0, TEXT.length, state.typed, LEAD.end, BUG.start, BUG.end, FOCUS.start, FOCUS.end]);
   if (state.caret !== null) cuts.add(state.caret);
   if (state.selection) state.selection.forEach((i) => cuts.add(i));
   const points = [...cuts].sort((a, b) => a - b);
 
   const out: ReactNode[] = [];
-  const caret = (key: string) => <span key={key} className={s.caret} data-blink={state.blink} aria-hidden="true" />;
+  const caret = (at: number) => (
+    <span key={`caret-${at}`} className={`${s.caret} ${at <= LEAD.end ? s.lead : ""}`} data-blink={state.blink} aria-hidden="true" />
+  );
 
   for (let i = 0; i < points.length - 1; i++) {
     const [from, to] = [points[i], points[i + 1]];
-    if (state.caret === from) out.push(caret(`caret-${from}`));
+    if (state.caret === from) out.push(caret(from));
     const classes = [
+      to <= LEAD.end && s.lead,
       from >= state.typed && s.pending,
       state.selection && from >= state.selection[0] && to <= state.selection[1] && s.selected,
       state.bugMarked && from >= BUG.start && to <= BUG.end && s.bug,
@@ -78,13 +84,17 @@ function renderText(state: State): ReactNode[] {
       );
     else out.push(...content);
   }
-  if (state.caret === TEXT.length) out.push(caret("caret-end"));
+  if (state.caret === TEXT.length) out.push(caret(TEXT.length));
   return out;
 }
 
-/** 히어로 제목. 홈을 새로 불러올 때마다 타이핑 인트로를 보여주고, 끝나면 직접 고쳐 쓸 수 있는 텍스트 상자가 됨 */
+/**
+ * 히어로 제목. 홈을 새로 불러올 때마다 타이핑 인트로를 보여주고, 끝나면 직접 고쳐 쓸 수 있는 텍스트 상자가 됨.
+ * 인트로가 끝난 뒤에는 다시 렌더링하지 않아 사용자가 바꾼 DOM을 React가 덮어쓰지 않음
+ */
 export function HeroHeadline({ className }: { className?: string }) {
   const [state, setState] = useState<State>(FINAL);
+  const ref = useRef<HTMLSpanElement>(null);
 
   // paint 전에 시작 상태로 바꿔야 완성 문구가 한 번 보였다 사라지지 않음
   useLayoutEffect(() => {
@@ -108,14 +118,18 @@ export function HeroHeadline({ className }: { className?: string }) {
   }, []);
 
   return (
-    <span
-      className={`${s.headline} ${className ?? ""}`}
-      data-done={state.done}
-      contentEditable={state.done ? "plaintext-only" : false}
-      suppressContentEditableWarning
-      spellCheck={false}
-    >
-      {renderText(state)}
-    </span>
+    <>
+      <span
+        ref={ref}
+        className={`${s.headline} ${className ?? ""}`}
+        data-done={state.done}
+        contentEditable={state.done}
+        suppressContentEditableWarning
+        spellCheck={false}
+      >
+        {renderText(state)}
+      </span>
+      <FormatToolbar target={ref} enabled={state.done} />
+    </>
   );
 }

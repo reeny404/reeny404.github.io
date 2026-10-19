@@ -6,6 +6,7 @@
 /* 디자인 툴의 텍스트 상자처럼: hover에 점선 경계, 편집 중에는 accent 경계 */
 .headline {
   display: block;
+  font-size: var(--headline-size, 1em);
   border-radius: var(--radius-sm);
   outline: 1px dashed transparent;
   outline-offset: 8px;
@@ -30,63 +31,31 @@
   visibility: hidden;
 }
 
-.selected {
-  background: var(--color-accent-soft);
-  border-radius: 2px;
+/* 첫 줄은 둘째 줄보다 살짝 작게. 서식 툴바의 크기 단계와 같은 배율 */
+.lead {
+  font-size: calc(var(--headline-size, 1em) * 0.8);
 }
 
-/*
- * 버그는 "수정 전" 수치처럼 text-muted 글자에 danger 취소선, 반복되는 이유는 옅은 accent 형광펜.
- * 선과 형광펜은 pseudo 요소로 그려 인트로에서 transform(scaleX)만으로 왼쪽부터 그어짐
- */
+/* 드래그한 글자는 반전. 인트로의 가짜 선택과 실제 선택이 같은 모습 */
+.selected,
+.headline::selection,
+.headline ::selection {
+  background: var(--color-accent);
+  color: var(--color-bg);
+}
+
+/* 버그는 danger, 반복되는 이유는 accent 글자색. 인트로에서는 색이 서서히 바뀜 */
+.bug {
+  color: var(--color-danger);
+}
+
+.focus {
+  color: var(--color-accent);
+}
+
 .bug,
 .focus {
-  position: relative;
-}
-
-.bug {
-  color: var(--color-text-muted);
-}
-
-.bug::after {
-  content: "";
-  position: absolute;
-  inset: 52% 0 auto;
-  height: 0.09em;
-  border-radius: 1px;
-  background: var(--color-danger);
-  transform-origin: left;
-}
-
-/* 형광펜을 글자 뒤에 두되 다른 요소 뒤로 빠지지 않도록 자체 stacking context */
-.focus {
-  isolation: isolate;
-}
-
-.focus::before {
-  content: "";
-  position: absolute;
-  inset: auto -0.04em 0.06em;
-  height: 0.42em;
-  z-index: -1;
-  border-radius: 2px;
-  /* accent-soft는 라이트 모드 흰 바탕에서 거의 보이지 않아 accent를 옅게 깔아 씀 */
-  background: var(--color-accent);
-  opacity: 0.18;
-  transform-origin: left;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .headline[data-done="false"] .bug::after,
-  .headline[data-done="false"] .focus::before {
-    animation: draw var(--duration-slow) var(--ease-out);
-  }
-}
-
-@keyframes draw {
-  from {
-    transform: scaleX(0);
-  }
+  transition: color var(--duration-slow) var(--ease-out);
 }
 
 /* 폭 0인 자리 표시. 막대는 pseudo 요소라 글자 사이 간격이 바뀌지 않음 */
@@ -103,7 +72,7 @@
   position: absolute;
   inset: -0.05em auto -0.05em -1px;
   width: 3px;
-  border-radius: 2px;
+  border-radius: var(--radius-xs);
   background: var(--color-accent);
 }
 
@@ -116,3 +85,82 @@
     opacity: 0;
   }
 }
+
+/* ---------- 서식 툴바 (body에 portal로 붙음) ---------- */
+.toolbar {
+  position: fixed;
+  z-index: var(--layer-popover);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-raised);
+  box-shadow: var(--shadow-float);
+  transform: translate(-50%, -100%);
+}
+
+.toolbar[data-below="true"] {
+  transform: translate(-50%, 0);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .toolbar {
+    animation: toolbar-in var(--duration-fast) var(--ease-out);
+  }
+}
+
+@keyframes toolbar-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* 툴바 버튼은 공용 Button(ghost, sm, icon). 글자 모양만 여기서 */
+.glyph {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-regular);
+  line-height: 1;
+}
+
+.glyph sup {
+  font-size: 0.7em;
+}
+
+.toolDivider {
+  width: 1px;
+  height: 1.25rem;
+  margin: 0 var(--space-1);
+  background: var(--color-border);
+}
+
+.toolSize {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 0 var(--space-1);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.toolSize input {
+  width: 3.5ch;
+  height: 1.75rem;
+  padding: 0 var(--space-1);
+  border: 1px solid transparent;
+  border-radius: calc(var(--radius-md) - 2px);
+  background: var(--color-bg-sunken);
+  color: var(--color-text);
+  font: inherit;
+  text-align: right;
+  box-sizing: content-box;
+}
+
+/* 기본 3px 간격이면 옆 "px" 글자와 겹쳐 보여 붙여 그림 */
+.toolSize input:focus-visible {
+  outline-offset: 0;
+}
+
+

@@ -27,11 +27,14 @@ function useActions(): Action[] {
 
   return useMemo<Action[]>(
     () => [
-      { id: "home", group: "이동", label: "처음 화면", keywords: "home 홈 메인", run: () => router.push("/") },
+      { id: "home", group: "이동", label: "Home", keywords: "home 홈 메인 처음 화면", run: () => router.push("/") },
       { id: "plotplan", group: "이동", label: "PlotPlan 에디터 V2", keywords: "case plotplan editor konva 에디터 사례", run: () => router.push("/work/plotplan/") },
       { id: "chipnsoda", group: "이동", label: "ChipNSoDA 실시간 작업 상태", keywords: "case chipnsoda websocket 소켓 사례", run: () => router.push("/work/chipnsoda/") },
       { id: "miridih", group: "이동", label: "미리캔버스 저장과 결제 안정화", keywords: "case miridih miricanvas 미리디 사례", run: () => router.push("/work/miridih/") },
+      { id: "experience", group: "이동", label: "경력", keywords: "experience career 경력 회사", run: () => router.push("/#experience") },
+      { id: "lab", group: "이동", label: "실험실", keywords: "lab 실험 데모 demo", run: () => router.push("/lab/") },
       { id: "system", group: "이동", label: "디자인 시스템", keywords: "design system tokens 토큰 컴포넌트", run: () => router.push("/system/") },
+      { id: "contact", group: "이동", label: "연락처", keywords: "contact 연락처 학력", run: () => router.push("/#contact") },
       { id: "light", group: "테마", label: "라이트 모드", keywords: "theme light 밝게", run: () => setTheme("light") },
       { id: "dark", group: "테마", label: "다크 모드", keywords: "theme dark 어둡게", run: () => setTheme("dark") },
       { id: "system-theme", group: "테마", label: "시스템 설정 따르기", keywords: "theme system auto 자동", run: () => setTheme("system") },

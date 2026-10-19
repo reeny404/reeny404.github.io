@@ -38,11 +38,11 @@ export const selectedWork: CaseSummary[] = [
     index: "01",
     title: caseStudies.plotplan.title,
     context: "애자일소다 PlotPlan · 2026.03 ~ 2026.10",
-    headline: "데이터, 화면, 저장의 책임을 나눠 다시 만든 에디터",
+    headline: "데이터와 화면, 저장을 나눠 다시 만든 에디터",
     summary: [
       "드래그와 패널 입력의 좌표 계산이 서로 다르던 D3 에디터를 React + Konva로 재작성",
       "드래그로 옮기든 패널에 입력하든 같은 계산을 거치도록 모든 변경을 command로 처리, 실행 취소도 같은 command로 해결",
-      "Canvas 객체가 저장 데이터에 섞이지 않도록 편집 데이터는 store에만 두고, 화면은 store 값으로 그리도록 분리",
+      "Canvas 객체가 저장 데이터에 섞이지 않도록 편집 데이터는 store에만 두고 화면은 store 값으로 그리도록 분리",
     ],
     description: caseStudies.plotplan.description,
     metrics: [
@@ -114,7 +114,6 @@ export const selectedWork: CaseSummary[] = [
       { label: "초기 로딩", before: "19초", after: "4초" },
       { label: "결제 데이터 유실", before: "월 12건", after: "0건" },
     ],
-    note: { label: "자료 기준", text: "재직 당시 직접 관리한 업무 기록 기준" },
     linkLabel: "미리디 사례",
   },
 ];

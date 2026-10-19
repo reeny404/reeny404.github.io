@@ -1,4 +1,5 @@
 .demo {
+  container-type: inline-size;
   display: grid;
   gap: var(--space-4);
   padding: var(--space-4);
@@ -39,24 +40,31 @@
   background: var(--color-bg-raised);
   color: var(--color-text);
   font-weight: var(--weight-semibold);
-  box-shadow: 0 1px 2px rgb(22 26 51 / 0.12);
+  box-shadow: var(--shadow-subtle);
 }
+
 
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(var(--cols), 1fr);
-  gap: 4px;
-  padding: var(--space-3);
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--space-1);
+  padding: var(--space-2);
   border-radius: var(--radius-md);
   background: var(--color-bg-sunken);
 }
 
-/* 좁은 화면에서도 노드가 24px 이상의 터치 영역을 갖도록 열 수를 줄임 */
-@media (max-width: 640px) {
+/* 노드가 24px 이상의 터치 영역을 갖는 범위에서 가로로 넓게 배치해, 그리드 아래 횟수까지 한 화면에 들어오도록 */
+@container (min-width: 45rem) {
   .grid {
-    grid-template-columns: repeat(12, 1fr);
-    padding: var(--space-2);
+    grid-template-columns: repeat(24, 1fr);
+    padding: var(--space-3);
+  }
+}
+
+@container (min-width: 64rem) {
+  .grid {
+    grid-template-columns: repeat(36, 1fr);
   }
 }
 
@@ -65,7 +73,7 @@
   min-width: 0;
   padding: 0;
   border: 1px solid var(--color-border);
-  border-radius: 3px;
+  border-radius: var(--radius-xs);
   background: transparent;
   cursor: pointer;
 }
@@ -90,8 +98,74 @@
   color: var(--color-text-muted);
 }
 
+.stats > div {
+  position: relative;
+}
+
+.stats dt {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.info {
+  display: inline-flex;
+}
+
+.infoButton {
+  display: inline-grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: help;
+}
+
+.infoButton:hover,
+.infoButton:focus-visible {
+  color: var(--color-text);
+}
+
+/* 기준은 항목 칸. 오른쪽 칸은 오른쪽 끝에 맞춰 좁은 화면에서도 밖으로 넘치지 않도록 */
+.tooltip {
+  position: absolute;
+  top: calc(100% + var(--space-1));
+  left: 0;
+  z-index: var(--layer-popover);
+  width: min(20rem, calc(100vw - var(--gutter) * 2 - var(--space-6)));
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-raised);
+  box-shadow: var(--shadow-float);
+  font-size: var(--text-xs);
+  line-height: var(--leading-snug);
+  color: var(--color-text);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-2px);
+  transition: opacity var(--duration-fast) var(--ease-out), transform var(--duration-fast) var(--ease-out), visibility var(--duration-fast);
+  pointer-events: none;
+}
+
+.stats > div:last-child .tooltip {
+  left: auto;
+  right: 0;
+}
+
+.info:hover .tooltip,
+.info:focus-within .tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
 .stats dd {
-  font-size: var(--text-xl);
+  font-size: var(--text-metric);
   font-weight: var(--weight-bold);
   letter-spacing: var(--tracking-tight);
 }

@@ -4,16 +4,15 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSyncExternalStore } from "react";
 import { Button } from "@/components/ui";
-import { palette } from "@/features/command/palette-store";
-import { useShortcutLabels } from "@/features/command/shortcuts";
 import { resolvedTheme, setTheme, useThemeChoice } from "@/features/theme/theme";
 import s from "./site.module.css";
 
+// 디자인 시스템은 실험실 안의 한 항목이라 실험실 메뉴로 표시
 const NAV = [
-  { href: "/#work", label: "사례", match: "/work/" },
-  { href: "/system/", label: "디자인 시스템", match: "/system/" },
-  { href: "/#experience", label: "경력", match: null },
-  { href: "/#contact", label: "연락처", match: null },
+  { href: "/#work", label: "사례", match: ["/work/"] },
+  { href: "/#experience", label: "경력", match: [] },
+  { href: "/lab/", label: "실험실", match: ["/lab/", "/system/"] },
+  { href: "/#contact", label: "연락처", match: [] },
 ] as const;
 
 export function SiteNav() {
@@ -22,7 +21,7 @@ export function SiteNav() {
     <nav className={s.nav} aria-label="주요 메뉴">
       <ul>
         {NAV.map((item) => {
-          const current = item.match !== null && pathname.startsWith(item.match);
+          const current = item.match.some((m) => pathname.startsWith(m));
           return (
             <li key={item.href}>
               <Link href={item.href} aria-current={current ? "page" : undefined}>
@@ -37,17 +36,6 @@ export function SiteNav() {
 }
 
 const subscribeNoop = () => () => {};
-
-export function PaletteButton() {
-  const keys = useShortcutLabels();
-  return (
-    <Button variant="ghost" size="sm" onClick={() => palette.open()} aria-keyshortcuts="Meta+K Control+K">
-      <span className={s.paletteLabel}>명령</span>
-      <span className="visually-hidden">팔레트 열기</span>
-      <kbd>{keys.palette}</kbd>
-    </Button>
-  );
-}
 
 export function ThemeToggle() {
   const choice = useThemeChoice();
