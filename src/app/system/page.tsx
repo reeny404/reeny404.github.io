@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Button, CodeFlow, Compare, DataTable, Eyebrow, MetricList, Note, TagList } from "@/components/ui";
 import { contrastRatio, wcagLevel } from "@/design/contrast";
-import { breakpoints, colors, motion, radius, space, typography } from "@/design/tokens";
+import { breakpoints, colors, layers, motion, radius, shadows, space, typography } from "@/design/tokens";
 import { OpenPaletteButton, ShortcutTable, ThemeSwitcher } from "./SystemControls";
 import s from "./system.module.css";
 
@@ -25,6 +25,7 @@ const TOC = [
   ["color", "색"],
   ["type", "글자"],
   ["space", "간격과 모서리"],
+  ["elevation", "그림자와 겹침"],
   ["motion", "움직임"],
   ["components", "컴포넌트"],
   ["patterns", "패턴"],
@@ -173,6 +174,36 @@ export default function SystemPage() {
         </Block>
 
         <Block
+          id="elevation"
+          eyebrow="Foundations"
+          title="그림자와 겹침"
+          lede={
+            <>
+              그림자는 바탕 위에 올려 둔 것과 떠 있는 것에만. 다크 모드에서는 남색 대신 검정 계열로 바뀜. 대화상자 뒤는 <code>--color-scrim</code>으로 덮음.
+            </>
+          }
+        >
+          <ul className={s.radii}>
+            {shadows.map((sh) => (
+              <li key={sh.name}>
+                <span className={s.shadowBox} style={{ boxShadow: `var(--shadow-${sh.name})` }} />
+                <code>--shadow-{sh.name}</code>
+                <span>{sh.usage}</span>
+              </li>
+            ))}
+          </ul>
+          <ul className={`${s.spaceScale} ${s.layerList}`}>
+            {layers.map((l) => (
+              <li key={l.name}>
+                <code>--layer-{l.name}</code>
+                <span className={s.hex}>{l.value}</span>
+                <span>{l.usage}</span>
+              </li>
+            ))}
+          </ul>
+        </Block>
+
+        <Block
           id="motion"
           eyebrow="Foundations"
           title="움직임"
@@ -195,13 +226,19 @@ export default function SystemPage() {
 
         <Block id="components" eyebrow="Components" title="컴포넌트" lede="사이트 전체가 쓰는 컴포넌트를 그대로 렌더링.">
           <div className={s.specimens}>
-            <Specimen name="Button" note="hover에서 테두리 강조, 누르면 0.97로 축소(80ms), 포커스는 2px accent outline.">
+            <Specimen name="Button" note="hover에서 테두리 강조, 누르면 0.97로 축소(80ms), 포커스는 2px accent outline. 켜고 끄는 버튼은 aria-pressed로 켜진 상태 표시.">
               <div className={s.row}>
                 <Button variant="primary">저장</Button>
                 <Button>취소</Button>
                 <Button variant="ghost">더 보기</Button>
                 <Button size="sm">작게</Button>
                 <Button disabled>비활성</Button>
+                <Button variant="ghost" size="sm" icon aria-pressed="true" aria-label="굵게 (켜짐)">
+                  <b>B</b>
+                </Button>
+                <Button variant="ghost" size="sm" icon aria-pressed="false" aria-label="기울임 (꺼짐)">
+                  <i>I</i>
+                </Button>
               </div>
             </Specimen>
 

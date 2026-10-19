@@ -13,6 +13,8 @@
 ## 규칙
 
 - 컴포넌트 CSS는 semantic 토큰(`--color-text`, `--space-4` …)만 참조. hex, px 값을 직접 쓰지 않음 (도식의 SVG 좌표 제외)
+- 그림자는 `--shadow-subtle | raised | float | overlay`, 겹침 순서는 `--layer-*`만 사용. 그림자는 미니 에디터처럼 바탕 위에 올려 둔 것과 떠 있는 것에만
+- 버튼은 모두 `Button`. 아이콘 버튼은 `variant="ghost" size="sm" icon`, 켜고 끄는 버튼은 `aria-pressed`
 - 테마: `<html data-theme>` 없음 = 시스템 설정, `light` | `dark` = 강제. 첫 paint 전 인라인 스크립트로 적용
 - 상태를 바꾸는 사용자 조작은 `history.execute(command)`를 통과. 화면 전용 상태(hover, 드래그 미리보기)는 제외
 - 구독은 그 값이 필요한 가장 작은 컴포넌트에서. 목록 항목은 자기 값만 구독
@@ -27,10 +29,13 @@
 | `Note` | `components/ui` | `default` 측정 조건, `scope` 기여 구분, `caution` 해석 한계 |
 | `DataTable` | `components/ui` | 측정 비교표. `numeric` 열 오른쪽 정렬, `{ result: true }` 강조 |
 | `Compare` | `components/ui` | 기존과 변경 두 열 |
-| `Button`, `buttonClass` | `components/ui` | `default`, `primary`, `ghost` × `md`, `sm`, `icon` |
+| `Button`, `buttonClass` | `components/ui` | `default`, `primary`, `ghost` × `md`, `sm`, `icon`. `aria-pressed`로 켜진 상태 |
 | `TagList`, `CodeFlow` | `components/ui` | 기술 목록, 텍스트 도식 |
 | `CaseHero`, `Chapter`, `Pager` | `components/case` | 사례 상세 구성. 제목은 첫 화면과 `ViewTransition`으로 연결 |
 | `CommandPalette`, `HistoryToast` | `features/command` | ⌘K, 실행 취소 알림 |
+| `HeroHeadline`, `FormatToolbar` | `features/editor` | 첫 화면 제목. 인트로 뒤 직접 고쳐 쓰는 텍스트 상자와 선택 영역 위 서식 툴바 |
+| `MiniEditor` | `features/editor` | 첫 화면 도형 편집 데모. 이동, 회전, 확대와 실행 취소 |
+| `RenderDemo` | `features/render-demo` | 구독 범위에 따른 render 횟수 비교 데모 |
 
 ## 문구
 
