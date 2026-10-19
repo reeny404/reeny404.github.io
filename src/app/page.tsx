@@ -38,7 +38,7 @@ export default function Home() {
               <HeroHeadline className={s.headline} />
             </h1>
             <p className={s.lede}>
-              플랜트 공정설계 에디터를 다시 설계해 편집 데이터를 한곳에 모으고 이동과 회전, 저장이 같은 경로를 거치게 했습니다.
+              드래그와 패널 입력이 서로 다른 로직으로 <span className={s.phrase}>좌표를 계산해</span> 되풀이되던 문제를 구조부터 고쳤습니다.
             </p>
           </div>
           <MiniEditor />
