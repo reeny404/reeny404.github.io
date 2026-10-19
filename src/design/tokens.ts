@@ -74,7 +74,7 @@ export const typography = {
     { name: "lg", size: "1.25rem", usage: "요약, 소제목" },
     { name: "xl", size: "clamp(1.5rem, 1.2rem + 1.2vw, 2rem)", usage: "섹션 제목" },
     { name: "2xl", size: "clamp(2.25rem, 1.5rem + 3vw, 3.75rem)", usage: "페이지 제목" },
-    { name: "metric", size: "clamp(1.75rem, 1.3rem + 1.8vw, 2.5rem)", usage: "변경 후 수치" },
+    { name: "metric", size: "clamp(1.375rem, 1.2rem + 0.6vw, 1.75rem)", usage: "변경 후 수치. 사례 제목보다 크지 않게" },
   ],
   weight: { regular: 400, medium: 500, semibold: 600, bold: 700 },
   leading: { display: 1.1, tight: 1.2, snug: 1.45, relaxed: 1.55, body: 1.7 },

@@ -141,7 +141,8 @@
 
 @media (min-width: 1024px) {
   .workRow {
-    grid-template-columns: 3rem minmax(0, 1.3fr) minmax(0, 1fr);
+    /* 내용이 주인공. 지표와 기술 열은 라벨이 한두 줄에 들어갈 만큼만 */
+    grid-template-columns: 3rem minmax(0, 2fr) minmax(15rem, 1fr);
     gap: var(--space-6);
   }
 }
