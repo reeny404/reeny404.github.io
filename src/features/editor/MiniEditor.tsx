@@ -1,6 +1,7 @@
 "use client";
 
 import { memo, useEffect, useRef, useState, type ReactNode } from "react";
+import { Button } from "@/components/ui";
 import { history, useHistory } from "@/features/command/history";
 import { useShortcutLabels } from "@/features/command/shortcuts";
 import {
@@ -261,9 +262,10 @@ function IconButton({
   children: ReactNode;
 }) {
   return (
-    <button
-      type="button"
-      className={s.iconButton}
+    <Button
+      variant="ghost"
+      size="sm"
+      icon
       aria-label={label}
       aria-keyshortcuts={shortcut}
       title={hint ? `${label} (${hint})` : label}
@@ -273,7 +275,7 @@ function IconButton({
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         {children}
       </svg>
-    </button>
+    </Button>
   );
 }
 

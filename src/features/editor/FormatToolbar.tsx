@@ -2,6 +2,7 @@
 
 import { useEffect, useLayoutEffect, useRef, useState, type ReactNode, type RefObject } from "react";
 import { createPortal } from "react-dom";
+import { Button } from "@/components/ui";
 import { useIsMac } from "@/features/command/shortcuts";
 import s from "./headline.module.css";
 
@@ -186,10 +187,11 @@ export function FormatToolbar({ target, enabled }: { target: RefObject<HTMLEleme
       onMouseDown={(ev) => ev.target instanceof HTMLInputElement || ev.preventDefault()}
     >
       {FORMATS.map((f) => (
-        <button
+        <Button
           key={f.cmd}
-          type="button"
-          className={s.toolButton}
+          variant="ghost"
+          size="sm"
+          icon
           aria-label={f.label}
           aria-pressed={status.active[f.cmd]}
           title={`${f.label} (${keys(f)})`}
@@ -198,20 +200,23 @@ export function FormatToolbar({ target, enabled }: { target: RefObject<HTMLEleme
             setStatus({ ...status, active: { ...status.active, [f.cmd]: document.queryCommandState(f.cmd) } });
           }}
         >
-          {f.glyph}
-        </button>
+          <span className={s.glyph}>{f.glyph}</span>
+        </Button>
       ))}
       <span className={s.toolDivider} aria-hidden="true" />
-      <button
-        type="button"
-        className={s.toolButton}
+      <Button
+        variant="ghost"
+        size="sm"
+        icon
         aria-label="글자 작게"
         title={`글자 작게 (${sizeKey(",")})`}
         disabled={status.size <= STEPS[0]}
         onClick={() => setSize(stepFrom(status.size, -1))}
       >
-        A<sup>−</sup>
-      </button>
+        <span className={s.glyph}>
+          A<sup>−</sup>
+        </span>
+      </Button>
       <label className={s.toolSize}>
         <input
           type="text"
@@ -241,16 +246,19 @@ export function FormatToolbar({ target, enabled }: { target: RefObject<HTMLEleme
         />
         px
       </label>
-      <button
-        type="button"
-        className={s.toolButton}
+      <Button
+        variant="ghost"
+        size="sm"
+        icon
         aria-label="글자 크게"
         title={`글자 크게 (${sizeKey(".")})`}
         disabled={status.size >= STEPS[STEPS.length - 1]}
         onClick={() => setSize(stepFrom(status.size, 1))}
       >
-        A<sup>+</sup>
-      </button>
+        <span className={s.glyph}>
+          A<sup>+</sup>
+        </span>
+      </Button>
     </div>,
     document.body,
   );
