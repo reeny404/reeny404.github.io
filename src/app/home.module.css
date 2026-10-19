@@ -44,7 +44,8 @@
 
 
 .headline {
-  font-size: var(--text-2xl);
+  /* 첫 줄과 서식 툴바의 글자 크기가 이 값을 기준으로 배율 계산 */
+  --headline-size: var(--text-2xl);
   line-height: 1.12;
 }
 
