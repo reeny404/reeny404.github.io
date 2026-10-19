@@ -90,10 +90,6 @@
   gap: var(--space-1);
 }
 
-.paletteLabel {
-  color: var(--color-text-muted);
-}
-
 /* 좁은 화면: 메뉴는 아래 줄에서 가로 스크롤 */
 @media (max-width: 767px) {
   .headerInner {
@@ -103,10 +99,6 @@
 
   .controls {
     margin-left: auto;
-  }
-
-  .paletteLabel {
-    display: none;
   }
 
   .nav {

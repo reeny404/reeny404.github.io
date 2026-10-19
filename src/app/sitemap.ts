@@ -3,7 +3,7 @@ import { site } from "@/content/profile";
 
 export const dynamic = "force-static";
 
-const paths = ["/", "/work/plotplan/", "/work/chipnsoda/", "/work/miridih/", "/system/"];
+const paths = ["/", "/work/plotplan/", "/work/chipnsoda/", "/work/miridih/", "/lab/", "/system/"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return paths.map((p) => ({
