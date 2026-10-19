@@ -16,8 +16,8 @@ export const experience = [
   {
     company: "애자일소다",
     companyEn: "AgileSoDA",
-    periods: ["2026.01 ~ 현재", "2024.11 ~ 2025.12"],
-    role: "수석연구원, Frontend Lead 역할 · 이전 Frontend Engineer, 프리랜서",
+    periods: ["2026.01 ~ 현재", "2024.11 ~ 2025.12 프리랜서"],
+    role: "Frontend Lead",
     summary: "AI 기반 플랜트 공정설계와 반도체 Floor Plan 설계 도구 개발.",
     points: [
       "PlotPlan 에디터 V2의 document store와 command 구조, 좌표 계산과 저장 경로 설계와 구현",
