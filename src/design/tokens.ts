@@ -77,7 +77,7 @@ export const typography = {
     { name: "metric", size: "clamp(1.75rem, 1.3rem + 1.8vw, 2.5rem)", usage: "변경 후 수치" },
   ],
   weight: { regular: 400, medium: 500, semibold: 600, bold: 700 },
-  leading: { tight: 1.2, snug: 1.45, body: 1.7 },
+  leading: { display: 1.1, tight: 1.2, snug: 1.45, relaxed: 1.55, body: 1.7 },
   tracking: { tight: "-0.025em", label: "0.06em" },
 } as const;
 
@@ -93,7 +93,33 @@ export const space = [
   ["9", "6rem"],
 ] as const;
 
-export const radius = { sm: "4px", md: "8px", lg: "14px", pill: "999px" } as const;
+export const radius = { xs: "2px", sm: "4px", md: "8px", lg: "14px", pill: "999px" } as const;
+
+/**
+ * 바탕 위에 올려 둔 정도. 그림자 색이 바탕에 따라 달라 라이트와 다크 값을 따로 둔다
+ */
+export const shadows = [
+  { name: "subtle", light: "0 1px 2px rgb(22 26 51 / 0.12)", dark: "0 1px 2px rgb(0 0 0 / 0.4)", usage: "segmented 컨트롤의 선택된 칸" },
+  {
+    name: "raised",
+    light: "0 1px 0 var(--color-border), 0 24px 48px -32px rgb(22 26 51 / 0.35)",
+    dark: "0 1px 0 var(--color-border), 0 24px 48px -32px rgb(0 0 0 / 0.7)",
+    usage: "첫 화면 미니 에디터",
+  },
+  { name: "float", light: "0 12px 32px -12px rgb(22 26 51 / 0.4)", dark: "0 12px 32px -12px rgb(0 0 0 / 0.6)", usage: "서식 툴바, 실행 취소 알림" },
+  { name: "overlay", light: "0 24px 64px -16px rgb(22 26 51 / 0.35)", dark: "0 24px 64px -16px rgb(0 0 0 / 0.6)", usage: "명령 팔레트" },
+] as const;
+
+/** 대화상자 뒤를 덮는 막 */
+export const scrim = { light: "rgb(22 26 51 / 0.32)", dark: "rgb(0 0 0 / 0.55)" } as const;
+
+/** 겹침 순서. 큰 값이 위. 명령 팔레트는 <dialog> top layer라 여기에 없음 */
+export const layers = [
+  { name: "header", value: 20, usage: "고정 헤더" },
+  { name: "popover", value: 40, usage: "서식 툴바" },
+  { name: "toast", value: 50, usage: "실행 취소 알림" },
+  { name: "skip-link", value: 100, usage: "본문 바로가기" },
+] as const;
 
 export const motion = {
   duration: [

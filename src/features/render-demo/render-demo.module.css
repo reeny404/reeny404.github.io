@@ -39,14 +39,14 @@
   background: var(--color-bg-raised);
   color: var(--color-text);
   font-weight: var(--weight-semibold);
-  box-shadow: 0 1px 2px rgb(22 26 51 / 0.12);
+  box-shadow: var(--shadow-subtle);
 }
 
 
 .grid {
   display: grid;
   grid-template-columns: repeat(var(--cols), 1fr);
-  gap: 4px;
+  gap: var(--space-1);
   padding: var(--space-3);
   border-radius: var(--radius-md);
   background: var(--color-bg-sunken);
@@ -65,7 +65,7 @@
   min-width: 0;
   padding: 0;
   border: 1px solid var(--color-border);
-  border-radius: 3px;
+  border-radius: var(--radius-xs);
   background: transparent;
   cursor: pointer;
 }

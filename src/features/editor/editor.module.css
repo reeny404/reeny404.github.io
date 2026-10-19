@@ -3,7 +3,7 @@
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   background: var(--color-bg-raised);
-  box-shadow: 0 1px 0 var(--color-border), 0 24px 48px -32px rgb(22 26 51 / 0.35);
+  box-shadow: var(--shadow-raised);
 }
 
 .board {
@@ -153,36 +153,6 @@
 .historyControls {
   right: var(--space-2);
   bottom: var(--space-2);
-}
-
-.iconButton {
-  display: grid;
-  place-items: center;
-  width: 2rem;
-  height: 2rem;
-  padding: 0;
-  border: 0;
-  border-radius: calc(var(--radius-md) - 2px);
-  background: transparent;
-  color: var(--color-text);
-  cursor: pointer;
-  transition:
-    background-color var(--duration-fast) var(--ease-out),
-    transform var(--duration-instant) var(--ease-out);
-}
-
-.iconButton:hover:not(:disabled) {
-  background: var(--color-bg-sunken);
-}
-
-.iconButton:active:not(:disabled) {
-  transform: scale(0.92);
-}
-
-.iconButton:disabled {
-  color: var(--color-text-muted);
-  opacity: 0.4;
-  cursor: default;
 }
 
 .status {

@@ -72,7 +72,7 @@
   position: absolute;
   inset: -0.05em auto -0.05em -1px;
   width: 3px;
-  border-radius: 2px;
+  border-radius: var(--radius-xs);
   background: var(--color-accent);
 }
 
@@ -89,7 +89,7 @@
 /* ---------- 서식 툴바 (body에 portal로 붙음) ---------- */
 .toolbar {
   position: fixed;
-  z-index: 50;
+  z-index: var(--layer-popover);
   display: flex;
   align-items: center;
   gap: 2px;
@@ -97,7 +97,7 @@
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   background: var(--color-bg-raised);
-  box-shadow: 0 12px 32px -16px rgb(22 26 51 / 0.4);
+  box-shadow: var(--shadow-float);
   transform: translate(-50%, -100%);
 }
 
@@ -117,40 +117,14 @@
   }
 }
 
-.toolButton {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 2rem;
-  height: 2rem;
-  padding: 0 var(--space-1);
-  border: 0;
-  border-radius: calc(var(--radius-md) - 2px);
-  background: transparent;
-  color: var(--color-text);
-  font-family: var(--font-sans);
+/* 툴바 버튼은 공용 Button(ghost, sm, icon). 글자 모양만 여기서 */
+.glyph {
   font-size: var(--text-sm);
   font-weight: var(--weight-regular);
   line-height: 1;
-  cursor: pointer;
-  transition: background-color var(--duration-fast) var(--ease-out);
 }
 
-.toolButton:hover:not(:disabled) {
-  background: var(--color-bg-sunken);
-}
-
-.toolButton[aria-pressed="true"] {
-  background: var(--color-accent-soft);
-  color: var(--color-accent);
-}
-
-.toolButton:disabled {
-  opacity: 0.4;
-  cursor: default;
-}
-
-.toolButton sup {
+.glyph sup {
   font-size: 0.7em;
 }
 
@@ -174,7 +148,7 @@
 .toolSize input {
   width: 3.5ch;
   height: 1.75rem;
-  padding: 0 4px;
+  padding: 0 var(--space-1);
   border: 1px solid transparent;
   border-radius: calc(var(--radius-md) - 2px);
   background: var(--color-bg-sunken);
@@ -184,7 +158,9 @@
   box-sizing: content-box;
 }
 
-.toolSize input:focus {
-  outline: none;
-  border-color: var(--color-accent);
+/* 기본 3px 간격이면 옆 "px" 글자와 겹쳐 보여 붙여 그림 */
+.toolSize input:focus-visible {
+  outline-offset: 0;
 }
+
+
