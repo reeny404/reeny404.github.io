@@ -116,6 +116,7 @@ export const scrim = { light: "rgb(22 26 51 / 0.32)", dark: "rgb(0 0 0 / 0.55)" 
 /** 겹침 순서. 큰 값이 위. 명령 팔레트는 <dialog> top layer라 여기에 없음 */
 export const layers = [
   { name: "header", value: 20, usage: "고정 헤더" },
+  { name: "floating", value: 30, usage: "맨 위로 버튼" },
   { name: "popover", value: 40, usage: "서식 툴바" },
   { name: "toast", value: 50, usage: "실행 취소 알림" },
   { name: "skip-link", value: 100, usage: "본문 바로가기" },

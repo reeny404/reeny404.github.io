@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import fontStats from "@/app/fonts/subset-stats.json";
 import { site } from "@/content/profile";
 import { editor } from "@/features/editor/store";
+import { rain, stopRain } from "./rain";
 
 // 콘솔 배경은 브라우저 테마를 따르므로 본문은 기본 색을 두고, 강조에만 양쪽 테마에서 읽히는 파랑
 const TITLE = "font: 700 18px/1.8 Pretendard, sans-serif; color: #4C74FF";
@@ -26,6 +27,7 @@ type ConsoleWindow = typeof window & {
   hello?: () => void;
   shuffle?: () => void;
   btw?: () => void;
+  rain?: (() => void) & { stop: () => void };
 };
 
 /**
@@ -50,6 +52,7 @@ export function ConsoleGreeting() {
       ["hello()", "메일로 인사 나누기. 커피챗도 버그 제보도 반가워요"],
       ["shuffle()", `첫 화면 도형 흩뜨리기. ${undo}면 제자리로`],
       ["btw()", "이 사이트 뒷이야기 한 토막"],
+      ["rain()", "화면 위로 공 쏟기. 부를수록 더, rain.stop()이면 치우기"],
     ];
     const width = Math.max(...commands.map(([name]) => name.length)) + 2;
     const lines: [string, string][] = [
@@ -81,6 +84,18 @@ export function ConsoleGreeting() {
       editor.shuffle();
       say(`${undo} 한 번이면 제자리로 돌아와요.`);
     };
+
+    w.rain = Object.assign(
+      () => {
+        if (rain()) say("후두두두. 한 번 더 부르면 더 쏟아지고, rain.stop()이면 치워요.");
+        else say("화면이 공으로 꽉 찼어요. rain.stop()으로 치우고 다시 불러 주세요.");
+      },
+      {
+        stop: () => {
+          say(stopRain() ? "다 치웠어요." : "치울 공이 없어요. rain()부터 불러 주세요.");
+        },
+      },
+    );
 
     let btwIndex = 0;
     w.btw = () => {

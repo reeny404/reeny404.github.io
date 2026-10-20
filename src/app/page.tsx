@@ -6,6 +6,7 @@ import { selectedWork } from "@/content/cases";
 import { education, experience, sideProjects, site, skills } from "@/content/profile";
 import { HeroHeadline } from "@/features/editor/HeroHeadline";
 import { MiniEditor } from "@/features/editor/MiniEditor";
+import { SkillBalls } from "@/features/skill-balls/SkillBalls";
 import s from "./home.module.css";
 
 const personJsonLd = {
@@ -150,6 +151,7 @@ export default function Home() {
                 </div>
               ))}
             </dl>
+            <SkillBalls />
           </div>
           <div>
             <header className={s.sectionHead} data-reveal>

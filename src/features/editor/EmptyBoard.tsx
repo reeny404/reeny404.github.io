@@ -1,6 +1,7 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import { useMemo, useSyncExternalStore } from "react";
+import { SlotBalls } from "@/features/not-found/SlotBalls";
 import { Glyph } from "./MiniEditor";
 import { BOARD, GRID, type Shape } from "./store";
 import s from "./editor.module.css";
@@ -38,7 +39,7 @@ const subscribeNoop = () => () => {};
 export function EmptyBoard() {
   // 정적 404.html은 빌드할 때 주소를 모름. hydration이 끝난 뒤 브라우저에서만 읽고, 그 전에는 빈 자리를 숨김
   const path = useSyncExternalStore(subscribeNoop, () => decodeURI(window.location.pathname), () => null);
-  const slot = slotFor(path ?? "");
+  const slot = useMemo(() => slotFor(path ?? ""), [path]);
   const left = slot.cx - SLOT.w / 2;
   const top = slot.cy - SLOT.h / 2;
 
@@ -67,18 +68,20 @@ export function EmptyBoard() {
             ].map(([x, y]) => (
               <rect key={`${x}-${y}`} x={x - 4} y={y - 4} width={8} height={8} rx={2} className={b.corner} />
             ))}
-            <text x={slot.cx} y={slot.cy} className={b.coord} textAnchor="middle" dominantBaseline="central">
+            {/* 상자 안은 공으로 쓴 404가 채우므로 좌표는 상자 위에 */}
+            <text x={slot.cx} y={top - 12} className={b.coord} textAnchor="middle">
               ({slot.cx}, {slot.cy})
             </text>
           </g>
         </svg>
+        {path !== null && <SlotBalls slot={slot} shapes={shapes} />}
         <p className={s.status}>
           <span className={s.badge}>404</span>
           <span className={b.path}>{path ?? ""}</span>
         </p>
       </div>
       <figcaption className="visually-hidden">
-        첫 화면 에디터의 도형들이 가장자리에 있고, 가운데 {path ?? "요청한 주소"} 자리의 선택 상자만 비어 있는 보드
+        첫 화면 에디터의 도형들이 가장자리에 있고, 가운데 {path ?? "요청한 주소"} 자리의 선택 상자를 공으로 쓴 404가 채운 보드
       </figcaption>
     </figure>
   );
