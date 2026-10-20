@@ -124,6 +124,19 @@
   color: var(--color-text-muted);
 }
 
+.pagerArrow {
+  display: inline-block;
+  transition: transform var(--duration-base) var(--ease-spring);
+}
+
+.pager a:first-child:hover .pagerArrow {
+  transform: translateX(-4px);
+}
+
+.pager a:last-child:hover .pagerArrow {
+  transform: translateX(4px);
+}
+
 .pagerTitle {
   font-weight: var(--weight-semibold);
 }

@@ -40,6 +40,7 @@
 }
 
 .nav ul {
+  position: relative;
   display: flex;
   gap: var(--space-1);
   margin: 0;
@@ -82,6 +83,24 @@
   height: 2px;
   border-radius: var(--radius-xs);
   background: var(--color-accent);
+}
+
+/* 미끄러지는 밑줄. 준비되면 링크마다 있던 ::after 밑줄을 대신함 */
+.navBar {
+  position: absolute;
+  left: 0;
+  bottom: 2px;
+  width: 100px;
+  height: 2px;
+  border-radius: var(--radius-xs);
+  background: var(--color-accent);
+  transform-origin: left;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.nav ul[data-ready] a[aria-current="page"]::after {
+  display: none;
 }
 
 .controls {

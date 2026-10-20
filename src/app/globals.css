@@ -237,7 +237,21 @@ hr {
   }
 }
 
+/* ---------- Scroll reveal (features/motion/ScrollReveal) ---------- */
+
+/* 화면 아래에 있어 아직 재생 전인 요소. 재생 중에는 anime.js의 inline 값이 이 규칙을 덮음 */
+[data-reveal-state="pending"]:not([data-reveal="children"]),
+[data-reveal="children"][data-reveal-state="pending"] > * {
+  opacity: 0;
+}
+
 @media print {
+  [data-reveal-state] > *,
+  [data-reveal-state] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
   .no-print {
     display: none !important;
   }

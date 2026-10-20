@@ -32,7 +32,7 @@ function Item({
   demo?: ReactNode;
 }) {
   return (
-    <li className={s.item} id={id} aria-labelledby={`${id}-title`}>
+    <li className={s.item} id={id} aria-labelledby={`${id}-title`} data-reveal>
       <span className={s.index} aria-hidden="true">
         {index}
       </span>

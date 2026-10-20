@@ -1,9 +1,11 @@
 "use client";
 
+import { animate, utils } from "animejs";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useSyncExternalStore } from "react";
+import { useLayoutEffect, useRef, useSyncExternalStore } from "react";
 import { Button } from "@/components/ui";
+import { prefersReducedMotion, settle } from "@/features/motion/motion";
 import { resolvedTheme, setTheme, useThemeChoice } from "@/features/theme/theme";
 import s from "./site.module.css";
 
@@ -15,21 +17,59 @@ const NAV = [
   { href: "/#contact", label: "연락처", match: [] },
 ] as const;
 
+/** 밑줄 막대의 기준 폭(px). 실제 폭은 scaleX로 맞춰 transform만 움직임 */
+const BAR = 100;
+
 export function SiteNav() {
   const pathname = usePathname();
+  const current = NAV.findIndex((item) => item.match.some((m) => pathname.startsWith(m)));
+  const listRef = useRef<HTMLUListElement>(null);
+  const barRef = useRef<HTMLLIElement>(null);
+  const shown = useRef(false);
+
+  // 현재 메뉴 밑줄 하나가 메뉴 사이를 미끄러져 이동. JS 전에는 각 링크의 ::after 밑줄이 대신 보임
+  useLayoutEffect(() => {
+    const list = listRef.current;
+    const bar = barRef.current;
+    if (!list || !bar) return;
+
+    const place = (moving: boolean) => {
+      const link = list.querySelector<HTMLElement>('a[aria-current="page"]');
+      if (!link) {
+        if (shown.current) animate(bar, { opacity: 0, duration: 140, ease: "out" });
+        shown.current = false;
+        return;
+      }
+      const inset = parseFloat(getComputedStyle(link).paddingLeft);
+      const to = { x: link.offsetLeft + inset, scaleX: (link.offsetWidth - inset * 2) / BAR };
+      if (moving && shown.current && !prefersReducedMotion()) {
+        animate(bar, { ...to, ease: settle() });
+      } else {
+        utils.set(bar, to);
+        if (moving && !shown.current) animate(bar, { opacity: [0, 1], duration: 140, ease: "out" });
+        else utils.set(bar, { opacity: 1 });
+      }
+      shown.current = true;
+    };
+
+    place(list.dataset.ready !== undefined);
+    list.dataset.ready = "";
+    const ro = new ResizeObserver(() => place(false));
+    ro.observe(list);
+    return () => ro.disconnect();
+  }, [current]);
+
   return (
     <nav className={s.nav} aria-label="주요 메뉴">
-      <ul>
-        {NAV.map((item) => {
-          const current = item.match.some((m) => pathname.startsWith(m));
-          return (
-            <li key={item.href}>
-              <Link href={item.href} aria-current={current ? "page" : undefined}>
-                {item.label}
-              </Link>
-            </li>
-          );
-        })}
+      <ul ref={listRef}>
+        {NAV.map((item, i) => (
+          <li key={item.href}>
+            <Link href={item.href} aria-current={i === current ? "page" : undefined}>
+              {item.label}
+            </Link>
+          </li>
+        ))}
+        <li ref={barRef} className={s.navBar} aria-hidden="true" />
       </ul>
     </nav>
   );
