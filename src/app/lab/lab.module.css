@@ -32,12 +32,22 @@
 
 @media (min-width: 1024px) {
   .item {
-    grid-template-columns: 3rem minmax(0, 2fr) minmax(15rem, 1fr);
+    /* 오른쪽은 가장 넓은 테마 전환 버튼(약 206px)이 들어가는 만큼만 */
+    grid-template-columns: 3rem minmax(0, 1fr) 13rem;
     gap: var(--space-6);
   }
 
   .demo {
     grid-column: 2 / -1;
+  }
+
+  /* 오른쪽 링크가 없는 항목은 빈 열을 남기지 않고 본문을 끝까지 */
+  .item:not(:has(> .action)) .body {
+    grid-column: 2 / -1;
+  }
+
+  .action {
+    justify-content: flex-end;
   }
 }
 
