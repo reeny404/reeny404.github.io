@@ -324,6 +324,16 @@
   font-weight: var(--weight-semibold);
 }
 
+.projectArrow {
+  display: inline-block;
+  transition: transform var(--duration-base) var(--ease-spring);
+}
+
+.projectLink:hover .projectArrow,
+.projectLink:focus-visible .projectArrow {
+  transform: translate(2px, -2px);
+}
+
 .contact {
   display: grid;
   gap: var(--space-3);

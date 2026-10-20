@@ -33,7 +33,7 @@ const TOC = [
 
 function Block({ id, eyebrow, title, lede, children }: { id: string; eyebrow?: string; title: string; lede?: ReactNode; children: ReactNode }) {
   return (
-    <section id={id} className={s.block} aria-labelledby={`${id}-title`}>
+    <section id={id} className={s.block} aria-labelledby={`${id}-title`} data-reveal>
       <header className={s.blockHead}>
         {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
         <h2 id={`${id}-title`}>{title}</h2>

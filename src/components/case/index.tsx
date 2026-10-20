@@ -55,7 +55,7 @@ export function Chapter({
   children: ReactNode;
 }) {
   return (
-    <section className={s.chapter} id={id} aria-labelledby={`${id}-title`}>
+    <section className={s.chapter} id={id} aria-labelledby={`${id}-title`} data-reveal>
       <div className={s.aside}>
         <Eyebrow>{index}</Eyebrow>
         <h2 id={`${id}-title`}>{title}</h2>
@@ -71,13 +71,17 @@ export function ChapterTitle({ children }: { children: ReactNode }) {
 
 export function Pager({ prev, next }: { prev: { href: string; label: string; dir: string }; next: { href: string; label: string; dir: string } }) {
   return (
-    <nav className={`${s.pager} no-print`} aria-label="사례 이동">
+    <nav className={`${s.pager} no-print`} aria-label="사례 이동" data-reveal>
       <Link href={prev.href}>
-        <span className={s.pagerDir}>← {prev.dir}</span>
+        <span className={s.pagerDir}>
+          <span className={s.pagerArrow} aria-hidden="true">←</span> {prev.dir}
+        </span>
         <span className={s.pagerTitle}>{prev.label}</span>
       </Link>
       <Link href={next.href}>
-        <span className={s.pagerDir}>{next.dir} →</span>
+        <span className={s.pagerDir}>
+          {next.dir} <span className={s.pagerArrow} aria-hidden="true">→</span>
+        </span>
         <span className={s.pagerTitle}>{next.label}</span>
       </Link>
     </nav>

@@ -8,6 +8,7 @@ import { heroIntroInitScript } from "@/features/editor/hero-intro";
 import { CommandPalette } from "@/features/command/CommandPalette";
 import { HistoryToast } from "@/features/command/HistoryToast";
 import { ConsoleGreeting } from "@/features/easter-eggs/ConsoleGreeting";
+import { ScrollReveal } from "@/features/motion/ScrollReveal";
 import { themeInitScript } from "@/features/theme/theme";
 import "./globals.css";
 
@@ -70,6 +71,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <CommandPalette />
         <HistoryToast />
         <ConsoleGreeting />
+        <ScrollReveal />
         <Analytics />
       </body>
     </html>

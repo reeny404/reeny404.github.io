@@ -47,7 +47,7 @@ export default function Home() {
 
       <section className={s.section} id="work" aria-labelledby="work-title">
         <div className="container">
-          <header className={s.sectionHead}>
+          <header className={s.sectionHead} data-reveal>
             <Eyebrow>Case Studies</Eyebrow>
             <h2 id="work-title">사례</h2>
             <p>원인과 판단에 더해 직접 맡은 범위와 수치를 잰 조건도 함께 적었습니다.</p>
@@ -58,7 +58,7 @@ export default function Home() {
               const href = `/work/${w.slug}/${w.anchor ? `#${w.anchor}` : ""}`;
               const title = <span className={s.workTitle}>{w.title}</span>;
               return (
-                <li key={w.index} className={s.workRow}>
+                <li key={w.index} className={s.workRow} data-reveal>
                   <span className={s.workIndex} aria-hidden="true">
                     {w.index}
                   </span>
@@ -101,13 +101,13 @@ export default function Home() {
 
       <section className={s.section} id="experience" aria-labelledby="experience-title">
         <div className="container">
-          <header className={s.sectionHead}>
+          <header className={s.sectionHead} data-reveal>
             <Eyebrow>Experience</Eyebrow>
             <h2 id="experience-title">경력</h2>
           </header>
           <ol className={s.timeline}>
             {experience.map((job) => (
-              <li key={job.company} className={s.timelineItem}>
+              <li key={job.company} className={s.timelineItem} data-reveal>
                 <div className={s.period}>
                   {job.periods.map((p) => (
                     <span key={p}>{p}</span>
@@ -135,11 +135,11 @@ export default function Home() {
       <section className={s.section} id="skills" aria-labelledby="skills-title">
         <div className={`container ${s.split}`}>
           <div>
-            <header className={s.sectionHead}>
+            <header className={s.sectionHead} data-reveal>
               <Eyebrow>Skills</Eyebrow>
               <h2 id="skills-title">주요 기술</h2>
             </header>
-            <dl className={s.skillRows}>
+            <dl className={s.skillRows} data-reveal="children">
               {skills.map((g) => (
                 <div key={g.group}>
                   <dt>{g.group}</dt>
@@ -151,15 +151,15 @@ export default function Home() {
             </dl>
           </div>
           <div>
-            <header className={s.sectionHead}>
+            <header className={s.sectionHead} data-reveal>
               <Eyebrow>Side Projects</Eyebrow>
               <h2>사이드 프로젝트</h2>
             </header>
-            <ul className={s.projects}>
+            <ul className={s.projects} data-reveal="children">
               {sideProjects.map((p) => (
                 <li key={p.name}>
                   <a href={p.href} className={s.projectLink}>
-                    {p.name} <span aria-hidden="true">↗</span>
+                    {p.name} <span className={s.projectArrow} aria-hidden="true">↗</span>
                   </a>
                   <span className={s.workContext}>{p.meta}</span>
                   <p className={s.workSummary}>{p.summary}</p>
@@ -173,11 +173,11 @@ export default function Home() {
       <section className={s.section} id="contact" aria-labelledby="contact-title">
         <div className={`container ${s.split}`}>
           <div>
-            <header className={s.sectionHead}>
+            <header className={s.sectionHead} data-reveal>
               <Eyebrow>Contact</Eyebrow>
               <h2 id="contact-title">연락처</h2>
             </header>
-            <ul className={s.contact}>
+            <ul className={s.contact} data-reveal="children">
               <li>
                 <span>Email</span> <a href={`mailto:${site.email}`}>{site.email}</a>
               </li>
@@ -190,11 +190,11 @@ export default function Home() {
             </ul>
           </div>
           <div>
-            <header className={s.sectionHead}>
+            <header className={s.sectionHead} data-reveal>
               <Eyebrow>Education</Eyebrow>
               <h2>학력</h2>
             </header>
-            <dl className={s.defList}>
+            <dl className={s.defList} data-reveal="children">
               {education.map((e) => (
                 <div key={e.school}>
                   <dt>{e.school}</dt>

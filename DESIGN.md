@@ -19,6 +19,7 @@
 - 상태를 바꾸는 사용자 조작은 `history.execute(command)`를 통과. 화면 전용 상태(hover, 드래그 미리보기)는 제외
 - 구독은 그 값이 필요한 가장 작은 컴포넌트에서. 목록 항목은 자기 값만 구독
 - 터치 영역 24px 이상, 포커스는 2px accent outline
+- 스크롤해서 나타나는 블록은 `data-reveal`, 짧은 목록은 `data-reveal="children"`. 첫 화면에 이미 보이는 요소와 움직임 줄이기 설정에서는 재생하지 않음. JS로 움직이는 값은 `features/motion/motion.ts`의 `settle`, `reveal`
 
 ## 컴포넌트
 
@@ -36,6 +37,8 @@
 | `HeroHeadline`, `FormatToolbar` | `features/editor` | 첫 화면 제목. 인트로 뒤 직접 고쳐 쓰는 텍스트 상자와 선택 영역 위 서식 툴바 |
 | `MiniEditor` | `features/editor` | 첫 화면 도형 편집 데모. 이동, 회전, 확대와 실행 취소 |
 | `RenderDemo` | `features/render-demo` | 구독 범위에 따른 render 횟수 비교 데모 |
+| `StaggerGrid` | `features/stagger-grid` | 누른 점부터 번지는 격자와 이징 비교 데모 |
+| `ScrollReveal` | `features/motion` | `[data-reveal]`이 화면에 들어올 때 아래에서 떠오르게 함. layout에 한 번 |
 
 ## 문구
 
