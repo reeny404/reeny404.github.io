@@ -7,6 +7,7 @@ import { Analytics } from "@/features/analytics/Analytics";
 import { heroIntroInitScript } from "@/features/editor/hero-intro";
 import { CommandPalette } from "@/features/command/CommandPalette";
 import { HistoryToast } from "@/features/command/HistoryToast";
+import { BackToTop } from "@/components/site/BackToTop";
 import { ConsoleGreeting } from "@/features/easter-eggs/ConsoleGreeting";
 import { ScrollReveal } from "@/features/motion/ScrollReveal";
 import { themeInitScript } from "@/features/theme/theme";
@@ -74,8 +75,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           본문으로 건너뛰기
         </a>
         <SiteHeader />
-        <main id="main">{children}</main>
+        <main id="main" tabIndex={-1}>{children}</main>
         <SiteFooter />
+        <BackToTop />
         <CommandPalette />
         <HistoryToast />
         <ConsoleGreeting />

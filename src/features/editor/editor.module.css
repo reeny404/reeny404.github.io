@@ -206,3 +206,151 @@
     transform: translateY(4px);
   }
 }
+
+/* ---------- 되감기 슬라이더 ---------- */
+.timeline {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-1) 0;
+  font-size: var(--text-xs);
+}
+
+.replay {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-bg-raised);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: border-color var(--duration-fast) var(--ease-out), transform var(--duration-base) var(--ease-spring);
+}
+
+.replay:hover:not(:disabled) {
+  border-color: var(--color-text-muted);
+}
+
+.replay:active:not(:disabled) {
+  transform: scale(0.92);
+  transition-duration: var(--duration-instant);
+}
+
+.replay:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.track {
+  position: relative;
+  flex: 1;
+  height: 1.75rem;
+}
+
+.timeline[data-empty] .track {
+  display: none;
+}
+
+/* range의 손잡이 중심은 양 끝에서 반지름(7px)만큼 안쪽을 오가므로 눈금도 같은 범위에 */
+.rail {
+  position: absolute;
+  inset: 50% 7px auto;
+  height: 4px;
+  margin-top: -2px;
+  border-radius: var(--radius-pill);
+  background: var(--color-bg-sunken);
+}
+
+.progress {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: inherit;
+  background: var(--color-accent-soft);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .progress {
+    transition: width var(--duration-base) var(--ease-out);
+  }
+}
+
+/* command 하나마다 눈금. 사이트 조작(테마 등)은 다른 색 */
+.tick {
+  position: absolute;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  border-radius: var(--radius-pill);
+  background: var(--color-border);
+}
+
+.tick[data-done] {
+  background: var(--color-accent);
+}
+
+.tick[data-scope="site"][data-done] {
+  background: var(--color-decorative-coral);
+}
+
+/* 실제 입력은 투명한 range. 키보드와 스크린리더 동작은 브라우저 기본 그대로 */
+.scrub {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+  appearance: none;
+}
+
+.scrub:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+.scrub::-webkit-slider-runnable-track {
+  height: 100%;
+  background: transparent;
+}
+
+.scrub::-moz-range-track {
+  background: transparent;
+}
+
+.scrub::-webkit-slider-thumb {
+  width: 14px;
+  height: 14px;
+  margin-top: calc((1.75rem - 14px) / 2);
+  border: 2px solid var(--color-accent);
+  border-radius: var(--radius-pill);
+  background: var(--color-bg-raised);
+  box-shadow: var(--shadow-subtle);
+  appearance: none;
+}
+
+.scrub::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--color-accent);
+  border-radius: var(--radius-pill);
+  background: var(--color-bg-raised);
+}
+
+.counter {
+  flex-shrink: 0;
+  min-width: 2.5rem;
+  font-family: var(--font-mono);
+  color: var(--color-text-muted);
+  text-align: right;
+}
+
+.timeline[data-empty] .counter {
+  font-family: inherit;
+  text-align: left;
+}

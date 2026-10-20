@@ -164,3 +164,24 @@
 .footerInner li {
   margin: 0;
 }
+
+/* ---------- 맨 위로 ---------- */
+.backToTop {
+  position: fixed;
+  right: max(var(--space-5), env(safe-area-inset-right));
+  bottom: max(var(--space-5), env(safe-area-inset-bottom));
+  z-index: var(--layer-floating);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-raised);
+  box-shadow: var(--shadow-float);
+  opacity: 0;
+  transform: translateY(8px) scale(0.9);
+  pointer-events: none;
+  transition: opacity var(--duration-fast) var(--ease-out), transform var(--duration-base) var(--ease-spring);
+}
+
+.backToTop[data-visible] {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}

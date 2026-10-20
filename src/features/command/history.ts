@@ -21,7 +21,7 @@ type Snapshot = {
   past: readonly Command[];
   future: readonly Command[];
   /** 마지막 undo/redo 결과. 토스트 표시용 */
-  last: { kind: "do" | "undo" | "redo"; label: string; scope: Command["scope"]; at: number } | null;
+  last: { kind: "do" | "undo" | "redo" | "travel"; label: string; scope: Command["scope"]; at: number } | null;
 };
 
 const LIMIT = 100;
@@ -71,6 +71,28 @@ export const history = {
       last: { kind: "redo", label: command.label, scope: command.scope, at: Date.now() },
     });
     return true;
+  },
+  /**
+   * 기록의 index번째 지점(실행한 command 수)으로 한 번에 이동. 되감기 슬라이더용.
+   * 사이의 command를 차례로 undo/redo하고 알림은 마지막에 한 번만 보낸다.
+   */
+  travel(index: number) {
+    const past = [...state.past];
+    const future = [...state.future];
+    const target = Math.min(Math.max(0, Math.round(index)), past.length + future.length);
+    if (target === past.length) return;
+    while (past.length > target) {
+      const command = past.pop()!;
+      command.undo();
+      future.unshift(command);
+    }
+    while (past.length < target) {
+      const command = future.shift()!;
+      command.do();
+      past.push(command);
+    }
+    const at = past.at(-1) ?? future[0];
+    set({ past, future, last: { kind: "travel", label: at.label, scope: at.scope, at: Date.now() } });
   },
   subscribe(listener: () => void) {
     listeners.add(listener);

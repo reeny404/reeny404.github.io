@@ -18,6 +18,7 @@ import {
   useShape,
   type Shape,
 } from "./store";
+import { Timeline } from "./Timeline";
 import s from "./editor.module.css";
 
 /** document 값에 드래그, 회전 미리보기를 더한 화면상의 배치 */
@@ -386,6 +387,7 @@ export function MiniEditor() {
         <StatusBar />
         <HistoryControls />
       </div>
+      <Timeline />
     </figure>
   );
 }

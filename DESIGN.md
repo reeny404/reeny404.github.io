@@ -36,6 +36,12 @@
 | `CommandPalette`, `HistoryToast` | `features/command` | ⌘K, 실행 취소 알림 |
 | `HeroHeadline`, `FormatToolbar` | `features/editor` | 첫 화면 제목. 인트로 뒤 직접 고쳐 쓰는 텍스트 상자와 선택 영역 위 서식 툴바 |
 | `MiniEditor` | `features/editor` | 첫 화면 도형 편집 데모. 이동, 회전, 확대와 실행 취소 |
+| `runSim`, `createWorld` | `features/physics` | 공 물리와 캔버스 루프. 중력, 부피 질량, 고정 선분 장애물, 잡아 던지기, 멈추면 쉬기 |
+| `BallPit` | `features/ball-pit` | 중력을 받아 쌓인 공을 던지고 기울이는 데모 |
+| `SkillBalls` | `features/skill-balls` | 홈 주요 기술을 이름표 붙은 공으로 |
+| `SlotBalls` | `features/not-found` | 404 보드의 빈 상자를 공으로 쓴 404가 채우고, 누르면 무너졌다 다시 모임 |
+| `Timeline` | `features/editor` | 전역 기록을 앞뒤로 끄는 되감기 슬라이더와 다시 보기. `history.travel(index)` |
+| `BackToTop` | `components/site` | 화면 절반 넘게 내려오면 오른쪽 아래에 나타나는 맨 위로 버튼 |
 | `RenderDemo` | `features/render-demo` | 구독 범위에 따른 render 횟수 비교 데모 |
 | `StaggerGrid` | `features/stagger-grid` | 누른 점부터 번지는 격자와 이징 비교 데모 |
 | `ScrollReveal` | `features/motion` | `[data-reveal]`이 화면에 들어올 때 아래에서 떠오르게 함. layout에 한 번 |
