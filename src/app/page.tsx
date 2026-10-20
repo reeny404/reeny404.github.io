@@ -6,7 +6,6 @@ import { selectedWork } from "@/content/cases";
 import { education, experience, sideProjects, site, skills } from "@/content/profile";
 import { HeroHeadline } from "@/features/editor/HeroHeadline";
 import { MiniEditor } from "@/features/editor/MiniEditor";
-import { SkillBalls } from "@/features/skill-balls/SkillBalls";
 import s from "./home.module.css";
 
 const personJsonLd = {
@@ -138,20 +137,33 @@ export default function Home() {
         <div className={`container ${s.split}`}>
           <div>
             <header className={s.sectionHead} data-reveal>
-              <Eyebrow>Skills</Eyebrow>
-              <h2 id="skills-title">주요 기술</h2>
+              <Eyebrow>Stack &amp; Expertise</Eyebrow>
+              <h2 id="skills-title">기술과 전문 분야</h2>
             </header>
-            <dl className={s.skillRows} data-reveal="children">
-              {skills.map((g) => (
-                <div key={g.group}>
-                  <dt>{g.group}</dt>
-                  <dd>
-                    <TagList items={g.items} label={g.group} />
-                  </dd>
-                </div>
-              ))}
-            </dl>
-            <SkillBalls />
+            <div className={s.skillTiers} data-reveal="children">
+              <div>
+                <h3>핵심 스택</h3>
+                <ul className={s.skillCore}>
+                  {skills.core.map((k) => (
+                    <li key={k}>{k}</li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h3>전문 분야</h3>
+                <dl className={s.skillAreas}>
+                  {skills.areas.map((a) => (
+                    <div key={a.title}>
+                      <dt>
+                        {a.title}
+                        <span className={s.skillStack}>{a.stack.join(", ")}</span>
+                      </dt>
+                      <dd>{a.text}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            </div>
           </div>
           <div>
             <header className={s.sectionHead} data-reveal>
@@ -162,7 +174,8 @@ export default function Home() {
               {sideProjects.map((p) => (
                 <li key={p.name}>
                   <a href={p.href} className={s.projectLink}>
-                    {p.name} <span className={s.projectArrow} aria-hidden="true">↗</span>
+                    {p.name}
+                    <span className={s.projectArrow} aria-hidden="true">↗</span>
                   </a>
                   <span className={s.workContext}>{p.meta}</span>
                   <p className={s.workSummary}>{p.summary}</p>
