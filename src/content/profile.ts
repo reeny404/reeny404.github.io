@@ -55,13 +55,27 @@ export const experience = [
   },
 ] as const;
 
-export const skills = [
-  { group: "Languages & Frameworks", items: ["React", "TypeScript", "JavaScript"] },
-  { group: "Graphics", items: ["Konva", "D3/SVG", "Canvas API"] },
-  { group: "State Management", items: ["Zustand", "TanStack Query"] },
-  { group: "Realtime", items: ["WebSocket", "STOMP/SockJS"] },
-  { group: "Build & Test", items: ["Vite", "MSW", "Playwright"] },
-] as const;
+/** 매일 쓰고 설계까지 하는 핵심 스택과, 그 기술로 맡아 온 분야 */
+export const skills = {
+  core: ["React", "TypeScript", "Konva", "Zustand", "TanStack Query", "Tailwind CSS"],
+  areas: [
+    {
+      title: "캔버스 에디터",
+      text: "도면 편집기의 데이터 구조와 command 설계, 렌더링 최적화",
+      stack: ["Konva", "D3/SVG", "Canvas API"],
+    },
+    {
+      title: "실시간 데이터",
+      text: "REST 이력과 WebSocket 실시간 데이터를 하나의 화면 상태로 연결",
+      stack: ["WebSocket", "STOMP/SockJS"],
+    },
+    {
+      title: "품질과 개발 환경",
+      text: "팀 규칙을 린트, 테스트, CI로 자동 검사",
+      stack: ["ESLint", "Vitest", "Playwright", "MSW", "GitLab CI"],
+    },
+  ],
+} as const;
 
 export const education = [
   { school: "한국방송통신대학교 컴퓨터과학과", period: "2018.03 ~ 2024.02 졸업" },
