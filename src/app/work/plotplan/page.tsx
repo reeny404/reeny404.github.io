@@ -150,7 +150,7 @@ After   CanvasNode → isSelected: boolean
           </p>
         </Chapter>
 
-        <Chapter id="drawing-recognition" index="08 도면 인식" title="BE 계약 확정 전 선개발">
+        <Chapter id="drawing-recognition" index="08 도면 인식" title="API 계약 제안과 화면 흐름 개발">
           <ChapterTitle>요청, 응답과 진행률 계약을 FE에서 먼저 제안</ChapterTitle>
           <p className="prose">
             도면 인식 API가 정해지지 않은 상태에서 화면에 필요한 요청, 응답과 WebSocket 진행률 형태를 FE에서 먼저 제안. 같은 형태의 MSW mock으로 파일 업로드, 진행 상태, 인식 결과의 캔버스 반영까지 선개발. 인식 좌표와 사용자 배치 좌표를 어느 계층에서 갱신할지 BE, AI 담당자와 정리.
@@ -160,6 +160,9 @@ After   CanvasNode → isSelected: boolean
             UI 개발과 상태 검증
                      ↓
           확정된 BE 계약으로 연결부 교체`}</CodeFlow>
+          <p className="prose">
+            연결부를 바꾼 뒤 실서버 테스트에서 나온 문제 처리. 인식 결과를 반영하면 Battery Limit(BL)이 서버에서 잠기는데, BL을 고치지 않아도 저장 요청이 BL 전체를 보내 409로 막히던 문제를 인식 BL은 저장 요청에서 빼도록 수정. BE가 인식 결과에 장비 회전값을 추가한 뒤에는 AI Auto Placement가 그 방향대로 장비를 놓도록 반영.
+          </p>
           <Note label="기여 구분" tone="scope">
             직접 담당 범위는 계약 제안, mock과 FE 흐름 구현, 좌표 갱신 책임 정리. AI 모델과 BE API 구현은 각 담당자의 작업.
           </Note>
