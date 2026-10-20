@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ViewTransition } from "react";
+import { JsonLd } from "@/components/site/JsonLd";
 import { Eyebrow, MetricList, Note, TagList } from "@/components/ui";
 import { selectedWork } from "@/content/cases";
 import { education, experience, sideProjects, site, skills } from "@/content/profile";
@@ -29,7 +30,7 @@ const personJsonLd = {
 export default function Home() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }} />
+      <JsonLd data={personJsonLd} />
 
       <section className={s.hero} aria-labelledby="hero-title">
         <div className={`container ${s.heroGrid}`}>

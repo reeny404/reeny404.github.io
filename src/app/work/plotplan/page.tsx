@@ -1,21 +1,18 @@
 import type { Metadata } from "next";
 import { CaseBody, CaseHero, Chapter, ChapterTitle, Pager } from "@/components/case";
 import { CodeFlow, Compare, DataTable, Note } from "@/components/ui";
+import { JsonLd, caseJsonLd, caseMetadata } from "@/components/site/JsonLd";
 import { caseStudies } from "@/content/cases";
 import { RenderDemo } from "@/features/render-demo/RenderDemo";
 
-const { title, description } = caseStudies.plotplan;
+const { title } = caseStudies.plotplan;
 
-export const metadata: Metadata = {
-  title,
-  description,
-  alternates: { canonical: "/work/plotplan/" },
-  openGraph: { type: "article", title, description, images: ["/og.png"], url: "/work/plotplan/" },
-};
+export const metadata: Metadata = caseMetadata("plotplan");
 
 export default function PlotPlanPage() {
   return (
     <>
+      <JsonLd data={caseJsonLd("plotplan")} />
       <CaseHero
         slug="plotplan"
         eyebrow="Case 01 · 애자일소다"

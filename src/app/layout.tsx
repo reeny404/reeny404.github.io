@@ -41,6 +41,14 @@ export const metadata: Metadata = {
   },
   twitter: { card: "summary_large_image", title: site.title, description: site.headline, images: ["/og.png"] },
   robots: { index: true, follow: true },
+  // 각 검색 콘솔의 소유권 확인 코드. 값이 없으면 태그를 만들지 않음 (deploy.yml의 Repository variables)
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION || undefined,
+    other: {
+      ...(process.env.NAVER_SITE_VERIFICATION && { "naver-site-verification": process.env.NAVER_SITE_VERIFICATION }),
+      ...(process.env.BING_SITE_VERIFICATION && { "msvalidate.01": process.env.BING_SITE_VERIFICATION }),
+    },
+  },
 };
 
 export const viewport: Viewport = {

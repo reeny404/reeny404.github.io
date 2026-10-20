@@ -2,20 +2,17 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CaseBody, CaseHero, Chapter, Pager } from "@/components/case";
 import { Compare, MetricList, Note } from "@/components/ui";
+import { JsonLd, caseJsonLd, caseMetadata } from "@/components/site/JsonLd";
 import { caseStudies } from "@/content/cases";
 
-const { title, description } = caseStudies.miridih;
+const { title } = caseStudies.miridih;
 
-export const metadata: Metadata = {
-  title,
-  description,
-  alternates: { canonical: "/work/miridih/" },
-  openGraph: { type: "article", title, description, images: ["/og.png"], url: "/work/miridih/" },
-};
+export const metadata: Metadata = caseMetadata("miridih");
 
 export default function MiridihPage() {
   return (
     <>
+      <JsonLd data={caseJsonLd("miridih")} />
       <CaseHero
         slug="miridih"
         eyebrow="Case 03 · 미리디"
