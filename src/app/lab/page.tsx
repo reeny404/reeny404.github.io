@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { Eyebrow } from "@/components/ui";
 import { site } from "@/content/profile";
 import { BallPit } from "@/features/ball-pit/BallPit";
+import { GooglyGhosts } from "@/features/googly-ghosts/GooglyGhosts";
 import { RenderDemo } from "@/features/render-demo/RenderDemo";
 import { StaggerGrid } from "@/features/stagger-grid/StaggerGrid";
 import { OpenPaletteButton, ShortcutTable, ThemeSwitcher } from "../system/SystemControls";
@@ -92,7 +93,7 @@ export default function LabPage() {
             index="03"
             id="balls"
             title="부딪히며 흩어지는 공"
-            why="중력을 받고, 질량은 공 부피처럼 반지름 세제곱. 충돌은 충격량으로 계산하고 격자 칸으로 이웃끼리만 검사. 모두 멈추면 그리기를 쉼."
+            why="큰 공일수록 무거워서 작은 공과 부딪혀도 덜 밀려남. 부딪힘은 가까이 있는 공끼리만 확인하고, 공이 모두 멈추면 화면 그리기를 쉼."
             demo={<BallPit />}
           >
             바닥에 쌓인 공 하나를 잡아 던지면 날아가 다른 공들과 부딪히며 파라락 흩어짐. 빈 곳을 누르면 그 자리에서 밀어냄.
@@ -100,6 +101,15 @@ export default function LabPage() {
 
           <Item
             index="04"
+            id="ghosts"
+            title="커서를 쫓는 유령들"
+            demo={<GooglyGhosts />}
+          >
+            옹기종기 모인 유령들이 커서를 쳐다봄. 가끔 눈을 깜빡이고, 누르면 깡총 뛰며 놀람.
+          </Item>
+
+          <Item
+            index="05"
             id="history"
             title="모든 조작을 되돌리는 기록"
             why="상태를 바꾸는 조작은 모두 history.execute(command)를 통과. 첫 화면 도형 이동, 회전, 테마 변경이 한 기록에 쌓이고, 되감기 슬라이더는 그 기록의 원하는 지점까지 undo와 redo를 이어 실행."
@@ -109,7 +119,7 @@ export default function LabPage() {
           </Item>
 
           <Item
-            index="05"
+            index="06"
             id="palette"
             title="명령 팔레트"
             why="이동, 테마, 실행 취소, 외부 링크까지 키보드 하나로. 마우스 없이도 사이트 전체를 오가도록."
@@ -120,7 +130,7 @@ export default function LabPage() {
           </Item>
 
           <Item
-            index="06"
+            index="07"
             id="theme"
             title="누른 자리에서 퍼지는 테마 전환"
             why="View Transitions API로 클릭 위치에서 원이 퍼지듯 전환. 움직임 줄이기 설정이나 미지원 브라우저에서는 즉시 적용."
@@ -130,7 +140,7 @@ export default function LabPage() {
           </Item>
 
           <Item
-            index="07"
+            index="08"
             id="system"
             title="디자인 시스템"
             why="tokens.ts 한 파일에서 CSS 변수와 문서 페이지를 함께 생성. 색마다 WCAG 대비 비율을 계산해 표시."
@@ -140,7 +150,7 @@ export default function LabPage() {
           </Item>
 
           <Item
-            index="08"
+            index="09"
             id="console"
             title="Console"
             action={<a href={site.repo}>소스 코드 보기 ↗</a>}
