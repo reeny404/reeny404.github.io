@@ -11,18 +11,19 @@ import s from "./stagger-grid.module.css";
  * accent와 섞으므로 테마를 바꿔도 남는 inline 색이 없다.
  */
 
-const COLS = 17;
-const ROWS = 9;
-const CENTER = Math.floor((COLS * ROWS) / 2);
+// 열 수는 데모 폭에 따라 CSS에서 24 또는 12. 둘 다 나누어떨어지는 수라 점 개수는 그대로
+const COUNT = 144;
+const DOTS = Array.from({ length: COUNT }, (_, i) => i);
+type Dims = [cols: number, rows: number];
+const centerOf = ([cols, rows]: Dims) => Math.floor(rows / 2) * cols + Math.floor(cols / 2);
 // CSS Modules가 클래스 이름을 바꾸므로 코드 예시의 '.dot' 대신 실제 이름으로 선택
 const DOT = `.${s.dot}`;
-const DOTS = Array.from({ length: COLS * ROWS }, (_, i) => i);
 
 type Pattern = "ripple" | "push" | "shuffle";
 type Ease = "spring" | "elastic" | "smooth";
 
 const PATTERNS: [Pattern, string][] = [
-  ["ripple", "파동"],
+  ["ripple", "파도"],
   ["push", "밀어내기"],
   ["shuffle", "무작위"],
 ];
@@ -73,9 +74,7 @@ function Compare({ selected }: { selected: Ease }) {
   return (
     <div className={s.compare} ref={ref}>
       <div className={s.compareHead}>
-        <p>
-          셋을 같은 시간 동안 나란히 움직여 보기. 그래프의 점선이 도착 지점이라, 선이 점선 위로 넘어간 만큼 지나쳤다 돌아옴.
-        </p>
+        <p>같은 1초 동안 나란히. 점선을 넘은 만큼 지나쳤다 돌아옴.</p>
         <Button size="sm" onClick={run}>
           {atEnd ? "되돌리기" : "나란히 재생"}
         </Button>
@@ -100,14 +99,17 @@ function Compare({ selected }: { selected: Ease }) {
   );
 }
 
-function codeFor(pattern: Pattern, ease: Ease, origin: number) {
-  const e = EASES[ease].code;
-  const grid = `{ grid: [${COLS}, ${ROWS}], from: ${origin} }`;
+// 긴 이징 식이 줄을 넘지 않도록 맨 위에서 변수로 빼고 아래에서는 이름만 씀
+function codeFor(pattern: Pattern, ease: Ease, [cols, rows]: Dims, origin: number) {
+  return `const ease = ${EASES[ease].code};\n\n${body(pattern, `{ grid: [${cols}, ${rows}], from: ${origin} }`)}`;
+}
+
+function body(pattern: Pattern, grid: string) {
   if (pattern === "ripple") {
     return `animate('.dot', {
   scale: [
     { to: 2.2, duration: 200, ease: 'outQuad' },
-    { to: 1, duration: 900, ease: ${e} },
+    { to: 1, duration: 900, ease },
   ],
   '--flash': [1, 0],
   delay: stagger(40, ${grid}),
@@ -117,7 +119,7 @@ function codeFor(pattern: Pattern, ease: Ease, origin: number) {
     return `animate('.dot', {
   translateX: [
     { to: stagger(8, { ...grid, axis: 'x' }), duration: 240, ease: 'outQuad' },
-    { to: 0, duration: 1000, ease: ${e} },
+    { to: 0, duration: 1000, ease },
   ],
   translateY: /* axis: 'y'로 같은 방식 */,
   '--flash': [1, 0],
@@ -127,7 +129,7 @@ function codeFor(pattern: Pattern, ease: Ease, origin: number) {
   return `animate('.dot', {
   scale: [
     { to: 0, duration: 250, ease: 'inQuad' },
-    { to: 1, duration: 800, ease: ${e} },
+    { to: 1, duration: 800, ease },
   ],
   rotate: [0, 180],
   '--flash': [1, 0],
@@ -150,7 +152,9 @@ function Segmented<T extends string>({ label, items, value, onChange }: { label:
 export function StaggerGrid() {
   const [pattern, setPattern] = useState<Pattern>("ripple");
   const [ease, setEase] = useState<Ease>("spring");
-  const [origin, setOrigin] = useState(CENTER);
+  const [dims, setDims] = useState<Dims>([24, 6]);
+  const [origin, setOrigin] = useState(() => centerOf([24, 6]));
+  const dimsRef = useRef(dims);
   const rootRef = useRef<HTMLDivElement>(null);
   const scopeRef = useRef<Scope | null>(null);
   const lastHover = useRef(-1);
@@ -159,7 +163,7 @@ export function StaggerGrid() {
     const scope = createScope({ root: rootRef }).add((self) => {
       self!.add("play", (from: number, p: Pattern, e: Ease) => {
         const out = EASES[e].value();
-        const grid = { grid: [COLS, ROWS], from };
+        const grid = { grid: dimsRef.current, from };
         const flash = [
           { to: 1, duration: 120 },
           { to: 0, duration: 900, ease: "outQuad" },
@@ -205,19 +209,33 @@ export function StaggerGrid() {
     });
     scopeRef.current = scope;
 
+    // 실제 열 수는 CSS가 정하므로 그려진 격자에서 읽어 stagger와 코드에 반영
+    const ro = new ResizeObserver(() => {
+      const el = rootRef.current;
+      if (!el) return;
+      const cols = getComputedStyle(el).gridTemplateColumns.split(" ").length;
+      if (cols === dimsRef.current[0]) return;
+      const next: Dims = [cols, COUNT / cols];
+      dimsRef.current = next;
+      setDims(next);
+      setOrigin(centerOf(next));
+    });
+    if (rootRef.current) ro.observe(rootRef.current);
+
     // 화면에 처음 들어올 때 가운데서 한 번. 움직임 줄이기 설정이면 생략
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const io = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting) return;
         io.disconnect();
-        scope.methods.play(CENTER, "ripple", "spring");
+        scope.methods.play(centerOf(dimsRef.current), "ripple", "spring");
       },
       { threshold: 0.6 },
     );
     if (!reduced && rootRef.current) io.observe(rootRef.current);
 
     return () => {
+      ro.disconnect();
       io.disconnect();
       scope.revert();
     };
@@ -238,7 +256,7 @@ export function StaggerGrid() {
       <div className={s.head}>
         <Segmented label="패턴" items={PATTERNS} value={pattern} onChange={setPattern} />
         <Segmented label="이징" items={Object.entries(EASES).map(([k, v]) => [k as Ease, v.label])} value={ease} onChange={setEase} />
-        <Button size="sm" onClick={() => play(CENTER)}>
+        <Button size="sm" onClick={() => play(centerOf(dims))}>
           가운데서 재생
         </Button>
       </div>
@@ -246,7 +264,6 @@ export function StaggerGrid() {
       <div
         ref={rootRef}
         className={s.grid}
-        style={{ gridTemplateColumns: `repeat(${COLS}, 1fr)` }}
         aria-hidden="true"
         onPointerDown={(e) => {
           const i = indexOf(e.target);
@@ -267,12 +284,13 @@ export function StaggerGrid() {
         ))}
       </div>
 
-      <Compare selected={ease} />
-
-      <pre className={s.code} aria-label="지금 설정의 anime.js 코드">
-        <code>{codeFor(pattern, ease, origin)}</code>
-      </pre>
-      <figcaption className={s.caption}>설정을 바꾸면 위 코드도 같이 바뀜.</figcaption>
+      <div className={s.bottom}>
+        <Compare selected={ease} />
+        <pre className={s.code} aria-label="지금 설정의 anime.js 코드">
+          <code>{codeFor(pattern, ease, dims, origin)}</code>
+        </pre>
+      </div>
+      <figcaption className={s.caption}>설정을 바꾸면 코드도 같이 바뀜.</figcaption>
     </figure>
   );
 }
