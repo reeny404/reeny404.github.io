@@ -10,7 +10,7 @@ const AMPLITUDE_API_KEY = process.env.NEXT_PUBLIC_AMPLITUDE_API_KEY;
 const isLocalHost = (hostname: string) => hostname === "localhost" || hostname === "127.0.0.1";
 
 /**
- * 방문자 수와 유입 경로(referrer, utm_*) 수집.
+ * 방문자 수와 유입 경로(referrer, utm_*), 링크와 버튼 클릭 수집.
  * 키가 없거나 로컬이면 아무것도 불러오지 않고, Amplitude는 첫 화면이 그려진 뒤 idle 시점에 불러와 LCP에 영향 없게 함
  */
 export function Analytics() {
@@ -29,7 +29,13 @@ export function Analytics() {
             attribution: true, // referrer, utm_* 를 사용자 속성으로 기록
             pageViews: { trackHistoryChanges: "pathOnly" }, // 클라이언트 라우팅 이동도 페이지뷰로
             sessions: true,
-            elementInteractions: false,
+            // 링크와 버튼 클릭만. 입력값 변경(Element Changed)과 화면 노출(zoning), 미니 에디터 같은 div 클릭은 제외
+            // resolver가 있으면 기본 allowlist는 무시됨
+            elementInteractions: {
+              viewportContentUpdated: { enabled: false },
+              shouldTrackEventResolver: (actionType, element) =>
+                actionType === "click" && element.closest("a, button, [data-amp-default-track]") !== null,
+            },
             formInteractions: false,
             fileDownloads: false,
           },

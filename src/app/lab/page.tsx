@@ -12,6 +12,8 @@ export const metadata: Metadata = {
   title: "실험실",
   description: "이 사이트를 만들며 붙인 기능과 데모",
   alternates: { canonical: "/lab/" },
+  // 지정하지 않으면 루트의 openGraph(url "/", 홈 제목)를 물려받아 공유 카드가 홈으로 보임
+  openGraph: { title: "실험실", description: "이 사이트를 만들며 붙인 기능과 데모", url: "/lab/", images: ["/og.png"] },
 };
 
 function Item({

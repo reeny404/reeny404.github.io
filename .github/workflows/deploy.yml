@@ -31,6 +31,10 @@ jobs:
           # 공개되는 클라이언트 키라 Secrets 대신 Repository variables에 둠 (Settings > Secrets and variables > Actions > Variables)
           NEXT_PUBLIC_GA_ID: ${{ vars.NEXT_PUBLIC_GA_ID }}
           NEXT_PUBLIC_AMPLITUDE_API_KEY: ${{ vars.NEXT_PUBLIC_AMPLITUDE_API_KEY }}
+          # 검색 콘솔 소유권 확인 메타태그 (Google Search Console, 네이버 서치어드바이저, Bing Webmaster Tools)
+          GOOGLE_SITE_VERIFICATION: ${{ vars.GOOGLE_SITE_VERIFICATION }}
+          NAVER_SITE_VERIFICATION: ${{ vars.NAVER_SITE_VERIFICATION }}
+          BING_SITE_VERIFICATION: ${{ vars.BING_SITE_VERIFICATION }}
       # 성능 예산: lighthouserc.json의 기준을 넘지 못하면 배포하지 않음
       - name: Lighthouse CI
         run: npx -y @lhci/cli@0.15.1 autorun

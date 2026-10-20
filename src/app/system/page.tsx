@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "디자인 시스템",
   description: "색, 글자, 간격, 움직임과 컴포넌트 정의",
   alternates: { canonical: "/system/" },
+  openGraph: { title: "디자인 시스템", description: "색, 글자, 간격, 움직임과 컴포넌트 정의", url: "/system/", images: ["/og.png"] },
 };
 
 const colorByName = Object.fromEntries(colors.map((c) => [c.name, c]));

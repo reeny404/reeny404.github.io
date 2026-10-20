@@ -1,20 +1,17 @@
 import type { Metadata } from "next";
 import { CaseBody, CaseHero, Chapter, ChapterTitle, Pager } from "@/components/case";
 import { CodeFlow, Note } from "@/components/ui";
+import { JsonLd, caseJsonLd, caseMetadata } from "@/components/site/JsonLd";
 import { caseStudies } from "@/content/cases";
 
-const { title, description } = caseStudies.chipnsoda;
+const { title } = caseStudies.chipnsoda;
 
-export const metadata: Metadata = {
-  title,
-  description,
-  alternates: { canonical: "/work/chipnsoda/" },
-  openGraph: { type: "article", title, description, images: ["/og.png"], url: "/work/chipnsoda/" },
-};
+export const metadata: Metadata = caseMetadata("chipnsoda");
 
 export default function ChipNSoDAPage() {
   return (
     <>
+      <JsonLd data={caseJsonLd("chipnsoda")} />
       <CaseHero
         slug="chipnsoda"
         eyebrow="Case 02 · 애자일소다"

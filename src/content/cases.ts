@@ -16,18 +16,25 @@ export type CaseSummary = {
   linkLabel: string;
 };
 
+/** published, modified: 사례 페이지의 JSON-LD, og:article 시간, sitemap lastModified에 쓰임. 본문을 고치면 modified도 갱신 */
 export const caseStudies = {
   plotplan: {
     title: "PlotPlan 에디터 V2",
+    published: "2026-10-15",
+    modified: "2026-10-19",
     description:
       "D3/SVG 에디터를 React + Konva로 재설계하며 document store와 command 구조, 좌표 계산과 저장 경로를 정리하고 재작성 후 회귀를 측정해 복구한 사례.",
   },
   chipnsoda: {
     title: "ChipNSoDA 실시간 작업 상태",
+    published: "2026-10-15",
+    modified: "2026-10-19",
     description: "AI 반도체 Floor Plan 설계 도구에서 REST 이력과 WebSocket 실시간 데이터를 하나의 화면 상태로 연결한 사례.",
   },
   miridih: {
     title: "미리캔버스 저장과 결제 안정화",
+    published: "2026-10-15",
+    modified: "2026-10-19",
     description: "웹 디자인 도구 미리캔버스의 저장 실패와 초기 로딩, 결제 데이터 유실을 개선한 사례.",
   },
 } as const;
