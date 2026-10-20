@@ -103,6 +103,7 @@
 }
 
 .stats dt {
+  position: relative;
   display: flex;
   align-items: center;
   gap: var(--space-1);
@@ -130,7 +131,7 @@
   color: var(--color-text);
 }
 
-/* 기준은 항목 칸. 오른쪽 칸은 오른쪽 끝에 맞춰 좁은 화면에서도 밖으로 넘치지 않도록 */
+/* 기준은 항목 이름 줄이라 아이콘 바로 아래, 이름 시작점에 맞춰 뜸 */
 .tooltip {
   position: absolute;
   top: calc(100% + var(--space-1));
@@ -152,9 +153,12 @@
   pointer-events: none;
 }
 
-.stats > div:last-child .tooltip {
-  left: auto;
-  right: 0;
+/* 데모가 좁아 오른쪽 칸 툴팁이 밖으로 넘칠 때만 칸 오른쪽 끝에 맞춤 */
+@container (max-width: 42rem) {
+  .stats > div:last-child .tooltip {
+    left: auto;
+    right: 0;
+  }
 }
 
 .info:hover .tooltip,

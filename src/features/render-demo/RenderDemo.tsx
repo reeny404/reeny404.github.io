@@ -220,7 +220,7 @@ export function RenderDemo() {
       </div>
       <Grid key={mode} mode={mode} />
       <figcaption className={s.caption}>
-        노드 {NODE_IDS.length}개 데모. 실제 측정은 장비 768개, CanvasNode 1,675개 장면에서 클릭당 2,340회 → 1회. 이 데모에서는 이전 선택이 풀리는 노드까지 포함해 수정 후 2회.
+        노드 {NODE_IDS.length}개로 줄인 데모. 실제 PlotPlan 장면(장비 768개, CanvasNode 1,675개)에서는 클릭당 render가 2,340회에서 1회로 줄었음.
       </figcaption>
     </figure>
   );
