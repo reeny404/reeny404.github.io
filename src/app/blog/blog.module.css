@@ -1,0 +1,260 @@
+.page {
+  padding-block: var(--space-8);
+}
+
+.title {
+  margin-top: var(--space-3);
+}
+
+.lede {
+  margin-top: var(--space-4);
+  max-width: var(--width-prose);
+  font-size: var(--text-lg);
+  line-height: var(--leading-snug);
+  color: var(--color-text-muted);
+}
+
+.back,
+.date,
+.older {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.date {
+  margin-top: var(--space-3);
+}
+
+.list {
+  display: grid;
+  gap: var(--space-2);
+  margin: var(--space-7) 0 0;
+  padding: 0;
+  list-style: none;
+  max-width: var(--width-prose);
+}
+
+.list a {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-4);
+  margin-inline: calc(var(--space-4) * -1);
+  border-radius: var(--radius-md);
+  color: inherit;
+  text-decoration: none;
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.list a:hover {
+  background: var(--color-bg-sunken);
+}
+
+.list time {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.postTitle {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+}
+
+.postDesc {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.older {
+  margin-top: var(--space-7);
+}
+
+/* 본문과 오른쪽 목차. 좁은 화면에서는 목차를 숨기고 본문만 */
+.layout {
+  display: grid;
+}
+
+.toc {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  /* 넓은 화면에서는 본문을 한 줄 45자 안팎(50rem)까지 넓히고 목차는 오른쪽 끝에 붙임 */
+  .layout {
+    grid-template-columns: minmax(0, 50rem) 15rem;
+    justify-content: space-between;
+    gap: var(--space-7);
+  }
+
+  .layout > .body {
+    max-width: none;
+  }
+
+  .toc {
+    display: block;
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-5));
+    align-self: start;
+    margin-top: var(--space-7);
+    font-size: var(--text-sm);
+  }
+}
+
+.toc ol {
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  list-style: none;
+  border-left: 1px solid var(--color-border);
+}
+
+.toc a {
+  display: block;
+  margin-left: -1px;
+  padding: var(--space-1) var(--space-3);
+  border-left: 2px solid transparent;
+  color: var(--color-text-muted);
+  line-height: var(--leading-snug);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-out), border-color var(--duration-fast) var(--ease-out);
+}
+
+.toc a:hover {
+  color: var(--color-text);
+}
+
+.toc a[aria-current] {
+  border-left-color: var(--color-accent);
+  color: var(--color-text);
+  font-weight: var(--weight-semibold);
+}
+
+/* 마크다운에서 변환한 본문. 요소에 class를 줄 수 없어 태그로 꾸밈 */
+.body {
+  max-width: var(--width-prose);
+  margin-top: var(--space-7);
+  line-height: var(--leading-relaxed);
+}
+
+.body > * + * {
+  margin-top: var(--space-4);
+}
+
+.body h2 {
+  margin-top: var(--space-8);
+}
+
+.body h3 {
+  margin-top: var(--space-6);
+}
+
+.body a {
+  color: var(--color-accent);
+}
+
+.body ul,
+.body ol {
+  padding-left: var(--space-5);
+}
+
+.body li + li {
+  margin-top: var(--space-1);
+}
+
+.body blockquote {
+  margin-inline: 0;
+  padding-left: var(--space-4);
+  border-left: 3px solid var(--color-border);
+  color: var(--color-text-muted);
+}
+
+.body code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  padding: 0.1em 0.3em;
+  border-radius: var(--radius-xs);
+  background: var(--color-bg-sunken);
+}
+
+.body pre {
+  overflow-x: auto;
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-sunken);
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+}
+
+.body pre code {
+  padding: 0;
+  background: none;
+}
+
+/* 글 안의 SVG 그림. 색은 class로 color만 정하고 SVG는 currentColor로 받아 테마를 따라감 */
+.body figure {
+  margin: var(--space-6) 0;
+}
+
+/* viewBox 480 기준으로 그린 그림이라 본문이 넓어져도 글자가 본문보다 커지지 않게 폭 상한 */
+.body figure svg {
+  display: block;
+  width: 100%;
+  max-width: 34rem;
+  height: auto;
+  margin-inline: auto;
+}
+
+.body figcaption {
+  margin-top: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+/* 손그림 그림의 글자. 폰트가 오기 전에는 본문 글꼴로 보임 */
+.body :global(svg.hand) {
+  font-family: var(--font-hand), var(--font-sans);
+}
+
+.body :global(.c-ink) { color: var(--color-text); }
+.body :global(.c-muted) { color: var(--color-text-muted); }
+.body :global(.c-accent) { color: var(--color-accent); }
+.body :global(.c-line) { color: var(--color-border); }
+.body :global(.c-soft) { color: var(--color-bg-sunken); }
+
+/* 그래프와 같은 숫자의 표를 나란히. 좁은 화면에서는 위아래로 */
+.body :global(.pair) {
+  display: grid;
+  gap: var(--space-5);
+}
+
+@media (min-width: 1024px) {
+  .body :global(.pair) {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--space-6);
+  }
+
+  .body :global(.pair) figure {
+    margin: 0;
+  }
+
+  .body :global(.pair) td,
+  .body :global(.pair) th {
+    padding-block: var(--space-1);
+  }
+}
+
+/* 넓은 표는 본문 폭 안에서 가로로 스크롤 */
+.body table {
+  display: block;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+
+.body th,
+.body td {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+  vertical-align: top;
+}

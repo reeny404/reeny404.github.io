@@ -32,7 +32,7 @@ export function SiteFooter() {
             <a href={site.github}>GitHub</a>
           </li>
           <li>
-            <a href={site.blog}>Blog</a>
+            <Link href="/blog/">Blog</Link>
           </li>
           <li>
             <a href={site.repo}>Source</a>

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { Post } from "@/content/blog";
 import { caseStudies } from "@/content/cases";
 import { site } from "@/content/profile";
 
@@ -35,6 +36,36 @@ export function caseJsonLd(slug: CaseSlug) {
         itemListElement: [
           { "@type": "ListItem", position: 1, name: "홈", item: `${site.url}/` },
           { "@type": "ListItem", position: 2, name: "사례", item: `${site.url}/#work` },
+          { "@type": "ListItem", position: 3, name: title, item: url },
+        ],
+      },
+    ],
+  };
+}
+
+/** 블로그 글: 글(BlogPosting)과 홈 > 블로그 > 제목 경로(BreadcrumbList) */
+export function postJsonLd({ slug, title, description, published, modified }: Post) {
+  const url = `${site.url}/blog/${slug}/`;
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BlogPosting",
+        headline: title,
+        description,
+        url,
+        mainEntityOfPage: url,
+        image: `${site.url}/og.png`,
+        inLanguage: "ko",
+        datePublished: published,
+        dateModified: modified,
+        author,
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "홈", item: `${site.url}/` },
+          { "@type": "ListItem", position: 2, name: "블로그", item: `${site.url}/blog/` },
           { "@type": "ListItem", position: 3, name: title, item: url },
         ],
       },

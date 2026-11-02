@@ -200,9 +200,6 @@ export default function Home() {
               <li>
                 <span>GitHub</span> <a href={site.github}>github.com/reeny404</a>
               </li>
-              <li>
-                <span>Blog</span> <a href={site.blog}>reeny404.tistory.com</a>
-              </li>
             </ul>
           </div>
           <div>
