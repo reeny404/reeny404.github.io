@@ -1,0 +1,219 @@
+---
+title: 같은 Claude Code를 쓰는데 왜 팀원마다 결과가 다를까
+description: CLAUDE.md, wiki, command, lint로 AI 쓰는 법을 팀 자산으로
+published: 2026-11-02
+---
+
+같은 Claude Code를 쓰는데 팀원마다 결과가 달랐다. 원인은 모델이 아니라 모델에게 주는 정보에 있었다. 각자 쓰는 `CLAUDE.md` 가 달랐고, 같은 내용을 매번 처음부터 다시 조사했고, 일을 시키는 방식도 사람마다 달랐다. 이 글은 그 셋을 팀 공통으로 맞춰 온 기록이다.
+
+## 처음에 불편했던 것
+
+팀 플랜으로 모두 Claude를 쓰게 됐지만 결과물은 생각만큼 좋지 않았고, 사람마다 달랐다. 같은 저장소인데 커밋 메시지 형식, 파일을 두는 위치, 화면 문구 언어가 사람마다 달랐다.
+
+더 큰 문제는 배경지식이었다. 도메인 규칙, 브랜치 정책, 작업 범위를 아는 정도가 사람마다 달랐고, 그 차이가 그대로 Claude에게 넘어갔다. 결국 내가 매번 찾아가서 처음부터 설명해야 했다. 초반 이슈 댓글을 보면 "브랜치 정책은 문서에 적어 뒀는데 설명이 필요하면 말해 달라", "질문할 때 그렇게 판단한 근거도 같이 적어 달라" 같은 말이 계속 나온다.
+
+그래서 목표를 하나로 잡았다. **내가 설명하지 않아도, 누가 시켜도 같은 결과가 나오게 하기.**
+
+## 1. CLAUDE.md를 팀이 같이 쓰기
+
+처음 `CLAUDE.md` 는 `.gitignore` 에 들어 있었다. 각자 자기 설정으로 쓰는 파일이었다. 그러다 보니 같은 저장소에서 세 사람의 AI가 서로 다른 규칙으로 코드를 썼다.
+
+7월 말에 `.gitignore` 에서 빼고 팀이 같이 쓰는 파일로 바꿨다. 커밋 규칙, 브랜치 규칙, 새 코드를 어느 폴더에 둘지 같은 내용이 다 여기 들어 있다. 사람이 보는 규칙 문서를 따로 만들지 않고 이 파일 하나를 사람과 AI가 같이 본다. 개인 설정이 필요한 사람은 `CLAUDE.local.md` 에 따로 적는다.
+
+팀원들도 반겼다. 같은 모델인데 왜 결과가 다르냐, 같이 일하는데 왜 코드가 제각각이냐는 불만은 다들 갖고 있었다.
+
+## 2. 조사한 내용은 wiki에 남기기
+
+AI는 대화가 끝나면 조사한 내용을 잊는다. 같은 걸 물을 때마다 코드를 처음부터 다시 뒤지고, 그러다 보니 사람마다 다른 결론이 나온다. 내가 사람마다 반복하던 설명도 어디에도 남지 않았다. 그래서 한 번 조사하거나 설명한 건 wiki 페이지로 남긴다. 어디에 쓸지는 이 질문으로 정한다.
+
+> 코드를 다 지우면 이 지식도 함께 사라지나?
+
+- 사라진다면 코드 wiki: 지금 코드가 어떻게 생겼는지. 함정, 제약, 도메인 규칙
+- 남는다면 결정 기록: 왜 그렇게 됐는지. 회의 결정, 열린 질문, 사고 기록
+
+<figure>
+<svg class="hand" viewBox="0 0 480 292" role="img" aria-labelledby="wiki-title" font-size="19">
+<title id="wiki-title">코드를 다 지우면 이 지식도 사라지나? 사라진다면 코드 wiki(지금 코드가 어떻게 생겼는지), 남는다면 결정 기록(왜 그렇게 됐는지)</title>
+<g class="c-soft"><rect x="30" y="12" width="420" height="52" rx="4" fill="currentColor"/><rect x="16" y="146" width="212" height="130" rx="4" fill="currentColor"/><rect x="252" y="146" width="212" height="130" rx="4" fill="currentColor"/></g>
+<g class="c-ink"><path d="M31.7 11.4Q240.5 9.5 449.4 12.5M450.4 13.7Q450 38.1 449.7 62.6M451.6 64.6Q240 63.6 28.3 64.4M30.8 63.1Q30.9 37.6 30.7 12.1M27.8 12.1Q238.4 11.5 449 11.5M449.8 14.6Q449.8 40.3 449.7 66M449 63.6Q239.7 63.7 30.5 64.1M30.8 65.3Q30.1 38.3 30.3 11.3M15 145.5Q121 147.8 227 145.8M227.2 145.5Q225.6 210.7 227.3 275.9M227.1 276.2Q121.2 275.8 15.3 276.8M16.5 274Q17.6 210.7 15.2 147.3M15.2 145.5Q121.1 147.3 227 146.8M227 144.6Q227.1 210.9 227 277.3M227.4 275.4Q122.7 275.7 17.9 276.5M16 276.9Q16.6 212.8 15.3 148.6M250.8 146.9Q356.8 148.6 462.8 146.5M463.5 146.5Q464 211.2 463.7 275.8M462.6 275.6Q357.5 275.1 252.5 276.7M252.3 276.2Q251.1 211.7 252.5 147.2M250.7 146Q357.9 145.6 465 145.7M463.6 144.5Q465.6 210.3 463.6 276M465.8 276.8Q358.2 278.1 250.5 275.1M252.4 273.6Q252.2 210.4 251.2 147.1" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/></g>
+<g class="c-accent"><path d="M180.2 66.7Q148.8 98.5 122 140M131.5 135.3L122 140M122.9 129L122 140M300.8 65.9Q330.7 101.1 358 140M356.7 129L358 140M347.6 134.8L358 140" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></g>
+<g class="c-ink" fill="currentColor" text-anchor="middle">
+<text x="240" y="44" font-size="21" font-weight="700">코드를 다 지우면 이 지식도 사라지나?</text>
+<text x="140" y="104" text-anchor="end">사라진다</text>
+<text x="340" y="104" text-anchor="start">남는다</text>
+<text x="122" y="182" font-size="23" font-weight="700">코드 wiki</text>
+<text x="358" y="182" font-size="23" font-weight="700">결정 기록</text>
+</g>
+<g class="c-muted" fill="currentColor" text-anchor="middle">
+<text x="122" y="214">지금 코드가 어떻게 생겼나</text>
+<text x="122" y="240">함정, 제약, 도메인 규칙</text>
+<text x="358" y="214">왜 그렇게 됐나</text>
+<text x="358" y="240">회의 결정, 사고 기록</text>
+</g>
+</svg>
+<figcaption>쓸 곳이 헷갈리면 이 질문부터 해 본다</figcaption>
+</figure>
+
+규칙도 두 개 정했다.
+
+- grep 몇 초면 찾는 건 쓰지 않는다. 파일 목록이나 함수 시그니처는 코드를 보는 게 더 정확하다. 이유, 제약, 함정만 쓴다
+- 결정은 AI가 확정하지 않는다. AI는 `proposed` 까지만 쓰고, `confirmed` 로 바꾸는 건 사람이 한다
+
+## 3. 자주 시키는 일은 command로 만들기
+
+같은 일을 시켜도 사람마다 시키는 말과 쓰는 용어가 달랐고, 빠뜨리는 단계도 달랐다. 그래서 자주 시키는 일은 slash command나 스킬로 만들어 두고 다 같이 그걸 쓴다. 저장소에 있는 command는 지금 14개다.
+
+직접 만든 것 중에서는 이런 걸 자주 쓴다.
+
+- 이슈 주소로 브랜치를 만들고 작업 시작
+- 규약에 맞춘 커밋, MR 생성과 본문 갱신
+- 회의 피드백 PPT에서 할 일을 뽑아 슬라이드 캡처와 함께 이슈로 일괄 등록
+- 배포 전 테스트
+
+남아 있는 세션 기록으로 세어 보니 MR command를 제일 많이 썼다. 내가 `/mr` 로 직접 입력한 게 51번, 말로 시켜서 Claude가 불러 쓴 게 87번이다. 다음은 커밋(32번), 이슈 등록(30번), 코드 리뷰(23번)였다.
+
+배포 전 테스트 command는 두 개다. 먼저 release 코드를 로컬에 띄워 브라우저로 돌려 보는 command를 만들었고, 그걸 바탕으로 배포 서버에서 전체 흐름을 끝까지 돌리고 결과를 Slack으로 정리해 주는 command를 하나 더 만들었다. 둘 다 리팩토링할 때 많이 도움이 됐다. 리팩토링은 동작이 안 바뀌어야 해서, 불안한 마음에 전체 흐름을 자꾸 직접 돌려 보게 된다. 이제는 Claude가 돌린 결과에서 걸리는 부분만 직접 본다. 그만큼 시간이 줄었다.
+
+남이 만든 스킬 중에서는 superpowers 플러그인의 brainstorming(작업 전에 질문부터 던져 준다)과 systematic-debugging(원인 모를 버그를 하나씩 좁혀 간다), 그리고 한국어 문장에서 AI 말투를 걷어 내는 스킬을 자주 쓴다.
+
+MR을 올리기 전에는 규약 리뷰 에이전트가 늘 한 번 보고, 앱 코드가 바뀌었으면 코드 리뷰 에이전트도 따로 본다. 규약 리뷰는 lint가 못 잡는 것만 본다.
+
+## 4. 꼭 지켜야 하는 건 lint로 막기
+
+문서에 "화면 문구는 영어로 쓴다"고 적어 둬도 AI가 가끔 한글 문구를 넣었다. 그래서 꼭 지켜야 하는 규칙은 eslint 규칙으로 만들었다.
+
+- 화면에 보이는 글자, `aria-label`, toast 문구에 한글이 있으면 lint 에러가 난다
+- 폴더 구조를 FSD로 옮기는 중이라 레이어 규칙을 어기는 import를 lint로 막는다. 아직 남은 위반은 건수를 파일에 적어 두고, 늘어나면 에러가 난다
+- wiki 문서는 커밋할 때 200줄 상한, 끊긴 링크, 필수 머리말을 자동으로 검사한다
+
+문서로만 둔 규칙은 리뷰 때마다 다시 말해야 했다. lint로 옮기고 나서는 그런 말을 할 일이 없어졌다.
+
+<figure>
+<svg class="hand" viewBox="0 0 480 292" role="img" aria-labelledby="steps-title" font-size="18">
+<title id="steps-title">규칙을 지키게 하는 힘의 계단. 문서(CLAUDE.md)는 대체로 지킴, command와 스킬은 절차를 매번 같게 반복, lint와 CI는 어기면 머지가 막힘</title>
+<g class="c-accent"><rect x="10" y="210" width="146" height="70" rx="3" fill="currentColor" fill-opacity="0.1"/><rect x="162" y="150" width="146" height="130" rx="3" fill="currentColor" fill-opacity="0.22"/><rect x="314" y="90" width="146" height="190" rx="3" fill="currentColor" fill-opacity="0.38"/></g>
+<g class="c-ink"><path d="M10.7 209.8Q82.8 207 154.9 209.1M155.3 211.6Q154.6 244.3 155.3 277.1M154.4 279.1Q82.4 281.3 10.4 280.2M9.5 279.6Q11.1 243.5 10.6 207.5M7.6 209.2Q81.6 211.3 155.6 209.5M156.8 211.4Q156.9 246.6 155.6 281.7M155.8 280.4Q82.2 282.3 8.5 280M10.9 279.7Q11.9 245.5 10.7 211.4M162.1 149.8Q234.3 151.3 306.4 149.6M307.1 148.7Q307.8 215.2 307.4 281.7M307.1 280.1Q235.1 279.1 163.1 280M162.2 280.9Q161 216.1 161.9 151.4M160.5 149.5Q235.2 150.3 309.8 150.1M307.3 148.3Q306.6 213 307 277.7M308.6 280.9Q235.9 278.5 163.1 279.1M162 280.7Q160.8 215.6 162.5 150.6M313.8 90.4Q386.6 92.8 459.5 90.8M460.9 87.9Q460.3 184.1 460.7 280.2M458.6 280.4Q385.5 281.6 312.5 279.5M313.6 277.8Q314.8 184 314.5 90.2M314 90.6Q386.2 88.3 458.4 90.5M459.8 90.8Q459.3 186.5 459.5 282.3M458.2 279.2Q386.4 280.9 314.5 280.7M313.6 281Q313.8 186.3 313.6 91.6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/></g>
+<g class="c-accent"><path d="M29.8 169.4Q238.9 110.2 440 40M429.3 38.4L440 40M432.6 47.9L440 40" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></g>
+<g class="c-ink" fill="currentColor" text-anchor="middle" font-weight="700" font-size="22">
+<text x="24" y="128" text-anchor="start" font-size="20" font-weight="700">지키게 하는 힘</text>
+<text x="83" y="238">문서</text>
+<text x="235" y="178">command, 스킬</text>
+<text x="387" y="118">lint, CI</text>
+</g>
+<g class="c-ink" fill="currentColor" text-anchor="middle">
+<text x="83" y="262">대체로 지킴</text>
+<text x="235" y="202">절차를 매번</text>
+<text x="235" y="220">같게 반복</text>
+<text x="387" y="142">어기면</text>
+<text x="387" y="160">머지가 막힘</text>
+</g>
+</svg>
+<figcaption>문서에만 적어 둔 규칙보다 lint로 막은 규칙이 훨씬 잘 지켜졌다</figcaption>
+</figure>
+
+## 실패한 것들
+
+목표에 비춰 보면 실패는 두 종류였다. 차이를 줄이려고 만든 게 오히려 차이를 만들기도 했고, 결과는 그대로인데 손만 더 가게 만든 것도 있었다.
+
+같은 내용을 보게 하려고 만든 wiki에서 사고가 세 번 났다.
+
+- wiki를 다른 폴더에 복사해 두고 쓰다가 두 군데가 따로 고쳐져서 내용이 달라졌다. 그 뒤로 원본은 한 곳에만 두고, 나머지는 검색용으로만 쓴다
+- wiki 도구가 제목으로 파일 이름을 만들 때 한글을 버렸다. `Plot 도메인 개요` 가 `plot.md` 가 되면서 링크가 다 끊겼다. 그래서 페이지 제목은 영어로 쓴다
+- prettier가 wiki 머리말을 여러 줄로 바꿔 놓았다. wiki 검사 도구가 그걸 못 읽어서 페이지 7개가 어디에도 연결되지 않은 것으로 나왔다
+
+만들어 놓고 결국 지운 것도 있다.
+
+- wiki 변경 기록 파일. 브랜치마다 같은 파일 끝에 한 줄씩 붙이다 보니 거의 매번 충돌이 났다. 내용도 커밋 메시지와 똑같았다
+- push 전 검사. MR CI에서 같은 검사를 또 돌리고 있었다. 지우면서 CI도 9분에서 5분 40초로 줄였다
+
+AI 때문에 만든 것들도 결국 관리는 사람 몫이다. 아무도 안 보거나 다른 데서 이미 하고 있으면 지운다.
+
+## 그래서 얼마나 달라졌나
+
+효과를 숫자 하나로 재기는 어려워서, Claude에게 커밋까지 맡긴 비율을 대신 셌다. 공동 작성자 표시(`Co-Authored-By: Claude`)가 붙은 커밋을 월별로 셌고, 병합 커밋은 뺐다.
+
+<div class="pair">
+
+<figure>
+<svg viewBox="0 0 480 262" role="img" aria-labelledby="commits-title" font-size="15">
+<title id="commits-title">월별 전체 커밋과 Claude 공동 작성 커밋. 4월 0%, 5월 2%, 6월 7%, 7월 15%, 8월 42%, 9월 55%, 10월 96%. 10월 리팩토링 202건을 빼면 94%</title>
+<g class="c-accent"><rect x="44" y="10" width="12" height="12" rx="3" fill="currentColor" fill-opacity="1"/></g><text class="c-ink" x="62" y="20" fill="currentColor" font-size="14">Claude 공동 작성</text>
+<g class="c-accent"><rect x="198" y="10" width="12" height="12" rx="3" fill="currentColor" fill-opacity="0.45"/></g><text class="c-ink" x="216" y="20" fill="currentColor" font-size="14">리팩토링</text>
+<g class="c-muted"><rect x="288" y="10" width="12" height="12" rx="3" fill="currentColor" fill-opacity="0.3"/></g><text class="c-ink" x="306" y="20" fill="currentColor" font-size="14">그 외 커밋</text>
+<g class="c-line"><line x1="44" x2="470" y1="220" y2="220" stroke="currentColor"/></g><text class="c-muted" x="38" y="224" text-anchor="end" fill="currentColor" font-size="13">0</text>
+<g class="c-line"><line x1="44" x2="470" y1="135" y2="135" stroke="currentColor"/></g><text class="c-muted" x="38" y="139" text-anchor="end" fill="currentColor" font-size="13">500</text>
+<g class="c-line"><line x1="44" x2="470" y1="50" y2="50" stroke="currentColor"/></g><text class="c-muted" x="38" y="54" text-anchor="end" fill="currentColor" font-size="13">1000</text>
+<g opacity="0.45"><title>4월: 전체 240, Claude 0 (0%)</title>
+<g class="c-muted"><path fill="currentColor" fill-opacity="0.3" d="M59.4 220V183.2Q59.4 179.2 63.4 179.2H85.4Q89.4 179.2 89.4 183.2V220Z"/></g>
+</g>
+<text class="c-muted" x="74.4" y="238" text-anchor="middle" fill="currentColor">4월</text>
+<text class="c-ink" x="74.4" y="171.2" text-anchor="middle" fill="currentColor" font-weight="600" opacity="0.45">0%</text>
+<g opacity="0.45"><title>5월: 전체 88, Claude 2 (2%)</title>
+<g class="c-accent"><path fill="currentColor" fill-opacity="1" d="M120.3 220V220.7Q120.3 220.7 120.3 220.7H150.3Q150.3 220.7 150.3 220.7V220Z"/></g>
+<g class="c-muted"><path fill="currentColor" fill-opacity="0.3" d="M120.3 218.7V209Q120.3 205 124.3 205H146.3Q150.3 205 150.3 209V218.7Z"/></g>
+</g>
+<text class="c-muted" x="135.3" y="238" text-anchor="middle" fill="currentColor">5월</text>
+<text class="c-ink" x="135.3" y="197" text-anchor="middle" fill="currentColor" font-weight="600" opacity="0.45">2%</text>
+<g><title>6월: 전체 245, Claude 17 (7%)</title>
+<g class="c-accent"><path fill="currentColor" fill-opacity="1" d="M181.1 220V218.1Q181.1 218.1 181.1 218.1H211.1Q211.1 218.1 211.1 218.1V220Z"/></g>
+<g class="c-muted"><path fill="currentColor" fill-opacity="0.3" d="M181.1 216.1V182.4Q181.1 178.4 185.1 178.4H207.1Q211.1 178.4 211.1 182.4V216.1Z"/></g>
+</g>
+<text class="c-muted" x="196.1" y="238" text-anchor="middle" fill="currentColor">6월</text>
+<text class="c-ink" x="196.1" y="170.4" text-anchor="middle" fill="currentColor" font-weight="600">7%</text>
+<g><title>7월: 전체 239, Claude 36 (15%)</title>
+<g class="c-accent"><path fill="currentColor" fill-opacity="1" d="M242 220V214.9Q242 214.9 242 214.9H272Q272 214.9 272 214.9V220Z"/></g>
+<g class="c-muted"><path fill="currentColor" fill-opacity="0.3" d="M242 212.9V183.4Q242 179.4 246 179.4H268Q272 179.4 272 183.4V212.9Z"/></g>
+</g>
+<text class="c-muted" x="257" y="238" text-anchor="middle" fill="currentColor">7월</text>
+<text class="c-ink" x="257" y="171.4" text-anchor="middle" fill="currentColor" font-weight="600">15%</text>
+<g><title>8월: 전체 428, Claude 179 (42%)</title>
+<g class="c-accent"><path fill="currentColor" fill-opacity="1" d="M302.9 220V190.6Q302.9 190.6 302.9 190.6H332.9Q332.9 190.6 332.9 190.6V220Z"/></g>
+<g class="c-muted"><path fill="currentColor" fill-opacity="0.3" d="M302.9 188.6V151.2Q302.9 147.2 306.9 147.2H328.9Q332.9 147.2 332.9 151.2V188.6Z"/></g>
+</g>
+<text class="c-muted" x="317.9" y="238" text-anchor="middle" fill="currentColor">8월</text>
+<text class="c-ink" x="317.9" y="139.2" text-anchor="middle" fill="currentColor" font-weight="600">42%</text>
+<g><title>9월: 전체 486, Claude 269 (55%)</title>
+<g class="c-accent"><path fill="currentColor" fill-opacity="1" d="M363.7 220V175.3Q363.7 175.3 363.7 175.3H393.7Q393.7 175.3 393.7 175.3V220Z"/></g>
+<g class="c-muted"><path fill="currentColor" fill-opacity="0.3" d="M363.7 173.3V141.4Q363.7 137.4 367.7 137.4H389.7Q393.7 137.4 393.7 141.4V173.3Z"/></g>
+</g>
+<text class="c-muted" x="378.7" y="238" text-anchor="middle" fill="currentColor">9월</text>
+<text class="c-ink" x="378.7" y="129.4" text-anchor="middle" fill="currentColor" font-weight="600">55%</text>
+<g><title>10월: 전체 933, Claude 895 (96%), 그중 리팩토링 202</title>
+<g class="c-accent"><path fill="currentColor" fill-opacity="1" d="M424.6 220V103.2Q424.6 103.2 424.6 103.2H454.6Q454.6 103.2 454.6 103.2V220Z"/></g>
+<g class="c-accent"><path fill="currentColor" fill-opacity="0.45" d="M424.6 101.2V68.8Q424.6 68.8 424.6 68.8H454.6Q454.6 68.8 454.6 68.8V101.2Z"/></g>
+<g class="c-muted"><path fill="currentColor" fill-opacity="0.3" d="M424.6 66.8V65.4Q424.6 61.4 428.6 61.4H450.6Q454.6 61.4 454.6 65.4V66.8Z"/></g>
+</g>
+<text class="c-muted" x="439.6" y="238" text-anchor="middle" fill="currentColor">10월</text>
+<text class="c-ink" x="439.6" y="53.4" text-anchor="middle" fill="currentColor" font-weight="600">96%</text>
+<text class="c-muted" x="418.6" y="90" text-anchor="end" fill="currentColor" font-size="13">리팩토링 202</text>
+<g class="c-muted"><path d="M50 150.2V145.2H159.7V150.2" fill="none" stroke="currentColor"/></g><text class="c-muted" x="104.9" y="139.2" text-anchor="middle" fill="currentColor" font-size="14">세팅 시기</text>
+</svg>
+<figcaption>10월은 리팩토링 커밋을 빼고 봐도 94%였다</figcaption>
+</figure>
+
+| 월 | 전체 | Claude |
+| --- | --- | --- |
+| 4월 | 240 | 0 |
+| 5월 | 88 | 2 |
+| 6월 | 245 | 17 |
+| 7월 | 239 | 36 |
+| 8월 | 428 | 179 |
+| 9월 | 486 | 269 |
+| 10월 | 933 | 895 |
+| 10월, 리팩토링 제외 | 731 | 693 |
+
+</div>
+
+4월과 5월은 기획과 디자인이 나오기 전이라 프로젝트를 세팅하던 때다. `CLAUDE.md` 를 팀이 같이 쓰기 시작한 건 7월 말이고, 8월부터 Claude가 만든 커밋이 눈에 띄게 늘었다.
+
+10월에 커밋이 933건으로 뛴 데는 두 가지가 겹쳤다. 하나는 FSD 이관이다. 옛 component 폴더가 남아 있는 한 이관이 끝나지 않아서, 시간이 남은 월말에 싹 옮겼다. 이관 브랜치에서 들어온 커밋이 202건이고 전부 Claude와 함께 만들었다. 옮긴 코드가 레이어 규칙을 어기면 lint가 바로 막아 줬다. 다른 하나는 문서다. 문서 커밋만 209건이었다. FSD 이관을 빼고 세도 10월은 731건 중 693건(94%)에 Claude가 들어갔다.
+
+다만 이 표시는 Claude가 커밋을 만들기만 해도 붙는다. 내가 다 짜 놓고 커밋만 맡긴 경우도 들어 있다. 같은 시기에 커밋을 잘게 나누는 규칙이 생겨서 커밋 수 자체도 늘었다.
+
+## 마무리
+
+처음 목표는 내가 설명하지 않아도 같은 결과가 나오게 하는 것이었다. 지금은 내가 하던 설명을 `CLAUDE.md` 와 wiki로 옮기는 중이고, 꼭 지켜야 하는 건 lint와 command로 막아 두었다.
+
+좋은 습관은 평소 모습에서 드러난다고 생각하는데, AI를 써 보니 AI도 우리 팀의 평소 모습을 그대로 따라 했다. 규칙이 사람마다 다르면 AI도 사람마다 다른 코드를 썼고, 규칙을 한곳에 모으니 비슷한 코드가 나오기 시작했다.
+
+앞으로도 좋은 스킬이나 쓰는 법이 보이면 계속 들여 볼 생각이다. 언젠가는 AI 쓰는 방식이 어느 정도 정해진 틀로 자리 잡고, 우리 팀 방식도 다른 곳에서 그대로 가져다 쓸 수 있으면 좋겠다. 목표는 처음이나 지금이나 같은 모델로 같은 결과를 내는 것이다.

@@ -14,6 +14,7 @@ const NAV = [
   { href: "/#work", label: "사례", match: ["/work/"] },
   { href: "/#experience", label: "경력", match: [] },
   { href: "/lab/", label: "실험실", match: ["/lab/", "/system/"] },
+  { href: "/blog/", label: "블로그", match: ["/blog/"] },
   { href: "/#contact", label: "연락처", match: [] },
 ] as const;
 
