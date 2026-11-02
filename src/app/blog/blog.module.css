@@ -224,6 +224,7 @@
 .body :global(.pair) {
   display: grid;
   gap: var(--space-5);
+  margin-block: var(--space-7);
 }
 
 @media (min-width: 1024px) {

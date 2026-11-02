@@ -51,7 +51,7 @@ AI는 대화가 끝나면 조사한 내용을 잊는다. 같은 걸 물을 때�
 <text x="358" y="240">회의 결정, 사고 기록</text>
 </g>
 </svg>
-<figcaption>어디에 쓸지는 이 질문 하나로 정한다</figcaption>
+<figcaption>쓸 곳이 헷갈리면 이 질문부터 해 본다</figcaption>
 </figure>
 
 규칙도 두 개 정했다.
@@ -108,7 +108,7 @@ MR을 올리기 전에는 규약 리뷰 에이전트가 늘 한 번 보고, 앱 
 <text x="387" y="160">머지가 막힘</text>
 </g>
 </svg>
-<figcaption>규칙은 아래 계단에서 위 계단으로 옮길수록 잘 지켜진다</figcaption>
+<figcaption>문서에만 적어 둔 규칙보다 lint로 막은 규칙이 훨씬 잘 지켜졌다</figcaption>
 </figure>
 
 ## 실패한 것들
@@ -188,7 +188,7 @@ AI 때문에 만든 것들도 결국 관리는 사람 몫이다. 아무도 안 �
 <text class="c-muted" x="418.6" y="90" text-anchor="end" fill="currentColor" font-size="13">리팩토링 202</text>
 <g class="c-muted"><path d="M50 150.2V145.2H159.7V150.2" fill="none" stroke="currentColor"/></g><text class="c-muted" x="104.9" y="139.2" text-anchor="middle" fill="currentColor" font-size="14">세팅 시기</text>
 </svg>
-<figcaption>월별 커밋 수와 Claude 공동 작성 비율. 10월은 리팩토링을 빼도 94%</figcaption>
+<figcaption>10월은 리팩토링 커밋을 빼고 봐도 94%였다</figcaption>
 </figure>
 
 | 월 | 전체 | Claude |
